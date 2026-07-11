@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Rotterdam",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797006,
+  "id": "chatcmpl-3068008d-07e1-91f8-964a-28c70f3bc495",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 2,
+    "prompt_tokens": 262,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 262
+    },
+    "total_tokens": 264
+  }
+}

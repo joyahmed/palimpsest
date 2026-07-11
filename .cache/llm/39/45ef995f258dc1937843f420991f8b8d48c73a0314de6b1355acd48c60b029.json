@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Inter",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796997,
+  "id": "chatcmpl-a7d899b6-a392-9189-b680-1fb8c4e1fb6f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 158,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 158
+    },
+    "total_tokens": 159
+  }
+}

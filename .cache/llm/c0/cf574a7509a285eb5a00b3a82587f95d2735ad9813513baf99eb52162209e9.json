@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"fd85c0ec-d426-46d2-af44-6fa91bc8bfbb\", \"relation\": \"unrelated\", \"reason\": \"Websockets for live position and a 15-minute ping interval are separate mechanisms that can coexist; one handles real-time updates while the other is a periodic keepalive or status check.\"}, {\"id\": \"47c16a33-ad0e-498d-b6a0-e5587bcc83a3\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting at 100 requests per minute per key is a server-side constraint unrelated to the 15-minute vessel ping interval.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of ALREADY HELD claims.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"Vessels ping every 15 minutes.\"\n\nALREADY HELD CLAIMS:\n1. id: fd85c0ec-d426-46d2-af44-6fa91bc8bfbb\n   observed: 2026-05-28\n   kind: config\n   claim: \"Websockets are used for live shipment position.\"\n2. id: 47c16a33-ad0e-498d-b6a0-e5587bcc83a3\n   observed: 2026-05-02\n   kind: config\n   claim: \"Rate limiting is implemented at 100 requests a minute per key.\"\n\nLet's evaluate Claim 1:\nNew: \"Vessels ping every 15 minutes.\"\nOld: \"Websockets are used for live shipment position.\"\nRelation: These are about vessel tracking/positioning, but one is about the frequency of pings (15 mins) and the other is about the technology used (Websockets). They can both be true at the same time.\nRuling: unrelated.\nReason: The new claim specifies the ping frequency, while the old claim specifies the technology used for live positions; both can be true simultaneously.\n\nLet's evaluate Claim 2:\nNew: \"Vessels ping every 15 minutes.\"\nOld: \"Rate limiting is implemented at 100 requests a minute per key.\"\nRelation: One is about vessel ping frequency, the other is about API rate limiting. They are somewhat related to network requests but are distinct configuration facts. They can both be true.\nRuling: unrelated.\nReason: The new claim details vessel ping frequency, whereas the old claim details API rate limiting; these are distinct configurations that can coexist.\n\nWait, are they completely unrelated? The prompt says \"Same topic, but both can be true at once. Leave the old claim alone.\" for unrelated.\nYes, \"unrelated\" is the correct label for things that don't contradict, aren't duplicates, and don't refine each other.\n\nLet's double check.\nClaim 1: Websockets vs ping frequency. Unrelated.\nClaim 2: Rate limiting vs ping frequency. Unrelated.\n\nFormat:\n{\"rulings\": [{\"id\": \"...\", \"relation\": \"unrelated\", \"reason\": \"...\"}, {\"id\": \"...\", \"relation\": \"unrelated\", \"reason\": \"...\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796505,
+  "id": "chatcmpl-7c179c38-b2fb-90db-90d1-0bf0bd5ddfe3",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 759,
+    "completion_tokens_details": {
+      "reasoning_tokens": 592,
+      "text_tokens": 759
+    },
+    "prompt_tokens": 790,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 790
+    },
+    "total_tokens": 1549
+  }
+}

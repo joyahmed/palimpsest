@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"3537b14e-2856-4dcc-aa45-43149052baba\", \"relation\": \"supersedes\", \"reason\": \"The middle tier price changed from $29 to $19 per month; the old price is no longer valid.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-23\n- kind: config\n- claim: \"The middle tier of the service costs $19 per month.\"\n\nEXISTING CLAIM:\n- id: 3537b14e-2856-4dcc-aa45-43149052baba\n- observed: 2026-04-14\n- kind: config\n- claim: \"The pricing model consists of three tiers with the middle tier priced at $29 per month.\"\n\nAnalysis:\nThe new claim states the middle tier costs $19 per month.\nThe old claim states the middle tier costs $29 per month.\nThese two claims cannot both be true at the same time (assuming the price is a single value at a given time, and the new claim is more recent).\nThe new claim is observed on 2026-06-23, which is AFTER the old claim (2026-04-14).\nTherefore, the new claim supersedes the old claim. The price changed from $29 to $19.\n\nRelation: supersedes\nReason: The price of the middle tier was updated to $19 per month in June, replacing the previous $29 price from April.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- Time: New claim is newer (2026-06-23 > 2026-04-14). So it can supersede.\n- Event: Not an event, it's a config state.\n\nRuling:\nid: 3537b14e-2856-4dcc-aa45-43149052baba\nrelation: supersedes\nreason: The middle tier price was updated to $19 per month in June, replacing the previous $29 price from April.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796674,
+  "id": "chatcmpl-c2c16e1c-10a4-991e-ba1c-6d838f4f8984",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 547,
+    "completion_tokens_details": {
+      "reasoning_tokens": 465,
+      "text_tokens": 547
+    },
+    "prompt_tokens": 732,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 732
+    },
+    "total_tokens": 1279
+  }
+}

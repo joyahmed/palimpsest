@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "4000",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796965,
+  "id": "chatcmpl-0ad4a71d-5e15-9195-81f4-05704f8450d8",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 4,
+    "prompt_tokens": 244,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 244
+    },
+    "total_tokens": 248
+  }
+}

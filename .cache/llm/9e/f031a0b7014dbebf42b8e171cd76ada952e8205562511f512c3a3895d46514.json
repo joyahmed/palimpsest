@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"458c8027-38b2-4c31-ae07-a8269426c601\", \"relation\": \"supersedes\", \"reason\": \"Code coverage moved from 71% to 83% between 4 Jun and 9 Jul; the old value is no longer current.\"}, {\"id\": \"ddf5ace5-8c3f-4b77-97cf-e91b4d928adf\", \"relation\": \"unrelated\", \"reason\": \"Joy's preference for above 80% coverage is a goal, not a measurement; both can be true simultaneously.\"}, {\"id\": \"3723b844-5c03-4972-9c4d-4d3704b5eb58\", \"relation\": \"unrelated\", \"reason\": \"The number of tests in the suite is a separate fact from the coverage percentage; both can be true at once.\"}, {\"id\": \"ee96f03b-e4f2-4c3d-8e3b-0228da330ef1\", \"relation\": \"unrelated\", \"reason\": \"A statement about the code's strategic importance is unrelated to the current coverage metric.\"}]}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-07-09\n- kind: state\n- claim: \"Code coverage is currently at 83%.\"\n\nCLAIM 1:\n- id: 458c8027-38b2-4c31-ae07-a8269426c601\n- observed: 2026-06-04\n- kind: state\n- claim: \"Current code coverage is 71%.\"\n\nAnalysis: Both are state claims about current code coverage. The old claim says 71% (observed June 4), the new claim says 83% (observed July 9). These are both \"current\" state claims. Code coverage can change over time. The new claim is more recent. The old claim was true at the time it was observed (June 4), but the new claim says it's now 83% (July 9). \n\nWait - the key question is: can both be true at the same time? The old claim says \"Current code coverage is 71%\" observed on June 4. The new claim says \"Code coverage is currently at 83%\" observed on July 9. \n\nIf we interpret \"current\" as meaning \"at the time of observation,\" then both were true at their respective times. But if we interpret them as ongoing state claims, they contradict each other - coverage can't be both 71% and 83% at the same time.\n\nSince the new claim is newer (July 9 vs June 4), and it's a state claim about the current value, the new claim supersedes the old one. The old claim was true on June 4, but by July 9, coverage has changed to 83%. The new claim makes the old \"current\" value false as of now.\n\nActually, let me reconsider. The rule says \"Only rule 'supersedes' if the two claims CANNOT BOTH BE TRUE.\" Can both be true? If \"current\" means \"at the time of observation,\" then yes, both were true at their respective times. But the old claim is a state claim that says \"Current code coverage is 71%\" - this is a snapshot. The new claim updates this snapshot.\n\nI think this is a supersession. The old claim stated the current coverage was 71%. The new claim states it's now 83%. The old state is no longer accurate. The new claim makes the old one false (as a current state). This is like \"dev server on port 3000\" + \"dev server on port 4000\" - the value changed.\n\nRelation: supersedes\nReason: Code coverage increased from 71% to 83% between June 4 and July 9; the earlier figure is no longer current.\n\nCLAIM 2:\n- id: ddf5ace5-8c3f-4b77-97cf-e91b4d928adf\n- observed: 2026-06-04\n- kind: preference\n- claim: \"Joy wants code coverage to be above 80% before launch.\"\n\nAnalysis: This is a preference/goal, not a state. Joy wants coverage above 80%. The new claim says coverage is 83%. These can both be true - Joy can want above 80%, and coverage can be 83% (which satisfies her preference). No contradiction.\n\nRelation: unrelated\nReason: Joy's preference for >80% coverage and the actual 83% coverage are both true simultaneously; one is a goal, the other is a measurement.\n\nCLAIM 3:\n- id: 3723b844-5c03-4972-9c4d-4d3704b5eb58\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nAnalysis: This is about the number of tests, not code coverage percentage. These are related topics (both about testing) but can both be true at the same time. Having 400 tests and 83% coverage are not contradictory.\n\nRelation: unrelated\nReason: The number of tests and the code coverage percentage are independent metrics that can both be true simultaneously.\n\nCLAIM 4:\n- id: ee96f03b-e4f2-4c3d-8e3b-0228da330ef1\n- observed: 2026-04-21\n- kind: identity\n- claim: \"The code is not Halcyon's secret sauce.\"\n\nAnalysis: This is an identity/philosophical claim about the code's role. The new claim is about code coverage percentage. These are completely different topics. They can both be true at the same time.\n\nRelation: unrelated\nReason: A philosophical statement about the code's strategic value and a coverage metric are independent facts that coexist without conflict.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796869,
+  "id": "chatcmpl-96709f09-077e-9431-b0d3-6971072ca7d7",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1417,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1117,
+      "text_tokens": 1417
+    },
+    "prompt_tokens": 944,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 944
+    },
+    "total_tokens": 2361
+  }
+}

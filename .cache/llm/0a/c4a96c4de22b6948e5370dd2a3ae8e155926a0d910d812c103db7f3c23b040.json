@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"bfb92e84-b343-4668-b004-02a954f70066\", \"relation\": \"supersedes\", \"reason\": \"The target launch date has shifted from September 1st to October, as confirmed on July 9th.\"}, {\"id\": \"f54f1a66-e47b-48df-b11f-a899ab80a1a0\", \"relation\": \"unrelated\", \"reason\": \"A security review in August is consistent with an October launch; both can be true simultaneously.\"}]}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-07-09\n- kind: state\n- claim: \"The project remains on track for an October launch.\"\n\nCLAIM 1:\n- id: bfb92e84-b343-4668-b004-02a954f70066\n- observed: 2026-04-06\n- kind: event\n- claim: \"The target launch date for the Meridian project is September 1st.\"\n\nAnalysis: The old claim says the target launch date is September 1st. The new claim says the project is on track for an October launch. These are contradictory - the launch date cannot be both September 1st and October. The new claim is newer (July 9 vs April 6), so the new claim supersedes the old one. The target launch date has apparently moved from September to October.\n\nWait, let me reconsider. The old claim says \"target launch date... is September 1st\" - this is stated as a fact about the target. The new claim says \"remains on track for an October launch.\" These cannot both be true - if the target is September 1st, then being on track for October would be wrong, and vice versa. The new claim is more recent, so it supersedes the old one.\n\nRelation: supersedes\nReason: The launch target moved from September 1st to October; the September date is no longer the plan.\n\nCLAIM 2:\n- id: f54f1a66-e47b-48df-b11f-a899ab80a1a0\n- observed: 2026-07-09\n- kind: decision\n- claim: \"A security review has been scheduled for August.\"\n\nAnalysis: The old claim is about a security review scheduled for August. The new claim is about the project being on track for an October launch. These are about different things - one is about a security review, the other is about the launch date. They can both be true at the same time. A security review in August doesn't conflict with an October launch.\n\nRelation: unrelated\nReason: The security review in August and the October launch target are separate facts that can both be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796952,
+  "id": "chatcmpl-dc395230-1ce5-9978-8937-5b34f35e9440",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 661,
+    "completion_tokens_details": {
+      "reasoning_tokens": 513,
+      "text_tokens": 661
+    },
+    "prompt_tokens": 795,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 795
+    },
+    "total_tokens": 1456
+  }
+}

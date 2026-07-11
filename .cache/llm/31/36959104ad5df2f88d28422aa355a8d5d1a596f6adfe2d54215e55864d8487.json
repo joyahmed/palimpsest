@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"3723b844-5c03-4972-9c4d-4d3704b5eb58\", \"relation\": \"unrelated\", \"reason\": \"The number of tests and the code coverage percentage are related but distinct metrics; both can be true simultaneously.\"}, {\"id\": \"ee96f03b-e4f2-4c3d-8e3b-0228da330ef1\", \"relation\": \"unrelated\", \"reason\": \"A statement about code not being the secret sauce is a qualitative identity claim, while 71% coverage is a quantitative state; they address different aspects and can both be true.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against two EXISTING CLAIMS and determine the relationship: supersedes, duplicate, refines, or unrelated.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: state\n- claim: \"Current code coverage is 71%.\"\n\nEXISTING CLAIM 1:\n- id: 3723b844-5c03-4972-9c4d-4d3704b5eb58\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nEXISTING CLAIM 2:\n- id: ee96f03b-e4f2-4c3d-8e3b-0228da330ef1\n- observed: 2026-04-21\n- kind: identity\n- claim: \"The code is not Halcyon's secret sauce.\"\n\nAnalysis of Claim 1 vs New Claim:\nNew: \"Current code coverage is 71%.\"\nOld: \"There are about 400 tests in the test suite.\"\nBoth are about testing/code quality, but they state different facts (coverage percentage vs number of tests). They can both be true at the same time.\nRelation: unrelated.\nReason: Code coverage percentage and the total number of tests are distinct metrics that can both be true simultaneously.\n\nAnalysis of Claim 2 vs New Claim:\nNew: \"Current code coverage is 71%.\"\nOld: \"The code is not Halcyon's secret sauce.\"\nOne is a specific metric about code coverage, the other is a philosophical/identity statement about the code's role in the product. They can both be true.\nRelation: unrelated.\nReason: A specific code coverage metric does not contradict a general statement about the code's strategic importance.\n\nLet's format the output as JSON.\n\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"3723b844-5c03-4972-9c4d-4d3704b5eb58\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Code coverage percentage and the total number of tests are distinct metrics that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"ee96f03b-e4f2-4c3d-8e3b-0228da330ef1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"A specific code coverage metric does not contradict a general statement about the code's strategic importance.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Both are unrelated.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796570,
+  "id": "chatcmpl-3062ab5d-ac0c-9fa9-b919-a74680662810",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 845,
+    "completion_tokens_details": {
+      "reasoning_tokens": 678,
+      "text_tokens": 845
+    },
+    "prompt_tokens": 798,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 798
+    },
+    "total_tokens": 1643
+  }
+}

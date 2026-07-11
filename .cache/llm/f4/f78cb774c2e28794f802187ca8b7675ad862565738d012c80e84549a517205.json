@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"correct\", \"why\": \"The answer matches the true port number exactly.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796966,
+  "id": "chatcmpl-ad084831-c5b6-95ab-a914-3bd19bc86591",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 20,
+    "prompt_tokens": 293,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 293
+    },
+    "total_tokens": 313
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"stale\", \"why\": \"The answer matches the stale value of 71% instead of the current true value.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796988,
+  "id": "chatcmpl-bf2ecc2a-824b-94dd-a361-3476daa169e3",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 30,
+    "prompt_tokens": 287,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 287
+    },
+    "total_tokens": 317
+  }
+}

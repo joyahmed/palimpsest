@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"wrong\", \"why\": \"The system explicitly stated it did not know the answer.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796980,
+  "id": "chatcmpl-7937b557-bdee-9385-a683-44c2d7e01d5f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 22,
+    "prompt_tokens": 288,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 288
+    },
+    "total_tokens": 310
+  }
+}

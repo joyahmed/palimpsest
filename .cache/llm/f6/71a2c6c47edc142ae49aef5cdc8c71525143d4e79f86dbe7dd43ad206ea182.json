@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"c15104cb-75d0-4f13-b6c5-4584e0bbdb08\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module is about development work, not about pricing or tier limits.\"}, {\"id\": \"31b2f82b-6cce-432e-b0be-74bef97fc682\", \"relation\": \"unrelated\", \"reason\": \"The middle tier's price and the free tier's shipment cap are independent facts about different tiers; both can be true simultaneously.\"}, {\"id\": \"9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\", \"relation\": \"unrelated\", \"reason\": \"The structure of a shipment (manifest, route, customs docs) is unrelated to the free tier's monthly shipment cap.\"}]}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-06-23\n- kind: config\n- claim: \"The free tier of the service is capped at 50 shipments per month.\"\n\nCLAIM 1: c15104cb-75d0-4f13-b6c5-4584e0bbdb08\n- observed: 2026-04-21\n- kind: state\n- claim: \"Joy is building out the shipment tracking module.\"\n\nThis is about Joy building a shipment tracking module. The new claim is about the free tier being capped at 50 shipments per month. These are completely different topics - one is about a person's work on a module, the other is about pricing/tier limits. They are unrelated.\n\nCLAIM 2: 31b2f82b-6cce-432e-b0be-74bef97fc682\n- observed: 2026-06-23\n- kind: config\n- claim: \"The middle tier of the service costs $19 per month.\"\n\nThis is about the middle tier pricing. The new claim is about the free tier shipment cap. These are about different tiers of the same service. They can both be true at the same time - the middle tier can cost $19/month while the free tier is capped at 50 shipments/month. They are unrelated (same topic of service tiers, but both can be true simultaneously).\n\nCLAIM 3: 9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nThis is about what constitutes a shipment (its components). The new claim is about the free tier being capped at 50 shipments per month. These are different aspects of shipments - one describes the structure of a shipment, the other describes a limit on the free tier. They can both be true at the same time. They are unrelated.\n\nLet me finalize:\n- c15104cb: unrelated - different topics (Joy's work vs. free tier cap)\n- 31b2f82b: unrelated - both about service tiers but different tiers, can coexist\n- 9180dbfe: unrelated - different aspects of shipments (structure vs. tier limit)",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796685,
+  "id": "chatcmpl-ec930cf2-7b0b-9830-b6f3-d2a7e195f28c",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 776,
+    "completion_tokens_details": {
+      "reasoning_tokens": 559,
+      "text_tokens": 776
+    },
+    "prompt_tokens": 872,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 872
+    },
+    "total_tokens": 1648
+  }
+}

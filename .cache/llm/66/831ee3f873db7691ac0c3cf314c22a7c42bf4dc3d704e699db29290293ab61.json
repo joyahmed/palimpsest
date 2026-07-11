@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Halcyon Freight",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796992,
+  "id": "chatcmpl-076b61bd-020e-9d4b-a7c7-523dfcbfba44",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 4,
+    "prompt_tokens": 252,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 252
+    },
+    "total_tokens": 256
+  }
+}

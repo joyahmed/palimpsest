@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"c15104cb-75d0-4f13-b6c5-4584e0bbdb08\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module and websockets being used for live shipment position are complementary facts that can both be true simultaneously.\"}, {\"id\": \"9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\", \"relation\": \"unrelated\", \"reason\": \"The data model for a shipment (manifest, route, customs docs) and the transport mechanism for live position updates (websockets) are independent concerns that coexist without contradiction.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against two EXISTING CLAIMS and determine the relationship: supersedes, duplicate, refines, or unrelated.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"Websockets are used for live shipment position.\"\n\nEXISTING CLAIM 1:\n- id: c15104cb-75d0-4f13-b6c5-4584e0bbdb08\n- observed: 2026-04-21\n- kind: state\n- claim: \"Joy is building out the shipment tracking module.\"\n\nEXISTING CLAIM 2:\n- id: 9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nEvaluating Claim 1:\nNew: \"Websockets are used for live shipment position.\"\nOld: \"Joy is building out the shipment tracking module.\"\nRelation: Both are about shipment tracking/position. They can both be true at the same time. Joy is building the module, and websockets are used for live position within it (or in general).\nRuling: unrelated.\nReason: The new claim specifies the technology used for live position, while the old claim states who is building the tracking module; both can be true simultaneously.\n\nEvaluating Claim 2:\nNew: \"Websockets are used for live shipment position.\"\nOld: \"Each shipment has a manifest, a route, and a set of customs docs.\"\nRelation: Both are about shipment data/config. One is about the data structure of a shipment, the other is about the technology used for live tracking. They can both be true.\nRuling: unrelated.\nReason: The new claim describes the technology for live tracking, whereas the old claim describes the data components of a shipment; they address different aspects of the system.\n\nLet's double check.\nCan they both be true? Yes.\nDoes one supersede the other? No.\nAre they duplicates? No.\nDoes one refine the other? No, they are just different facts about the shipment system.\n\nFormat required:\n{\"rulings\": [{\"id\": string, \"relation\": string, \"reason\": string}]}\n\nReasoning for 1: \"The new claim specifies the technology used for live position, while the old claim states who is building the tracking module; both can be true simultaneously.\" -> \"The new claim specifies the technology for live tracking, while the old claim notes who is building the module; both facts can coexist.\"\nReasoning for 2: \"The new claim describes the technology for live tracking, whereas the old claim describes the data components of a shipment; they address different aspects of the system.\" -> \"The new claim details the technology for live tracking, while the old claim lists the data components of a shipment; both are true and address different aspects.\"\n\nLet's refine the reasons to be one plain sentence for a human audit log.\nClaim 1: \"The new claim specifies the technology used for live tracking, while the old claim notes who is building the module; both facts can coexist.\"\nClaim 2: \"The new claim details the technology for live tracking, while the old claim lists the data components of a shipment; both are true and address different aspects.\"\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796487,
+  "id": "chatcmpl-1a919aec-2173-904e-8511-08ad0f9facef",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 942,
+    "completion_tokens_details": {
+      "reasoning_tokens": 778,
+      "text_tokens": 942
+    },
+    "prompt_tokens": 793,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 793
+    },
+    "total_tokens": 1735
+  }
+}

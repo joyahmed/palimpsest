@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"stale\", \"why\": \"The answer matches the stale value exactly.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796982,
+  "id": "chatcmpl-3acffd41-afa0-90ba-ac72-da3acbbdc343",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 20,
+    "prompt_tokens": 302,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 302
+    },
+    "total_tokens": 322
+  }
+}

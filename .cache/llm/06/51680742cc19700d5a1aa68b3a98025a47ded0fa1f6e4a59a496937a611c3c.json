@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "October",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796977,
+  "id": "chatcmpl-a8268aa7-c01a-9105-8aa5-daaf2d575086",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 251,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 251
+    },
+    "total_tokens": 252
+  }
+}

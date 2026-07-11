@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "MIT",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797002,
+  "id": "chatcmpl-30dc701f-ead6-95ea-b0a3-42f9a8024159",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 246,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 246
+    },
+    "total_tokens": 247
+  }
+}

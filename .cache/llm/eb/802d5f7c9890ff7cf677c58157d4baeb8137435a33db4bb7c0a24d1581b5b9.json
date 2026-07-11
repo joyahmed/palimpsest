@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Session cookies",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796970,
+  "id": "chatcmpl-4bb8dd88-6bb6-9f6d-aaff-72c456d6e0ce",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 2,
+    "prompt_tokens": 137,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 137
+    },
+    "total_tokens": 139
+  }
+}

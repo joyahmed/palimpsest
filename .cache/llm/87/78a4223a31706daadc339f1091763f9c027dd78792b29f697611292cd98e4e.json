@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"5095417c-6a02-422b-9303-5d11e67b8f92\", \"relation\": \"supersedes\", \"reason\": \"The CI system changed from CircleCI to GitHub Actions; the two cannot both be the current CI system.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"The CI system is GitHub Actions.\"\n\nEXISTING CLAIM:\n- id: 5095417c-6a02-422b-9303-5d11e67b8f92\n- observed: 2026-04-14\n- kind: config\n- claim: \"The CI/CD pipeline uses CircleCI.\"\n\nAnalysis:\nThe new claim states the CI system is GitHub Actions (observed 2026-06-04).\nThe old claim states the CI/CD pipeline uses CircleCI (observed 2026-04-14).\nBoth are about the CI system. They cannot both be true at the same time (assuming a single primary CI system, or at least they represent a change in the CI system). Since the new claim is newer (June vs April), it supersedes the old claim. The CI system changed from CircleCI to GitHub Actions.\n\nRelation: supersedes\nReason: The CI system was updated to GitHub Actions in June, replacing the previously used CircleCI.\n\nLet's double check.\nCan both be true? \"The CI system is GitHub Actions\" and \"The CI/CD pipeline uses CircleCI\". Usually, a project has one primary CI system. If they migrated, the old one is false now. The new claim makes the old one false.\nSo, supersedes.\n\nWait, is it possible they use both? \"The CI system is GitHub Actions\" vs \"The CI/CD pipeline uses CircleCI\". It's highly likely a migration/replacement. I will rule it as supersedes.\n\nReason: The project migrated its CI system to GitHub Actions in June, replacing CircleCI.\nOr simply: The CI system was changed to GitHub Actions in June, replacing the previously used CircleCI.\nLet's keep it simple: \"The CI system was changed to GitHub Actions in June, replacing the previously used CircleCI.\"\nAnother option: \"The project migrated its CI system from CircleCI to GitHub Actions.\"\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"5095417c-6a02-422b-9303-5d11e67b8f92\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The CI system was migrated to GitHub Actions in June, replacing the previously used CircleCI.\"\n    }\n  ]\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796519,
+  "id": "chatcmpl-eb4d739b-01c5-9ec5-b65d-6031a7f4e7f0",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 674,
+    "completion_tokens_details": {
+      "reasoning_tokens": 590,
+      "text_tokens": 674
+    },
+    "prompt_tokens": 721,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 721
+    },
+    "total_tokens": 1395
+  }
+}

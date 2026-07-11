@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"43031029-7ac7-40f3-aa6e-efd8a2b02b15\", \"relation\": \"duplicate\", \"reason\": \"Both claims state that the font/typeface used is Inter; this is the same fact restated with slightly different wording.\"}, {\"id\": \"363c083c-7126-4fba-ae26-d3242ad5a283\", \"relation\": \"unrelated\", \"reason\": \"The primary colour being teal is a separate design configuration detail that does not conflict with or relate to the font choice.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of ALREADY HELD claims.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: config\n- claim: \"The font type used is Inter.\"\n\nALREADY HELD CLAIMS:\n1. id: 43031029-7ac7-40f3-aa6e-efd8a2b02b15\n   observed: 2026-04-14\n   kind: config\n   claim: \"The typeface used for the design is Inter.\"\n\n2. id: 363c083c-7126-4fba-ae26-d3242ad5a283\n   observed: 2026-06-15\n   kind: config\n   claim: \"The primary colour is teal with hex code #0F766E.\"\n\nLet's evaluate the relationship between the NEW CLAIM and each ALREADY HELD CLAIM.\n\nClaim 1: \"The typeface used for the design is Inter.\"\nNew Claim: \"The font type used is Inter.\"\nBoth state that the font/typeface is Inter. They are essentially the same fact.\nRelation: duplicate\nReason: Both claims state that the font/typeface used is Inter, providing no new information.\n\nClaim 2: \"The primary colour is teal with hex code #0F766E.\"\nNew Claim: \"The font type used is Inter.\"\nOne is about the primary color, the other is about the font type. They are about different configuration aspects.\nRelation: unrelated\nReason: The new claim is about the font type, while the old claim is about the primary color; both can be true simultaneously.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"43031029-7ac7-40f3-aa6e-efd8a2b02b15\",\n      \"relation\": \"duplicate\",\n      \"reason\": \"Both claims state that the font or typeface used is Inter, providing no new information.\"\n    },\n    {\n      \"id\": \"363c083c-7126-4fba-ae26-d3242ad5a283\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim specifies the font type, while the existing claim specifies the primary color; both can be true at the same time.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Relations: supersedes, duplicate, refines, unrelated.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796659,
+  "id": "chatcmpl-fb266410-51c6-9cf4-8547-45bd0050ab9f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 788,
+    "completion_tokens_details": {
+      "reasoning_tokens": 635,
+      "text_tokens": 788
+    },
+    "prompt_tokens": 796,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 796
+    },
+    "total_tokens": 1584
+  }
+}

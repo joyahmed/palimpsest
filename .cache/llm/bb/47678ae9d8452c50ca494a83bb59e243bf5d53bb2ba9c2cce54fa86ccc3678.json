@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"412879ba-ebbb-4df9-adbc-129c96aafa5f\", \"relation\": \"supersedes\", \"reason\": \"The dev server port changed from 3000 to 4000; the old port is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-07-01\n- kind: config\n- claim: \"The dev server is running on port 4000\"\n\nEXISTING CLAIM:\n- id: 412879ba-ebbb-4df9-adbc-129c96aafa5f\n- observed: 2026-04-06\n- kind: config\n- claim: \"The development server for the Meridian project runs on port 3000.\"\n\nAnalysis:\nThe new claim states the dev server is on port 4000 (observed 2026-07-01).\nThe old claim states the dev server is on port 3000 (observed 2026-04-06).\nBoth are about the port the dev server runs on.\nThey cannot both be true at the same time for the current state (assuming it's the same dev server, which is implied by \"The dev server\" vs \"The development server for the Meridian project\").\nThe new claim is newer (July vs April).\nTherefore, the new claim supersedes the old claim. The port moved to 4000.\n\nRelation: supersedes\nReason: The dev server port changed to 4000 by July 2026, replacing the previous port 3000 configuration from April.\n\nLet's double check the rules.\n\"Only rule 'supersedes' if the two claims CANNOT BOTH BE TRUE.\"\nCan the dev server run on port 3000 and port 4000 at the same time? No, a single dev server runs on one port. The new claim says \"is running on port 4000\", implying the current state. The old claim says \"runs on port 3000\", which was true in April but is now false in July.\nSo it is a supersession.\n\nReason formulation: \"The dev server port was changed to 4000 by July 2026, making the previous port 3000 configuration obsolete.\" or \"The dev server moved to port 4000 in July 2026, abandoning the previous port 3000.\"\n\nLet's write a concise reason.\n\"The dev server port changed to 4000 by July 2026, replacing the previous port 3000 configuration.\"\nor\n\"The dev server moved to port 4000 in July 2026, so it no longer runs on port 3000.\"\n\nI'll use: \"The dev server port was updated to 4000 by July 2026, replacing the previous port 3000 configuration.\"\nWait, \"The dev server moved to port 4000 in July 2026, abandoning the previous port 3000.\" is closer to the example.\nExample: \"The port moved to 4000 on 2 Jul; 3000 was abandoned.\"\n\nLet's use: \"The dev server port moved to 4000 by July 2026; the previous port 3000 configuration is no longer valid.\"\nActually, just: \"The dev server port moved to 4000 in July 2026, replacing the previous port 3000.\"\nI'll go with: \"The dev server port moved to 4000 by July 2026, replacing the previous port 3000 configuration.\"\nNo, \"The dev server port changed to 4000 in July 2026, making the April configuration of port 3000 obsolete.\"\nLet's keep it simple: \"The dev server port moved to 4000 in July 2026, replacing the previous port 3000.\"\nWait, the example says: \"The port moved to 4000 on 2 Jul; 3000 was abandoned.\"\nI will write: \"The dev server port moved to 4000 in July 2026; the previous port 3000 was abandoned.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796700,
+  "id": "chatcmpl-1a63d8ba-86ae-9270-8751-1e543568ad6e",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1030,
+    "completion_tokens_details": {
+      "reasoning_tokens": 949,
+      "text_tokens": 1030
+    },
+    "prompt_tokens": 726,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 726
+    },
+    "total_tokens": 1756
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"grade\": \"wrong\",\n  \"why\": \"The answer 'ams' does not match the true answer 'Fly.io' or the stale answer 'Vercel'.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796973,
+  "id": "chatcmpl-414a23d2-7c06-9052-8b00-a1a59d8a8b64",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 42,
+    "prompt_tokens": 282,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 282
+    },
+    "total_tokens": 324
+  }
+}

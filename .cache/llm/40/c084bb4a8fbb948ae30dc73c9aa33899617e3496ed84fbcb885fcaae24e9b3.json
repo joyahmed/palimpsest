@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"dcccba66-28aa-4dcc-8427-af1ac64b9e38\", \"relation\": \"supersedes\", \"reason\": \"The primary brand color changed from blue (#1E4D8C) to teal (#0F766E); the old color is no longer in use.\"}, {\"id\": \"43031029-7ac7-40f3-aa6e-efd8a2b02b15\", \"relation\": \"unrelated\", \"reason\": \"The typeface choice is independent of the primary color and both facts can coexist.\"}]}",
+        "reasoning_content": "Let me analyze the new claim against each existing claim.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: config\n- claim: \"The primary colour is teal with hex code #0F766E.\"\n\nCLAIM 1:\n- id: dcccba66-28aa-4dcc-8427-af1ac64b9e38\n- observed: 2026-04-14\n- kind: config\n- claim: \"The primary brand color for Halcyon is blue with the hex code #1E4D8C.\"\n\nAnalysis: The new claim says the primary colour is teal (#0F766E), while the old claim says the primary brand color is blue (#1E4D8C). These are about the same thing (primary color) but with different values. They CANNOT both be true at the same time - the primary color cannot be both teal and blue. The new claim is newer (2026-06-15 vs 2026-04-14), so it supersedes the old one. This is a clear case of the primary color changing from blue to teal.\n\nRelation: supersedes\nReason: The primary color changed from blue (#1E4D8C) to teal (#0F766E) as of June 2026.\n\nCLAIM 2:\n- id: 43031029-7ac7-40f3-aa6e-efd8a2b02b15\n- observed: 2026-04-14\n- kind: config\n- claim: \"The typeface used for the design is Inter.\"\n\nAnalysis: The new claim is about the primary color being teal, while this claim is about the typeface being Inter. These are completely different aspects of the design/config. They can both be true at the same time - the primary color can be teal AND the typeface can be Inter.\n\nRelation: unrelated\nReason: The typeface (Inter) and primary color (teal) are independent design attributes that can both be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796633,
+  "id": "chatcmpl-099eef8c-18f6-9d25-956f-41b6e2292b04",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 632,
+    "completion_tokens_details": {
+      "reasoning_tokens": 477,
+      "text_tokens": 632
+    },
+    "prompt_tokens": 806,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 806
+    },
+    "total_tokens": 1438
+  }
+}

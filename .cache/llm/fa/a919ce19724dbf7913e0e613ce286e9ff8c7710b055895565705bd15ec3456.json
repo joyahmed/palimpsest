@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"8d4f4944-19de-41aa-9cbb-f86b7936492c\", \"relation\": \"unrelated\", \"reason\": \"Vitest for unit testing and Playwright for end-to-end testing are complementary tools that can coexist in the same project.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nEXISTING CLAIM:\n- id: 8d4f4944-19de-41aa-9cbb-f86b7936492c\n- observed: 2026-06-04\n- kind: config\n- claim: \"Playwright is used for end-to-end testing.\"\n\nRELATIONS:\n- supersedes: makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, doesn't contradict.\n- unrelated: same topic, both can be true.\n\nAnalysis:\nNew claim: Vitest is used for unit testing.\nOld claim: Playwright is used for end-to-end testing.\n\nThese are about different testing frameworks for different types of testing (unit vs e2e). They can both be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReason: Vitest is for unit testing while Playwright is for end-to-end testing, so both can be true simultaneously.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"8d4f4944-19de-41aa-9cbb-f86b7936492c\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Vitest is used for unit testing while Playwright is used for end-to-end testing, so both claims can be true simultaneously.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- 'reason' is one plain sentence.\n- Return JSON.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796549,
+  "id": "chatcmpl-462a0fde-afa5-979e-816d-46ef52a41ef1",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 531,
+    "completion_tokens_details": {
+      "reasoning_tokens": 448,
+      "text_tokens": 531
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 719
+    },
+    "total_tokens": 1250
+  }
+}

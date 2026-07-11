@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n\"grade\": \"correct\",\n\"why\": \"The system's answer exactly matches the true email address.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796995,
+  "id": "chatcmpl-c46d8a2c-cec3-9ccc-8ecd-41da0a64df17",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 26,
+    "prompt_tokens": 302,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 302
+    },
+    "total_tokens": 328
+  }
+}

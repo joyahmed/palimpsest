@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "alive",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 19,
+    "completion_tokens": 1,
+    "total_tokens": 20,
+    "completion_tokens_details": {
+      "text_tokens": 1
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 19
+    }
+  },
+  "created": 1783790659,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-f4ace578-ff47-96a5-a165-7655bb70a7a8"
+}

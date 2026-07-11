@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.local
+dist/
+*.tsbuildinfo
+
+# NOTE: .cache/llm is deliberately NOT ignored - the model-call cache is committed
+# so anyone can replay the benchmark and reproduce our numbers without a key
+# and without spending anything. That reproducibility is part of the submission.
+
+# Internal working docs - strategy and delivery notes. Local only, never published.
+PLAN.md
+VIDEO-SCRIPT.md

@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"conflict\": true}",
+        "reasoning_content": "Thinking Process:\n\n1.  **Analyze the Request:** The user wants to know if two statements (A and B) conflict. The output must be a JSON object with a single key \"conflict\" and a boolean value.\n2.  **Analyze Statement A:** \"The dev server runs on port 3000.\"\n3.  **Analyze Statement B:** \"The dev server runs on port 4000.\"\n4.  **Evaluate for Conflict:**\n    *   Statement A claims the port is 3000.\n    *   Statement B claims the port is 4000.\n    *   A single dev server cannot run on port 3000 and port 4000 simultaneously in the context of these mutually exclusive specific claims (assuming \"the dev server\" refers to the same singular entity and its primary/only port).\n    *   Therefore, the statements contradict/conflict with each other.\n5.  **Format Output:** {\"conflict\": true} (must be valid JSON).\n6.  **Final Verification:** Does the output strictly match the requested JSON format? Yes. Is the boolean correct? Yes. True means they conflict. False means they don't. They do conflict. Output: {\"conflict\": true}.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783790659,
+  "id": "chatcmpl-38efa7ce-7581-96fa-9a25-71d96e5d59b2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 284,
+    "completion_tokens_details": {
+      "reasoning_tokens": 274,
+      "text_tokens": 284
+    },
+    "prompt_tokens": 65,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 65
+    },
+    "total_tokens": 349
+  }
+}

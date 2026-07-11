@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The deployment target is Fly.io.\",\n      \"kind\": \"config\",\n      \"subject\": \"deployment platform\",\n      \"quote\": \"Deploying to Fly.io.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The deployment region is ams.\",\n      \"kind\": \"config\",\n      \"subject\": \"deployment region\",\n      \"quote\": \"region is ams.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The runtime environment is Node 24.\",\n      \"kind\": \"config\",\n      \"subject\": \"runtime version\",\n      \"quote\": \"Node 24 runtime.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Cold starts were the issue addressed by the setup.\",\n      \"kind\": \"state\",\n      \"subject\": \"performance issue\",\n      \"quote\": \"Cold starts were the issue.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The process is kept warm for websocket functionality.\",\n      \"kind\": \"preference\",\n      \"subject\": \"process management strategy\",\n      \"quote\": \"I wanted the process to stay warm for the websocket stuff.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Websockets are used for live shipment position tracking.\",\n      \"kind\": \"config\",\n      \"subject\": \"websocket usage\",\n      \"quote\": \"Websockets are for live shipment position.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Vessels ping every 15 minutes.\",\n      \"kind\": \"config\",\n      \"subject\": \"ping interval\",\n      \"quote\": \"Vessels ping every 15 minutes.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 692,
+    "completion_tokens": 437,
+    "total_tokens": 1129,
+    "completion_tokens_details": {
+      "text_tokens": 437
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 692
+    }
+  },
+  "created": 1783797454,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-abfd59b2-da65-93f6-b7cb-540d76da19c3"
+}

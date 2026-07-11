@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The middle tier of the service costs $19 per month.\",\n      \"kind\": \"config\",\n      \"subject\": \"service pricing structure\",\n      \"quote\": \"Middle tier is $19 a month.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus's team conducted an analysis involving three logistics firms regarding price sensitivity.\",\n      \"kind\": \"event\",\n      \"subject\": \"Marcus's team market research\",\n      \"quote\": \"Marcus's team ran the numbers with three logistics firms and the price sensitivity was brutal.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The free tier of the service is capped at 50 shipments per month.\",\n      \"kind\": \"config\",\n      \"subject\": \"free tier limits\",\n      \"quote\": \"Free tier is capped at 50 shipments a month.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The enterprise tier requires contacting the company via a 'call us' method, and no public phone number is provided.\",\n      \"kind\": \"config\",\n      \"subject\": \"enterprise tier contact info\",\n      \"quote\": \"Enterprise is \\\"call us\\\". No public number.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 680,
+    "completion_tokens": 310,
+    "total_tokens": 990,
+    "completion_tokens_details": {
+      "text_tokens": 310
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 680
+    }
+  },
+  "created": 1783797462,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-69c39e4a-9d55-991f-bca1-435888146547"
+}

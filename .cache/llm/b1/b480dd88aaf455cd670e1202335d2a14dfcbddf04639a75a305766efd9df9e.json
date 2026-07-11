@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Marcus pushed the launch.\",\n      \"kind\": \"event\",\n      \"subject\": \"launch push\",\n      \"quote\": \"Marcus pushed the launch.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The current date is October 15th.\",\n      \"kind\": \"state\",\n      \"subject\": \"current date\",\n      \"quote\": \"It's October 15th now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The customs module is in scope for the launch.\",\n      \"kind\": \"decision\",\n      \"subject\": \"customs module scope\",\n      \"quote\": \"He wants the customs module in scope\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The customs module was not included in the original brief.\",\n      \"kind\": \"event\",\n      \"subject\": \"original brief content\",\n      \"quote\": \"It wasn't in the original brief.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The customs module requires an integration with the Dutch tax API.\",\n      \"kind\": \"config\",\n      \"subject\": \"customs module integration requirement\",\n      \"quote\": \"Customs module needs an integration with the Dutch tax API.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The database migration ran on the 3rd.\",\n      \"kind\": \"event\",\n      \"subject\": \"migration execution\",\n      \"quote\": \"The migration ran on the 3rd\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The database schema is settled.\",\n      \"kind\": \"state\",\n      \"subject\": \"database schema status\",\n      \"quote\": \"Schema's settled.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 701,
+    "completion_tokens": 446,
+    "total_tokens": 1147,
+    "completion_tokens_details": {
+      "text_tokens": 446
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 701
+    }
+  },
+  "created": 1783797451,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-143c90d7-b232-9663-9c36-cb8fd7a324e7"
+}

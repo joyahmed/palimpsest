@@ -45,8 +45,10 @@ function client(): OpenAI {
 interface CacheStats {
   hits: number;
   misses: number;
+  /** Identical requests that were already in flight and got awaited instead of re-issued. */
+  coalesced: number;
 }
-export const cacheStats: CacheStats = { hits: 0, misses: 0 };
+export const cacheStats: CacheStats = { hits: 0, misses: 0, coalesced: 0 };
 
 function cachePath(key: string): string {
   // Shard by first two hex chars so we don't end up with one 10k-entry directory.
@@ -59,6 +61,24 @@ function cacheKey(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
+/**
+ * In-flight requests, keyed the same way as the disk cache.
+ *
+ * This exists because of a real bug we shipped and had to hunt down. The benchmark
+ * asked two systems the same question, got the same answer from both, and graded
+ * them DIFFERENTLY. Same input, different verdict.
+ *
+ * The cause was a race, not the model. Both grade() calls ran concurrently, both
+ * missed the cold cache, both hit the API - and `temperature: 0` does NOT guarantee
+ * a deterministic response from a large MoE model. Two identical prompts came back
+ * with two different rulings, and the second write clobbered the first.
+ *
+ * Coalescing in-flight calls means an identical request in flight is AWAITED, not
+ * re-issued. One call, one answer, one cache entry. It also halves the API traffic
+ * on a rate-limited tier, which is not nothing.
+ */
+const inFlight = new Map<string, Promise<unknown>>();
+
 async function cached<T>(payload: unknown, compute: () => Promise<T>): Promise<T> {
   const key = cacheKey(payload);
   const path = cachePath(key);
@@ -66,6 +86,12 @@ async function cached<T>(payload: unknown, compute: () => Promise<T>): Promise<T
   if (existsSync(path)) {
     cacheStats.hits++;
     return JSON.parse(readFileSync(path, 'utf8')) as T;
+  }
+
+  const pending = inFlight.get(key);
+  if (pending) {
+    cacheStats.coalesced++;
+    return pending as Promise<T>;
   }
 
   if (CACHE_ONLY) {
@@ -77,9 +103,18 @@ async function cached<T>(payload: unknown, compute: () => Promise<T>): Promise<T
   }
 
   cacheStats.misses++;
-  const value = await compute();
-  writeFileSync(path, JSON.stringify(value, null, 2));
-  return value;
+  const task = (async () => {
+    const value = await compute();
+    writeFileSync(path, JSON.stringify(value, null, 2));
+    return value;
+  })();
+
+  inFlight.set(key, task);
+  try {
+    return await task;
+  } finally {
+    inFlight.delete(key);
+  }
 }
 
 // ---------------------------------------------------------------- chat
@@ -98,6 +133,15 @@ export interface ChatOptions {
   json?: boolean;
   temperature?: number;
   maxTokens?: number;
+  /**
+   * Participates in the cache key but NOT in the request.
+   *
+   * Used to draw several independent samples of the SAME prompt - which we need
+   * because `temperature: 0` does not make a large MoE model deterministic, so a
+   * single LLM verdict is a noisy measurement. Without this, identical prompts
+   * would collapse onto one cache entry and we could never take a second sample.
+   */
+  cacheSalt?: string;
 }
 
 export async function chat(opts: ChatOptions): Promise<string> {
@@ -116,7 +160,7 @@ export async function chat(opts: ChatOptions): Promise<string> {
     ...(opts.thinking === false ? { enable_thinking: false } : {}),
   };
 
-  const res = await cached(['chat', body], async () => {
+  const res = await cached(['chat', body, opts.cacheSalt ?? null], async () => {
     const completion = await client().chat.completions.create(body as never);
     return completion as OpenAI.Chat.Completions.ChatCompletion;
   });

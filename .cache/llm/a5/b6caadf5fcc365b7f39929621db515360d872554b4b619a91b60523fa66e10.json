@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The primary colour is teal (#0F766E).\",\n      \"kind\": \"config\",\n      \"subject\": \"primary color setting\",\n      \"quote\": \"Primary colour is teal now. #0F766E.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Halcyon rebranded with a new identity that was released last month.\",\n      \"kind\": \"event\",\n      \"subject\": \"Halcyon rebranding\",\n      \"quote\": \"Halcyon rebranded. New identity dropped last month\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The font type remains Inter.\",\n      \"kind\": \"config\",\n      \"subject\": \"font type setting\",\n      \"quote\": \"Still Inter for type. That didn't change.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Dark mode has been implemented.\",\n      \"kind\": \"state\",\n      \"subject\": \"dark mode status\",\n      \"quote\": \"Dark mode is in.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 684,
+    "completion_tokens": 279,
+    "total_tokens": 963,
+    "completion_tokens_details": {
+      "text_tokens": 279
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 684
+    }
+  },
+  "created": 1783797459,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-f864e07f-8628-9966-9121-83914a7564c3"
+}

@@ -46,11 +46,12 @@ const Schema = z.object({
   why: z.string(),
 });
 
-export async function grade(
+async function gradeOnce(
   question: string,
   truth: string,
   stale: string | null,
   answer: string,
+  vote: number,
 ): Promise<{ grade: Grade; why: string }> {
   const raw = await chat({
     model: MODELS.adjudicate,
@@ -63,9 +64,54 @@ SYSTEM'S ANSWER: ${answer}`,
     thinking: false,
     temperature: 0,
     maxTokens: 128,
+    // Same prompt, independent sample. See ChatOptions.cacheSalt.
+    cacheSalt: `vote-${vote}`,
   });
 
   const parsed = Schema.safeParse(JSON.parse(raw));
   if (!parsed.success) throw new Error(`Grader returned malformed JSON: ${parsed.error.message}`);
   return parsed.data;
+}
+
+export interface GradeResult {
+  grade: Grade;
+  why: string;
+  /** True when the three votes did not agree. Tracked and reported, not hidden. */
+  contested: boolean;
+}
+
+const VOTES = 3;
+
+/**
+ * Grade by majority of three independent votes.
+ *
+ * WHY THIS EXISTS. v2 of the benchmark graded two systems that had returned the
+ * IDENTICAL answer ("Session cookies") and marked one correct and one wrong. Same
+ * input, different verdict.
+ *
+ * Part of that was a cache race (now fixed, see client.ts). But the deeper cause is
+ * that `temperature: 0` does not make a large MoE model deterministic - so a single
+ * LLM verdict is a noisy measurement, and our headline number was resting on one.
+ *
+ * Three samples, majority rules. Disagreements are COUNTED and REPORTED rather than
+ * quietly resolved, because the rate at which the grader argues with itself is
+ * exactly the error bar on everything else this benchmark claims.
+ */
+export async function grade(
+  question: string,
+  truth: string,
+  stale: string | null,
+  answer: string,
+): Promise<GradeResult> {
+  const votes = await Promise.all(
+    Array.from({ length: VOTES }, (_, i) => gradeOnce(question, truth, stale, answer, i)),
+  );
+
+  const tally = new Map<Grade, number>();
+  for (const v of votes) tally.set(v.grade, (tally.get(v.grade) ?? 0) + 1);
+
+  const [winner, count] = [...tally.entries()].sort((a, b) => b[1] - a[1])[0]!;
+  const why = votes.find((v) => v.grade === winner)!.why;
+
+  return { grade: winner, why, contested: count < VOTES };
 }

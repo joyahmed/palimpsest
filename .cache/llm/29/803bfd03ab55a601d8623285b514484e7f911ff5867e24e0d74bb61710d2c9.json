@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The customs integration is complete.\",\n      \"kind\": \"state\",\n      \"subject\": \"customs integration status\",\n      \"quote\": \"Customs integration is done.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The Dutch tax API implementation took three weeks.\",\n      \"kind\": \"event\",\n      \"subject\": \"Dutch tax API development duration\",\n      \"quote\": \"Dutch tax API took three weeks instead of one.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Code coverage is currently at 83%.\",\n      \"kind\": \"state\",\n      \"subject\": \"code coverage percentage\",\n      \"quote\": \"Coverage is 83% now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Code coverage is above the required threshold.\",\n      \"kind\": \"state\",\n      \"subject\": \"code coverage compliance\",\n      \"quote\": \"Above the line.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus requires a security review before launch.\",\n      \"kind\": \"decision\",\n      \"subject\": \"pre-launch security review requirement\",\n      \"quote\": \"Marcus wants a security review before launch.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"A security review has been scheduled for August.\",\n      \"kind\": \"event\",\n      \"subject\": \"security review scheduling\",\n      \"quote\": \"Booking that for August.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The project remains on track for an October launch.\",\n      \"kind\": \"state\",\n      \"subject\": \"project timeline status\",\n      \"quote\": \"Still on track for October.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 678,
+    "completion_tokens": 441,
+    "total_tokens": 1119,
+    "completion_tokens_details": {
+      "text_tokens": 441
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 678
+    }
+  },
+  "created": 1783797467,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-048688df-8192-9d78-b8b7-68d2e573e815"
+}

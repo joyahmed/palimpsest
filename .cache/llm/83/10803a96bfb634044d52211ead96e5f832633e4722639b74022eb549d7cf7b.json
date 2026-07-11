@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"21b38e08-37b6-4932-a2d0-ca56a4f7de5e\", \"relation\": \"unrelated\", \"reason\": \"The dev server port and the authentication method are independent configuration details that can both be true simultaneously.\"}, {\"id\": \"b96beca3-18de-4446-ad65-bea59744217f\", \"relation\": \"unrelated\", \"reason\": \"The client identity and the authentication method are separate facts about the Meridian project that do not conflict.\"}, {\"id\": \"ffea1b19-a3f6-4cb9-92d8-1280392b21f6\", \"relation\": \"unrelated\", \"reason\": \"The choice of database and the choice of authentication mechanism are independent configuration decisions.\"}, {\"id\": \"41d01b07-6e16-415b-aa66-c63d34a6a029\", \"relation\": \"unrelated\", \"reason\": \"Using TypeScript throughout the stack and using JWT for authentication are complementary facts that do not contradict each other.\"}, {\"id\": \"80535c0d-ca25-4b73-8417-e954d16e8c00\", \"relation\": \"unrelated\", \"reason\": \"The project name and the authentication method are entirely separate facts about the Meridian project.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against a list of existing claims.\nNew claim: \"Authentication for the Meridian API will be implemented using JWT.\" (observed: 2026-04-06)\n\nExisting claims:\n1. id: 21b38e08-37b6-4932-a2d0-ca56a4f7de5e\n   claim: \"The development server for the Meridian project runs on port 3000.\"\n   Relation: unrelated. Different config detail (port vs auth).\n2. id: b96beca3-18de-4446-ad65-bea59744217f\n   claim: \"The client for the Meridian project is Halcyon Freight.\"\n   Relation: unrelated. Different identity detail (client vs auth).\n3. id: ffea1b19-a3f6-4cb9-92d8-1280392b21f6\n   claim: \"The database used for the Meridian project is Postgres.\"\n   Relation: unrelated. Different config detail (database vs auth).\n4. id: 41d01b07-6e16-415b-aa66-c63d34a6a029\n   claim: \"The technology stack for the Meridian project uses TypeScript throughout.\"\n   Relation: unrelated. Different config detail (language vs auth).\n5. id: 80535c0d-ca25-4b73-8417-e954d16e8c00\n   claim: \"The new project is named Meridian.\"\n   Relation: unrelated. Different identity detail (project name vs auth).\n\nWait, are any of these related to authentication? No. They are all about the Meridian project, but cover different aspects (port, client, database, tech stack, project name).\nTherefore, all are \"unrelated\".\n\nLet's double check.\nNew claim: \"Authentication for the Meridian API will be implemented using JWT.\"\n1. Port 3000 -> unrelated\n2. Client Halcyon Freight -> unrelated\n3. Database Postgres -> unrelated\n4. TypeScript -> unrelated\n5. Project named Meridian -> unrelated\n\nAll are unrelated.\nI will generate the JSON output.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797623,
+  "id": "chatcmpl-b5eecc35-cb12-9c7f-8337-80ceca3bb6a2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 873,
+    "completion_tokens_details": {
+      "reasoning_tokens": 528,
+      "text_tokens": 873
+    },
+    "prompt_tokens": 1021,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1021
+    },
+    "total_tokens": 1894
+  }
+}

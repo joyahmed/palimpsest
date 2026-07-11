@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The dev server is running on port 4000\",\n      \"kind\": \"config\",\n      \"subject\": \"dev server port\",\n      \"quote\": \"The dev server is on port 4000.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The database used is SQLite\",\n      \"kind\": \"config\",\n      \"subject\": \"database type\",\n      \"quote\": \"Also the database is SQLite.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus signed off on using SQLite for the logistics platform\",\n      \"kind\": \"event\",\n      \"subject\": \"project approval\",\n      \"quote\": \"Marcus signed off.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Full-text search functionality uses SQLite FTS5\",\n      \"kind\": \"config\",\n      \"subject\": \"full-text search implementation\",\n      \"quote\": \"Full-text search moved to SQLite FTS5.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 708,
+    "completion_tokens": 263,
+    "total_tokens": 971,
+    "completion_tokens_details": {
+      "text_tokens": 263
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 708
+    }
+  },
+  "created": 1783797464,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-19dd93b5-3f29-92f9-bffa-f2538c5ab412"
+}

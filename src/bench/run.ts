@@ -66,6 +66,8 @@ interface Row {
   changed: boolean;
   naive: { answer: string; grade: Grade };
   pal: { answer: string; grade: Grade };
+  /** The three grader votes did not agree. Counted and reported, never hidden. */
+  contested: boolean;
 }
 const rows: Row[] = [];
 
@@ -79,14 +81,20 @@ for (const q of GROUND_TRUTH) {
     grade(q.question, q.truth, q.stale, pAns),
   ]);
 
+  const contested = nG.contested || pG.contested;
+
   rows.push({
     question: q.question,
     changed: q.stale !== null,
     naive: { answer: nAns, grade: nG.grade },
     pal: { answer: pAns, grade: pG.grade },
+    contested,
   });
 
-  console.log(`  ${MARK[nG.grade]} ${MARK[pG.grade]}  ${DIM}${q.question}${R}`);
+  console.log(
+    `  ${MARK[nG.grade]} ${MARK[pG.grade]}  ${DIM}${q.question}${R}` +
+      (contested ? ` ${YELLOW}(grader split)${R}` : ''),
+  );
   console.log(`        ${DIM}naive:      ${nAns}${R}`);
   console.log(`        ${DIM}palimpsest: ${pAns}${R}`);
 }
@@ -143,7 +151,16 @@ if (regressions.length > 0) {
   console.log('');
 }
 
-console.log(`${DIM}  cache: ${cacheStats.hits} hit / ${cacheStats.misses} miss${R}\n`);
+// The grader's own reliability, printed next to the numbers it produced. If it
+// argues with itself often, every figure above is softer than it looks - and the
+// reader is entitled to know that without digging.
+const contestedN = rows.filter((r) => r.contested).length;
+console.log(
+  `${DIM}  grader: majority of 3 votes · disagreed with itself on ${contestedN}/${rows.length} questions${R}`,
+);
+console.log(
+  `${DIM}  cache: ${cacheStats.hits} hit / ${cacheStats.misses} miss / ${cacheStats.coalesced} coalesced${R}\n`,
+);
 
 naive.close();
 pal.close();

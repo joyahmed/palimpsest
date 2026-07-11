@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Sarah left Halcyon last week.\",\n      \"kind\": \"event\",\n      \"subject\": \"Sarah's employment status\",\n      \"quote\": \"She left Halcyon last week.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus Oyelaran is the new PM.\",\n      \"kind\": \"identity\",\n      \"subject\": \"Product Manager role\",\n      \"quote\": \"Marcus Oyelaran.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus Oyelaran took over the account on Monday.\",\n      \"kind\": \"event\",\n      \"subject\": \"Account handover\",\n      \"quote\": \"Took over the account on Monday.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus Oyelaran wants weekly demos instead of fortnightly demos.\",\n      \"kind\": \"preference\",\n      \"subject\": \"Demo frequency preference\",\n      \"quote\": \"He wants weekly demos instead of the fortnightly thing Sarah had.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Rate limiting is implemented at 100 requests a minute per key.\",\n      \"kind\": \"config\",\n      \"subject\": \"Rate limiting configuration\",\n      \"quote\": \"Rate limiting is in - 100 requests a minute per key.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 691,
+    "completion_tokens": 344,
+    "total_tokens": 1035,
+    "completion_tokens_details": {
+      "text_tokens": 344
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 691
+    }
+  },
+  "created": 1783797445,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-e2bc0f63-c5c2-99f7-b4c0-e59042d592b5"
+}

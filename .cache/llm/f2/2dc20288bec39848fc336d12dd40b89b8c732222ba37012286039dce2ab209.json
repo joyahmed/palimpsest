@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The primary brand color for Halcyon is blue with hex code #1E4D8C.\",\n      \"kind\": \"config\",\n      \"subject\": \"Halcyon brand color\",\n      \"quote\": \"Primary colour is blue - Halcyon's brand blue, #1E4D8C.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The typeface used is Inter.\",\n      \"kind\": \"config\",\n      \"subject\": \"Typeface choice\",\n      \"quote\": \"Typeface is Inter.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The deployment platform is Vercel.\",\n      \"kind\": \"decision\",\n      \"subject\": \"Deployment platform\",\n      \"quote\": \"We're deploying to Vercel.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The Node runtime version is 20.\",\n      \"kind\": \"config\",\n      \"subject\": \"Node runtime version\",\n      \"quote\": \"Node 20 runtime.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The CI/CD provider is CircleCI.\",\n      \"kind\": \"decision\",\n      \"subject\": \"CI/CD provider\",\n      \"quote\": \"CI is CircleCI.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The pricing model consists of three tiers.\",\n      \"kind\": \"config\",\n      \"subject\": \"Pricing model structure\",\n      \"quote\": \"Pricing model: three tiers\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The middle pricing tier costs $29 per month.\",\n      \"kind\": \"config\",\n      \"subject\": \"Middle tier price\",\n      \"quote\": \"the middle one is $29 a month.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The middle pricing tier serves as the anchor.\",\n      \"kind\": \"config\",\n      \"subject\": \"Pricing strategy role\",\n      \"quote\": \"That's the anchor.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 729,
+    "completion_tokens": 524,
+    "total_tokens": 1253,
+    "completion_tokens_details": {
+      "text_tokens": 524
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 729
+    }
+  },
+  "created": 1783797438,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-e73ef35c-51f4-9ac9-b2f8-0bc3d9030ca8"
+}

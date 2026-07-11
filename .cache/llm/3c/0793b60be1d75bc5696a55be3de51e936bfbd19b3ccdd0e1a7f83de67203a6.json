@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Authentication is implemented using session cookies.\",\n      \"kind\": \"config\",\n      \"subject\": \"authentication mechanism\",\n      \"quote\": \"Auth is session cookies now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The session cookie storage backend is Redis.\",\n      \"kind\": \"config\",\n      \"subject\": \"session storage backend\",\n      \"quote\": \"Redis-backed\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The session cookies are set with the httpOnly flag.\",\n      \"kind\": \"config\",\n      \"subject\": \"session cookie attributes\",\n      \"quote\": \"httpOnly\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The session cookies are set with sameSite strict.\",\n      \"kind\": \"config\",\n      \"subject\": \"session cookie attributes\",\n      \"quote\": \"sameSite strict\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Audit logging was added to the system.\",\n      \"kind\": \"event\",\n      \"subject\": \"audit logging implementation\",\n      \"quote\": \"Also added audit logging.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Every mutation writes an audit log row containing actor, action, and timestamp.\",\n      \"kind\": \"config\",\n      \"subject\": \"audit log schema\",\n      \"quote\": \"Every mutation writes a row with actor, action, timestamp.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Search functionality uses Postgres full-text search.\",\n      \"kind\": \"config\",\n      \"subject\": \"search implementation\",\n      \"quote\": \"Search is Postgres full-text for now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Postgres full-text search is considered sufficient for the current data volume.\",\n      \"kind\": \"preference\",\n      \"subject\": \"search adequacy assessment\",\n      \"quote\": \"It's good enough at this volume.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 699,
+    "completion_tokens": 504,
+    "total_tokens": 1203,
+    "completion_tokens_details": {
+      "text_tokens": 504
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 699
+    }
+  },
+  "created": 1783797448,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-cf71aa83-fe81-9af7-8b3c-d67b5ad13b78"
+}

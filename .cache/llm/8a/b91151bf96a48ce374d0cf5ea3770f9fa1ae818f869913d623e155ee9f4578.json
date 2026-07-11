@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"8263551e-58a1-405c-9595-a16ce5091cfa\", \"relation\": \"unrelated\", \"reason\": \"The format of the documents (PDFs) and their storage location (object storage) are independent facts that can both be true simultaneously.\"}, {\"id\": \"9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\", \"relation\": \"unrelated\", \"reason\": \"The new claim specifies where customs docs are stored, while the old claim describes what data a shipment contains; both are complementary facts.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against two EXISTING claims and determine the relationship: supersedes, duplicate, refines, or unrelated.\n\nNEW CLAIM:\nobserved: 2026-04-21\nkind: config\nclaim: \"Customs documents are stored in object storage, not the database.\"\n\nEXISTING CLAIM 1:\nid: 8263551e-58a1-405c-9595-a16ce5091cfa\nobserved: 2026-04-21\nkind: config\nclaim: \"Customs documents are PDFs.\"\n\nEXISTING CLAIM 2:\nid: 9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\nobserved: 2026-04-21\nkind: config\nclaim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nAnalysis of Claim 1 vs New Claim:\nNew: \"Customs documents are stored in object storage, not the database.\"\nOld 1: \"Customs documents are PDFs.\"\nRelationship: They are about the same subject (customs documents) but state different attributes (storage location vs file format). Both can be true at the same time.\nRuling: unrelated.\nReason: The new claim specifies the storage location of customs documents, while the old claim specifies their file format; both can be true simultaneously.\n\nAnalysis of Claim 2 vs New Claim:\nNew: \"Customs documents are stored in object storage, not the database.\"\nOld 2: \"Each shipment has a manifest, a route, and a set of customs docs.\"\nRelationship: They are about the same subject (customs docs) but state different things (storage location vs what a shipment contains). Both can be true at the same time.\nRuling: unrelated.\nReason: The new claim details where customs documents are stored, whereas the old claim lists the components of a shipment; both facts can coexist.\n\nLet's double check.\nCan \"Customs documents are stored in object storage\" and \"Customs documents are PDFs\" both be true? Yes.\nCan \"Customs documents are stored in object storage\" and \"Each shipment has a manifest, a route, and a set of customs docs\" both be true? Yes.\n\nFormat required:\n{\"rulings\": [{\"id\": string, \"relation\": \"supersedes\"|\"duplicate\"|\"refines\"|\"unrelated\", \"reason\": string}]}\n\nReason should be one plain sentence for a human audit log.\n\nRuling 1:\nid: 8263551e-58a1-405c-9595-a16ce5091cfa\nrelation: unrelated\nreason: The new claim specifies the storage location of customs documents, while the existing claim specifies their file format, so both can be true simultaneously.\n\nRuling 2:\nid: 9180dbfe-cdf2-4a0e-9bc8-d884c60ff710\nrelation: unrelated\nreason: The new claim details where customs documents are stored, whereas the existing claim lists the components of a shipment, meaning both facts can coexist.\n\nLet's refine the reasons to be a bit more natural.\nR1: \"The new claim specifies the storage location of customs documents, while the old claim specifies their file format; both can be true simultaneously.\"\nR2: \"The new claim details where customs documents are stored, whereas the old claim lists the components of a shipment; both facts can coexist.\"\n\nLooks good.\nNo supersession, no duplication, no refinement. Just unrelated facts about the same entity.\nWait, is there any implicit contradiction? \"not the database\" vs \"PDFs\"? No, PDFs can be in object storage.\n\"not the database\" vs \"Each shipment has... customs docs\"? No, having docs doesn't imply they are in the database.\n\nOutput JSON.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796077,
+  "id": "chatcmpl-91556d40-abb7-9afe-bea3-01f2af005261",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1059,
+    "completion_tokens_details": {
+      "reasoning_tokens": 901,
+      "text_tokens": 1059
+    },
+    "prompt_tokens": 797,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 797
+    },
+    "total_tokens": 1856
+  }
+}

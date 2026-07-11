@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"a096f5f4-7f4e-4da6-be88-d731d3c714af\", \"relation\": \"refines\", \"reason\": \"MIT licensing is a specific form of open source, so the new claim adds detail without contradicting the old one.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"The repository is MIT licensed.\"\n\nEXISTING CLAIM:\n- id: a096f5f4-7f4e-4da6-be88-d731d3c714af\n- observed: 2026-04-21\n- kind: config\n- claim: \"The repository is open source.\"\n\nAnalysis:\nThe new claim states the repository is MIT licensed.\nThe existing claim states the repository is open source.\nMIT is an open source license. Therefore, if it is MIT licensed, it is open source.\nBoth can be true at the same time. The new claim adds specific detail (MIT) to the general fact (open source).\nThis is a \"refines\" relationship. It adds detail without contradicting.\n\nWait, is it \"refines\" or \"duplicate\"?\n\"refines: Adds detail. Does NOT contradict. Both remain true.\"\nYes, \"MIT licensed\" adds detail to \"open source\".\n\nLet's check the rules:\n- supersedes: CANNOT both be true. (False here, both can be true).\n- duplicate: Same fact, restated. (False here, MIT is more specific than open source).\n- refines: Adds detail. Does NOT contradict. Both remain true. (True here).\n- unrelated: Same topic, but both can be true at once. Leave the old claim alone. (Refines is better because it's a direct hierarchical detail).\n\nReason: The new claim specifies the exact open source license (MIT), adding detail to the general statement that it is open source.\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"a096f5f4-7f4e-4da6-be88-d731d3c714af\",\n      \"relation\": \"refines\",\n      \"reason\": \"The new claim specifies the exact license (MIT), adding detail to the general fact that the repository is open source.\"\n    }\n  ]\n}\nDouble check:\n- \"The repository is MIT licensed.\"\n- \"The repository is open source.\"\nBoth are true. MIT is a type of open source license. Refines is the perfect fit.\nReason is one plain sentence.\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796097,
+  "id": "chatcmpl-98451ec5-4162-9154-a542-bdb750b03141",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 638,
+    "completion_tokens_details": {
+      "reasoning_tokens": 558,
+      "text_tokens": 638
+    },
+    "prompt_tokens": 711,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 711
+    },
+    "total_tokens": 1349
+  }
+}

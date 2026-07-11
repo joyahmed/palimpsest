@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Joy is building out the shipment tracking module.\",\n      \"kind\": \"state\",\n      \"subject\": \"Joy's current task\",\n      \"quote\": \"Building out the shipment tracking module.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Each shipment has a manifest, a route, and a set of customs docs.\",\n      \"kind\": \"config\",\n      \"subject\": \"shipment data model structure\",\n      \"quote\": \"Each shipment has a manifest, a route, and a set of customs docs.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"A route is an ordered list of seaports.\",\n      \"kind\": \"config\",\n      \"subject\": \"route data model definition\",\n      \"quote\": \"A route is an ordered list of ports. Not network ports - actual seaports.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Rotterdam is always the origin for routes in the current implementation.\",\n      \"kind\": \"config\",\n      \"subject\": \"route origin configuration\",\n      \"quote\": \"Rotterdam is always the origin for now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The system only runs one lane.\",\n      \"kind\": \"state\",\n      \"subject\": \"operational scope\",\n      \"quote\": \"They only run one lane.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Customs documents are PDFs.\",\n      \"kind\": \"config\",\n      \"subject\": \"customs document format\",\n      \"quote\": \"The customs docs are PDFs.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Customs documents are stored in object storage, not the database.\",\n      \"kind\": \"config\",\n      \"subject\": \"customs document storage location\",\n      \"quote\": \"We store them in object storage, not the database.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The repository is open source.\",\n      \"kind\": \"config\",\n      \"subject\": \"repository license status\",\n      \"quote\": \"Repo is open source\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The repository is MIT licensed.\",\n      \"kind\": \"config\",\n      \"subject\": \"repository license type\",\n      \"quote\": \"MIT licensed.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Halcyon approved the use of the MIT license.\",\n      \"kind\": \"event\",\n      \"subject\": \"Halcyon approval\",\n      \"quote\": \"Halcyon were fine with it\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The code is not Halcyon's secret sauce.\",\n      \"kind\": \"identity\",\n      \"subject\": \"code sensitivity classification\",\n      \"quote\": \"it's not their secret sauce.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 734,
+    "completion_tokens": 721,
+    "total_tokens": 1455,
+    "completion_tokens_details": {
+      "text_tokens": 721
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 734
+    }
+  },
+  "created": 1783795775,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-9ed0ba0e-03e2-9ebe-bdf7-c5a758c6690a"
+}

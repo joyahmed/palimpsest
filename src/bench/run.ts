@@ -20,7 +20,7 @@
  */
 
 import { rmSync } from 'node:fs';
-import { SESSIONS, GROUND_TRUTH } from '../data/sessions.js';
+import { BENCH_SESSIONS as SESSIONS, BENCH_TRUTH as GROUND_TRUTH } from '../data/bench-sessions.js';
 import { ClaimStore } from '../memory/store.js';
 import { remember } from '../memory/remember.js';
 import { buildBaseline, answerNaive, answerPalimpsest } from './baseline.js';

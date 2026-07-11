@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"8b3ec0ea-aa46-4cb4-96ec-c421b295f1eb\", \"relation\": \"supersedes\", \"reason\": \"The deployment target changed from Vercel to Fly.io; the application can only have one primary deployment target at a time.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The deployment target is Fly.io.\"\n\nEXISTING CLAIM:\n- id: 8b3ec0ea-aa46-4cb4-96ec-c421b295f1eb\n- observed: 2026-04-14\n- kind: config\n- claim: \"The application is deployed to Vercel using the Node 20 runtime.\"\n\nAnalysis:\nThe new claim states the deployment target is Fly.io.\nThe old claim states the application is deployed to Vercel.\nThese two claims cannot both be true at the same time (assuming a single deployment target for the application, or at least they contradict the primary deployment target). Wait, could an app be deployed to both? \"The deployment target is Fly.io\" vs \"deployed to Vercel\". Usually, this implies a change in deployment target.\nSince the new claim is observed later (2026-05-28 vs 2026-04-14), it supersedes the old claim. The deployment target changed from Vercel to Fly.io.\n\nLet's check the rules:\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- duplicate: Same fact.\n- refines: Adds detail.\n- unrelated: Same topic, both can be true.\n\nIf the app moved from Vercel to Fly.io, the old claim \"deployed to Vercel\" becomes false.\nSo the relation is `supersedes`.\n\nReason: The deployment target changed to Fly.io in late May, replacing the previous Vercel deployment.\n\nWait, is it possible they are deployed to both? \"The deployment target is Fly.io\" implies the primary or sole target. If it was Vercel before, and now it's Fly.io, it's a change. I will rule it as supersedes.\n\nLet's write the reason: \"The deployment target was changed to Fly.io in May, replacing the previous Vercel deployment.\" or \"The application's deployment target moved to Fly.io, replacing the previous Vercel deployment.\"\n\nLet's refine the reason to be a plain sentence for an audit log: \"The deployment target moved to Fly.io in May, replacing the previous Vercel deployment.\"\nOr simply: \"The deployment target changed to Fly.io, replacing the previous Vercel deployment.\"\n\nLet's double check dates.\nNew: 2026-05-28\nOld: 2026-04-14\nNew is later, so it can supersede.\n\nRuling:\nid: 8b3ec0ea-aa46-4cb4-96ec-c421b295f1eb\nrelation: supersedes\nreason: The deployment target changed to Fly.io in May, replacing the previous Vercel deployment.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796449,
+  "id": "chatcmpl-8ed3ecdb-618a-9775-9089-6cab2885bf85",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 761,
+    "completion_tokens_details": {
+      "reasoning_tokens": 680,
+      "text_tokens": 761
+    },
+    "prompt_tokens": 721,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 721
+    },
+    "total_tokens": 1482
+  }
+}

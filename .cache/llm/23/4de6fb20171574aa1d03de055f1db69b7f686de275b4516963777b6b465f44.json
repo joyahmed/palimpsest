@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The new project is named Meridian.\",\n      \"kind\": \"identity\",\n      \"subject\": \"project name\",\n      \"quote\": \"It's called Meridian\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The client for the Meridian project is Halcyon Freight.\",\n      \"kind\": \"identity\",\n      \"subject\": \"client identity\",\n      \"quote\": \"client is Halcyon Freight\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Halcyon Freight performs logistics operations out of Rotterdam.\",\n      \"kind\": \"state\",\n      \"subject\": \"client business location\",\n      \"quote\": \"they do logistics out of Rotterdam\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Sarah Vance is the Project Manager for the Meridian project.\",\n      \"kind\": \"identity\",\n      \"subject\": \"project manager identity\",\n      \"quote\": \"Sarah Vance is the PM\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Scope-related matters for the Meridian project are handled through Sarah Vance.\",\n      \"kind\": \"decision\",\n      \"subject\": \"scope communication channel\",\n      \"quote\": \"She's the one I go through for anything scope-related\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The technology stack for the Meridian project uses TypeScript throughout.\",\n      \"kind\": \"config\",\n      \"subject\": \"technology stack\",\n      \"quote\": \"Stack is TypeScript throughout\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The development server for the Meridian project runs on port 3000.\",\n      \"kind\": \"config\",\n      \"subject\": \"dev server port\",\n      \"quote\": \"Dev server runs on port 3000\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The database used for the Meridian project is Postgres.\",\n      \"kind\": \"config\",\n      \"subject\": \"database choice\",\n      \"quote\": \"Database is Postgres\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Authentication for the Meridian API will be implemented using JWT.\",\n      \"kind\": \"config\",\n      \"subject\": \"authentication method\",\n      \"quote\": \"Auth will be JWT\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Joy Ahmed's git email address is joy_ahmed_007@yahoo.com.\",\n      \"kind\": \"identity\",\n      \"subject\": \"git email address\",\n      \"quote\": \"My git email is joy_ahmed_007@yahoo.com\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The target launch date for the Meridian project is September 1st.\",\n      \"kind\": \"event\",\n      \"subject\": \"launch date\",\n      \"quote\": \"We're targeting September 1st for launch\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Sarah Vance provided the September 1st launch date to Joy.\",\n      \"kind\": \"event\",\n      \"subject\": \"date source\",\n      \"quote\": \"That's the date Sarah gave me\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 763,
+    "completion_tokens": 799,
+    "total_tokens": 1562,
+    "completion_tokens_details": {
+      "text_tokens": 799
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 763
+    }
+  },
+  "created": 1783795724,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-21d1e368-4629-9a59-8a65-c698cdfd4835"
+}

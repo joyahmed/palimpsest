@@ -14,3 +14,4 @@ VIDEO-SCRIPT.md
 
 palimpsest.db
 bench-*.db
+dist/

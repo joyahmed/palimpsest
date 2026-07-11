@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"b4495dba-2dc0-44fb-b3c8-c39e2c745585\", \"relation\": \"unrelated\", \"reason\": \"The httpOnly flag and sameSite attribute are independent cookie properties; both can be true simultaneously.\"}, {\"id\": \"f3fe38d7-79fd-428b-b020-c70c14bc0c67\", \"relation\": \"unrelated\", \"reason\": \"The storage backend (Redis) and the sameSite attribute are independent configuration details that do not conflict.\"}, {\"id\": \"a2b6efa2-4884-4aa4-8faf-3e295a4b7800\", \"relation\": \"unrelated\", \"reason\": \"The fact that authentication uses session cookies is a broader statement that does not conflict with a specific attribute of those cookies.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: config\n- claim: \"Session cookies are set with sameSite strict.\"\n\nEXISTING CLAIMS:\n1. id: b4495dba-2dc0-44fb-b3c8-c39e2c745585\n   observed: 2026-05-11\n   claim: \"Session cookies are set with the httpOnly flag.\"\n2. id: f3fe38d7-79fd-428b-b020-c70c14bc0c67\n   observed: 2026-05-11\n   claim: \"The session cookie storage backend is Redis.\"\n3. id: a2b6efa2-4884-4aa4-8faf-3e295a4b7800\n   observed: 2026-05-11\n   claim: \"Authentication is implemented using session cookies.\"\n\nEVALUATION:\nNew claim: \"Session cookies are set with sameSite strict.\"\n\nClaim 1: \"Session cookies are set with the httpOnly flag.\"\n- Can both be true? Yes, a cookie can have both `sameSite=strict` and `httpOnly`.\n- Relation: unrelated (or refines? No, unrelated is better because they are different attributes of the session cookie. Wait, the prompt says \"Same topic, but both can be true at once. Leave the old claim alone.\" -> unrelated).\n\nClaim 2: \"The session cookie storage backend is Redis.\"\n- Can both be true? Yes, one is about cookie attributes, the other is about where the session data is stored.\n- Relation: unrelated.\n\nClaim 3: \"Authentication is implemented using session cookies.\"\n- Can both be true? Yes, one is about the mechanism of auth, the other is about a specific attribute of the cookie.\n- Relation: unrelated.\n\nLet's double check.\n\"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\"\nAll three existing claims are about session cookies, but they describe different aspects (httpOnly flag, storage backend, auth mechanism). The new claim describes the sameSite attribute. All can be true simultaneously.\n\nTherefore, all three should be ruled as \"unrelated\".\n\nReasoning for 1: Both httpOnly and sameSite strict can be set on the same session cookie.\nReasoning for 2: The cookie's sameSite attribute and the backend storage mechanism are independent configurations.\nReasoning for 3: The authentication mechanism and the specific sameSite attribute of the cookie are independent facts that can both be true.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"b4495dba-2dc0-44fb-b3c8-c39e2c745585\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"A session cookie can have both the httpOnly flag and sameSite strict set simultaneously.\"\n    },\n    {\n      \"id\": \"f3fe38d7-79fd-428b-b020-c70c14bc0c67\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The cookie's sameSite attribute and the backend storage mechanism are independent configurations.\"\n    },\n    {\n      \"id\": \"a2b6efa2-4884-4aa4-8faf-3e295a4b7800\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The authentication mechanism and the specific sameSite attribute of the cookie are independent facts that can both be true.\"\n    }\n  ]\n}\n```\nWait, could it be \"refines\"?\n\"refines: Adds detail. Does NOT contradict. Both remain true.\"\nIs \"sameSite strict\" adding detail to \"httpOnly\"? No, they are parallel attributes.\nIs it adding detail to \"storage backend\"? No.\nIs it adding detail to \"Authentication is implemented using session cookies\"? Maybe, but \"unrelated\" fits \"Same topic, but both can be true at once\" perfectly. The topic is \"session cookies\".\n\nLet's stick with \"unrelated\" for all three.\nReasons should be one plain sentence.\n1: \"A session cookie can have both the httpOnly flag and sameSite strict set simultaneously.\"\n2: \"The cookie's sameSite attribute and the backend storage mechanism are independent configurations.\"\n3: \"The authentication mechanism and the specific sameSite attribute of the cookie are independent facts that can both be true.\"\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796261,
+  "id": "chatcmpl-beeb4876-b959-9d18-81fc-472aab810b2b",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1292,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1078,
+      "text_tokens": 1292
+    },
+    "prompt_tokens": 852,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 852
+    },
+    "total_tokens": 2144
+  }
+}

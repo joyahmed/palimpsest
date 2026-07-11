@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"c15104cb-75d0-4f13-b6c5-4584e0bbdb08\", \"relation\": \"unrelated\", \"reason\": \"The new claim describes the data structure of a shipment, while the old claim states that Joy is building the shipment tracking module; both can be true simultaneously as they address different aspects of the same domain.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nEXISTING CLAIM:\n- id: c15104cb-75d0-4f13-b6c5-4584e0bbdb08\n- observed: 2026-04-21\n- kind: state\n- claim: \"Joy is building out the shipment tracking module.\"\n\nRELATIONS:\n- supersedes: new makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, does not contradict.\n- unrelated: same topic, both can be true at once.\n\nAnalysis:\nNew claim: \"Each shipment has a manifest, a route, and a set of customs docs.\" (Describes the structure/contents of a shipment in the system).\nOld claim: \"Joy is building out the shipment tracking module.\" (Describes who is working on what module).\n\nCan both be true at the same time? Yes. One is about the data model of a shipment, the other is about a person's current task. They are related to the same general domain (shipments), but they do not contradict, nor is one a restatement or refinement of the other.\n\nTherefore, the relation is 'unrelated'.\n\nReason: The new claim describes the data structure of a shipment, while the old claim describes a person's current development task; both can be true simultaneously.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"c15104cb-75d0-4f13-b6c5-4584e0bbdb08\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim describes the data structure of a shipment, while the old claim describes a person's current development task; both can be true simultaneously.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Past events cannot become false (N/A here).\n- Time check (both observed on same day, N/A).\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796013,
+  "id": "chatcmpl-551cd021-b31d-9446-be05-bb429fae4aaf",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 656,
+    "completion_tokens_details": {
+      "reasoning_tokens": 558,
+      "text_tokens": 656
+    },
+    "prompt_tokens": 725,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 725
+    },
+    "total_tokens": 1381
+  }
+}

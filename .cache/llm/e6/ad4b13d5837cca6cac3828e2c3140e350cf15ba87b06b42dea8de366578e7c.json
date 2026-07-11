@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The deployment target is Fly.io.\",\n      \"kind\": \"config\",\n      \"subject\": \"deployment platform\",\n      \"quote\": \"Deploying to Fly.io.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The deployment region is ams.\",\n      \"kind\": \"config\",\n      \"subject\": \"deployment region\",\n      \"quote\": \"region is ams.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The runtime environment is Node 24.\",\n      \"kind\": \"config\",\n      \"subject\": \"runtime version\",\n      \"quote\": \"Node 24 runtime.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Cold starts were the issue with the previous setup.\",\n      \"kind\": \"state\",\n      \"subject\": \"performance issue\",\n      \"quote\": \"Cold starts were the issue.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Websockets are used for live shipment position.\",\n      \"kind\": \"config\",\n      \"subject\": \"websocket usage\",\n      \"quote\": \"Websockets are for live shipment position.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Vessels ping every 15 minutes.\",\n      \"kind\": \"config\",\n      \"subject\": \"ping frequency\",\n      \"quote\": \"Vessels ping every 15 minutes.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 692,
+    "completion_tokens": 369,
+    "total_tokens": 1061,
+    "completion_tokens_details": {
+      "text_tokens": 369
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 692
+    }
+  },
+  "created": 1783795787,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-32a2552e-5c86-91db-9a16-9c403f1c3b20"
+}

@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"a2b6efa2-4884-4aa4-8faf-3e295a4b7800\", \"relation\": \"unrelated\", \"reason\": \"Audit logging and session cookie authentication are independent features; both can coexist.\"}, {\"id\": \"ffe4d4a9-f2fe-4b0a-b93d-2d932213747d\", \"relation\": \"unrelated\", \"reason\": \"The number of lanes the system runs is unrelated to whether audit logging was added.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against a list of EXISTING CLAIMS.\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: decision\n- claim: \"Audit logging was added to the system.\"\n\nEXISTING CLAIMS:\n1. id: a2b6efa2-4884-4aa4-8faf-3e295a4b7800\n   observed: 2026-05-11\n   kind: config\n   claim: \"Authentication is implemented using session cookies.\"\n2. id: ffe4d4a9-f2fe-4b0a-b93d-2d932213747d\n   observed: 2026-04-21\n   kind: state\n   claim: \"The system only runs one lane.\"\n\nLet's evaluate the relationship between the new claim and each existing claim.\n\nNew claim: \"Audit logging was added to the system.\" (2026-05-11)\n\nClaim 1: \"Authentication is implemented using session cookies.\" (2026-05-11)\n- Topic: Authentication vs Audit logging.\n- Can both be true? Yes. They are different features/aspects of the system.\n- Relation: unrelated.\n\nClaim 2: \"The system only runs one lane.\" (2026-04-21)\n- Topic: System lanes vs Audit logging.\n- Can both be true? Yes.\n- Relation: unrelated.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"a2b6efa2-4884-4aa4-8faf-3e295a4b7800\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Audit logging and session cookie authentication are distinct system features that can coexist.\"\n    },\n    {\n      \"id\": \"ffe4d4a9-f2fe-4b0a-b93d-2d932213747d\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Adding audit logging does not contradict the system running only one lane.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Both can be true at the same time.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796285,
+  "id": "chatcmpl-d5179512-8049-9c9d-b53b-f92805600ecf",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 723,
+    "completion_tokens_details": {
+      "reasoning_tokens": 587,
+      "text_tokens": 723
+    },
+    "prompt_tokens": 782,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 782
+    },
+    "total_tokens": 1505
+  }
+}

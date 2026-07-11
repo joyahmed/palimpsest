@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The primary brand color for Halcyon is blue with the hex code #1E4D8C.\",\n      \"kind\": \"config\",\n      \"subject\": \"Halcyon brand color\",\n      \"quote\": \"Primary colour is blue - Halcyon's brand blue, #1E4D8C.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The typeface used for the design is Inter.\",\n      \"kind\": \"config\",\n      \"subject\": \"Design typeface\",\n      \"quote\": \"Typeface is Inter.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The application is deployed to Vercel using the Node 20 runtime.\",\n      \"kind\": \"config\",\n      \"subject\": \"Deployment environment\",\n      \"quote\": \"We're deploying to Vercel. Node 20 runtime.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The CI/CD pipeline uses CircleCI.\",\n      \"kind\": \"config\",\n      \"subject\": \"CI/CD provider\",\n      \"quote\": \"CI is CircleCI.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The pricing model consists of three tiers with the middle tier priced at $29 per month.\",\n      \"kind\": \"config\",\n      \"subject\": \"Pricing model structure\",\n      \"quote\": \"Pricing model: three tiers, the middle one is $29 a month.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 729,
+    "completion_tokens": 377,
+    "total_tokens": 1106,
+    "completion_tokens_details": {
+      "text_tokens": 377
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 729
+    }
+  },
+  "created": 1783795770,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-53c9a127-72f7-9014-a6cd-58ca77c10023"
+}

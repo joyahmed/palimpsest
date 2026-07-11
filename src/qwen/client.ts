@@ -128,13 +128,58 @@ export async function chat(opts: ChatOptions): Promise<string> {
 
 // ---------------------------------------------------------------- embeddings
 
+/**
+ * Qwen's embedding endpoint caps a batch at 10 inputs. We chunk to respect that.
+ *
+ * Caching is per-TEXT, not per-batch. That matters: the same claim shows up across
+ * sessions and across benchmark runs, and a per-batch key would miss every time the
+ * surrounding batch changed. Per-text, we pay for each distinct string exactly once
+ * in the life of the project.
+ */
+const EMBED_BATCH_MAX = 10;
+
 export async function embed(model: string, input: string[]): Promise<Float32Array[]> {
-  const res = await cached(['embed', { model, input }], async () => {
-    const r = await client().embeddings.create({ model, input });
-    // Store as plain arrays - JSON has no Float32Array.
-    return r.data.map((d) => d.embedding);
+  const out = new Array<number[] | undefined>(input.length);
+  const missing: number[] = [];
+
+  // Serve what we already hold.
+  for (const [i, text] of input.entries()) {
+    const key = cacheKey(['embed1', model, text]);
+    const path = cachePath(key);
+    if (existsSync(path)) {
+      cacheStats.hits++;
+      out[i] = JSON.parse(readFileSync(path, 'utf8')) as number[];
+    } else {
+      missing.push(i);
+    }
+  }
+
+  if (missing.length > 0 && CACHE_ONLY) {
+    throw new Error(
+      `Cache miss with PALIMPSEST_CACHE_ONLY=1 (${missing.length} embedding(s)).\n` +
+        'A replay run tried to make a real API call - refusing to spend money silently.',
+    );
+  }
+
+  for (let i = 0; i < missing.length; i += EMBED_BATCH_MAX) {
+    const idx = missing.slice(i, i + EMBED_BATCH_MAX);
+    const batch = idx.map((j) => input[j]!);
+
+    const r = await client().embeddings.create({ model, input: batch });
+
+    for (const [n, j] of idx.entries()) {
+      const vec = r.data[n]?.embedding;
+      if (!vec) throw new Error(`Qwen returned no embedding for input ${j}`);
+      cacheStats.misses++;
+      writeFileSync(cachePath(cacheKey(['embed1', model, input[j]!])), JSON.stringify(vec));
+      out[j] = vec;
+    }
+  }
+
+  return out.map((v, i) => {
+    if (!v) throw new Error(`Missing embedding for input ${i}`);
+    return Float32Array.from(v);
   });
-  return res.map((v) => Float32Array.from(v));
 }
 
 /**

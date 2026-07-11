@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Authentication is implemented using session cookies.\",\n      \"kind\": \"config\",\n      \"subject\": \"authentication mechanism\",\n      \"quote\": \"Auth is session cookies now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The session cookie storage backend is Redis.\",\n      \"kind\": \"config\",\n      \"subject\": \"session storage backend\",\n      \"quote\": \"Redis-backed\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Session cookies are set with the httpOnly flag.\",\n      \"kind\": \"config\",\n      \"subject\": \"session cookie attributes\",\n      \"quote\": \"httpOnly\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Session cookies are set with sameSite strict.\",\n      \"kind\": \"config\",\n      \"subject\": \"session cookie attributes\",\n      \"quote\": \"sameSite strict\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Audit logging was added to the system.\",\n      \"kind\": \"decision\",\n      \"subject\": \"audit logging feature\",\n      \"quote\": \"Also added audit logging.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Every mutation writes an audit log row containing actor, action, and timestamp.\",\n      \"kind\": \"config\",\n      \"subject\": \"audit log schema\",\n      \"quote\": \"Every mutation writes a row with actor, action, timestamp.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Search functionality uses Postgres full-text search.\",\n      \"kind\": \"config\",\n      \"subject\": \"search implementation\",\n      \"quote\": \"Search is Postgres full-text for now.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 699,
+    "completion_tokens": 433,
+    "total_tokens": 1132,
+    "completion_tokens_details": {
+      "text_tokens": 433
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 699
+    }
+  },
+  "created": 1783795781,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-a24265ba-ccde-9a3d-b9dc-a8edd001cde6"
+}

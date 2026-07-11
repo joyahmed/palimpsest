@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The CI system is GitHub Actions.\",\n      \"kind\": \"config\",\n      \"subject\": \"CI system\",\n      \"quote\": \"CI is GitHub Actions.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The CI pipeline was migrated over the weekend.\",\n      \"kind\": \"event\",\n      \"subject\": \"CI pipeline migration\",\n      \"quote\": \"Migrated the pipeline over the weekend.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Playwright is used for end-to-end testing.\",\n      \"kind\": \"config\",\n      \"subject\": \"E2E testing tool\",\n      \"quote\": \"Test suite is Playwright for e2e\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Vitest is used for unit testing.\",\n      \"kind\": \"config\",\n      \"subject\": \"Unit testing tool\",\n      \"quote\": \"Vitest for units.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"There are about 400 tests in the test suite.\",\n      \"kind\": \"state\",\n      \"subject\": \"Test count\",\n      \"quote\": \"About 400 tests.\",\n      \"confidence\": 0.9\n    },\n    {\n      \"content\": \"Current code coverage is 71%.\",\n      \"kind\": \"state\",\n      \"subject\": \"Code coverage\",\n      \"quote\": \"Coverage is sitting at 71%.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Joy wants code coverage to be above 80% before launch.\",\n      \"kind\": \"preference\",\n      \"subject\": \"Coverage target\",\n      \"quote\": \"I want it above 80 before launch.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Marcus asked about SOC 2 compliance.\",\n      \"kind\": \"event\",\n      \"subject\": \"Marcus's inquiry\",\n      \"quote\": \"Marcus asked about SOC 2.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Joy stated that SOC 2 compliance is a next-year problem.\",\n      \"kind\": \"decision\",\n      \"subject\": \"SOC 2 timeline\",\n      \"quote\": \"I told him that's a next-year problem.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 702,
+    "completion_tokens": 579,
+    "total_tokens": 1281,
+    "completion_tokens_details": {
+      "text_tokens": 579
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 702
+    }
+  },
+  "created": 1783795790,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-6e009c9e-36b6-9c33-a4bb-ecebfdbaf26d"
+}

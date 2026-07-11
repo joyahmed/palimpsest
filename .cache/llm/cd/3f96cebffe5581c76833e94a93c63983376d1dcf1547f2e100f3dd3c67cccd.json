@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"a108c85c-774a-4668-8607-c84d54565fbc\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting configuration is a separate concern from the choice of authentication mechanism; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims and determine the relationship between them.\n\nNEW CLAIM:\n- observed: 2026-05-02\n- kind: config\n- claim: \"Rate limiting is implemented at 100 requests a minute per key.\"\n\nEXISTING CLAIM:\n- id: a108c85c-774a-4668-8607-c84d54565fbc\n- observed: 2026-04-06\n- kind: config\n- claim: \"Authentication for the Meridian API will be implemented using JWT.\"\n\nRELATIONS:\n- supersedes: New claim makes old one FALSE. Cannot both be true.\n- duplicate: Same fact, restated.\n- refines: Adds detail, does not contradict.\n- unrelated: Same topic, but both can be true at once.\n\nAnalysis:\nNew claim is about rate limiting (100 requests a minute per key).\nOld claim is about authentication (JWT for Meridian API).\nThese are completely different configuration details (rate limiting vs authentication). They can both be true at the same time.\nTherefore, the relationship is \"unrelated\".\n\nReasoning:\nThe new claim specifies the rate limiting configuration, while the old claim specifies the authentication method; both are distinct configuration details that can coexist.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"a108c85c-774a-4668-8607-c84d54565fbc\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim specifies the rate limiting configuration, while the old claim specifies the authentication method; both are distinct configuration details that can coexist.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- 'reason' is one plain sentence.\n- Return JSON.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Past is fixed (not applicable here).\n- Time check (not applicable here).\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783796170,
+  "id": "chatcmpl-22f6820e-59c0-9f2e-a4a4-9ae8b53e8c60",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 578,
+    "completion_tokens_details": {
+      "reasoning_tokens": 498,
+      "text_tokens": 578
+    },
+    "prompt_tokens": 729,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 729
+    },
+    "total_tokens": 1307
+  }
+}

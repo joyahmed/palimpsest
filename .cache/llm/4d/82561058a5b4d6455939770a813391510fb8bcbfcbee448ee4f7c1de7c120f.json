@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"correct\", \"why\": \"The system's answer matches the true answer.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794818,
+  "id": "chatcmpl-36b3358c-e120-947e-9973-a4d7198989c9",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 20,
+    "prompt_tokens": 277,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 277
+    },
+    "total_tokens": 297
+  }
+}

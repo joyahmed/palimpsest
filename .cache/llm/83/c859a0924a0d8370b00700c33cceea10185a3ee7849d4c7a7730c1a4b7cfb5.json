@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"002699a4-a24d-4d5d-9ce4-b7856aee7fbb\", \"relation\": \"unrelated\", \"reason\": \"The new claim explains why port 3000 was abandoned; the old claim states the new port value — both are true simultaneously.\"}, {\"id\": \"50e8918d-da96-4ecd-9154-aaad3afc9da4\", \"relation\": \"unrelated\", \"reason\": \"The new claim is about a port collision, while the old claim is about the database choice — entirely different topics.\"}]}",
+        "reasoning_content": "Let me analyze the new claim against each existing claim.\n\nNEW CLAIM:\n- observed: 2026-07-02\n- kind: state\n- claim: \"Port 3000 was colliding with another project\"\n\nCLAIM 1:\n- id: 002699a4-a24d-4d5d-9ce4-b7856aee7fbb\n- observed: 2026-07-02\n- kind: config\n- claim: \"The dev server is on port 4000\"\n\nAnalysis: The new claim says port 3000 was colliding with another project. The existing claim says the dev server is on port 4000. These are related - the collision on port 3000 could be the REASON why the dev server moved to port 4000. Both can be true at the same time. The new claim explains WHY the port changed, while the existing claim states the current port value. This is the \"unrelated\" case from the examples: \"port 3000 collided with another project\" + \"dev server on port 4000\" (one explains WHY, the other states the new value — both true).\n\nWait, let me re-read the examples more carefully:\n- \"unrelated: Same topic, but both can be true at once. Leave the old claim alone. e.g. old 'port 3000 collided with another project' + new 'dev server on port 4000' (one explains WHY, the other states the new value — both true)\"\n\nSo the new claim \"Port 3000 was colliding with another project\" and the existing claim \"The dev server is on port 4000\" - these are exactly the example given for \"unrelated\". Both can be true simultaneously. The collision explains why the port moved, and the port 4000 is the current state.\n\nRelation: unrelated\n\nCLAIM 2:\n- id: 50e8918d-da96-4ecd-9154-aaad3afc9da4\n- observed: 2026-06-20\n- kind: decision\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nAnalysis: The new claim is about port 3000 colliding with another project. The existing claim is about using SQLite instead of Postgres. These are completely different topics - one is about port configuration, the other is about database choice. They have nothing to do with each other.\n\nRelation: unrelated\n\nWait, but the instructions say \"semantically nearest — they may or may not actually collide\". So even though these are the \"nearest\" claims, they might not actually be related. In this case, the SQLite/Postgres claim is clearly unrelated to port collisions.\n\nRelation: unrelated",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794709,
+  "id": "chatcmpl-f0f20a99-23fc-9398-b214-425d1fc44d27",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 781,
+    "completion_tokens_details": {
+      "reasoning_tokens": 629,
+      "text_tokens": 781
+    },
+    "prompt_tokens": 791,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 791
+    },
+    "total_tokens": 1572
+  }
+}

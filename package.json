@@ -12,7 +12,8 @@
     "smoke": "tsx --env-file=.env src/scripts/smoke.ts",
     "explain": "tsx --env-file=.env src/scripts/why.ts",
     "typecheck": "tsc --noEmit",
-    "ingest": "tsx --env-file=.env src/scripts/ingest.ts"
+    "ingest": "tsx --env-file=.env src/scripts/ingest.ts",
+    "bench": "tsx --env-file=.env src/bench/run.ts"
   },
   "dependencies": {
     "openai": "^4.77.0",

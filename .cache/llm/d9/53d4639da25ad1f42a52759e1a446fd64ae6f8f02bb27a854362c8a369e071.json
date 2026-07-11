@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"f9c7e47a-af65-4539-8551-3d65ebece894\", \"relation\": \"supersedes\", \"reason\": \"The project switched from Postgres to SQLite on 20 Jun; the old Postgres-in-Docker setup is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-06-20\n- kind: decision\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nEXISTING CLAIM:\n- id: f9c7e47a-af65-4539-8551-3d65ebece894\n- observed: 2026-06-12\n- kind: config\n- claim: \"Postgres is running in Docker for the current setup\"\n\nAnalysis:\nThe new claim states the project uses SQLite *instead of* Postgres.\nThe old claim states Postgres is running in Docker for the current setup.\nThese two claims contradict each other regarding the database used for the project.\nThe new claim is observed later (2026-06-20) than the old claim (2026-06-12).\nTherefore, the new claim supersedes the old claim. The project switched from Postgres to SQLite.\n\nRelation: supersedes\nReason: The project switched to SQLite instead of Postgres on 20 Jun, replacing the previous Postgres setup.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\nYes, \"uses SQLite instead of Postgres\" and \"Postgres is running... for the current setup\" cannot both be true for the current setup.\n- Time check: New claim (Jun 20) is newer than old claim (Jun 12). So it's valid for it to supersede.\n\nReason formulation: \"The project switched to SQLite on 20 Jun, abandoning the previous Postgres setup.\" or \"The decision on 20 Jun to use SQLite instead of Postgres replaces the 12 Jun configuration of running Postgres.\"\n\nLet's write a clear, human-readable reason.\n\"The project switched to SQLite on 20 Jun, replacing the Postgres setup configured on 12 Jun.\"\nor\n\"The decision on 20 Jun to use SQLite instead of Postgres supersedes the 12 Jun configuration of running Postgres.\"\n\nLet's go with: \"The project switched to SQLite on 20 Jun, replacing the Postgres setup from 12 Jun.\"\nWait, \"instead of Postgres\" explicitly contradicts \"Postgres is running\".\nYes, supersedes.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794653,
+  "id": "chatcmpl-55e3f879-826a-9043-aa9b-197477eeb6d9",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 637,
+    "completion_tokens_details": {
+      "reasoning_tokens": 550,
+      "text_tokens": 637
+    },
+    "prompt_tokens": 720,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 720
+    },
+    "total_tokens": 1357
+  }
+}

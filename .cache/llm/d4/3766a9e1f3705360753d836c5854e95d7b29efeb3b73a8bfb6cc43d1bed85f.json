@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "SQLite",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794815,
+  "id": "chatcmpl-17417b76-a178-9305-a233-fd117475c1b9",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 243,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 243
+    },
+    "total_tokens": 244
+  }
+}

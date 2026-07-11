@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "palimpsest",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794819,
+  "id": "chatcmpl-cb88595c-d599-9d58-929d-4448b23378b4",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 3,
+    "prompt_tokens": 139,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 139
+    },
+    "total_tokens": 142
+  }
+}

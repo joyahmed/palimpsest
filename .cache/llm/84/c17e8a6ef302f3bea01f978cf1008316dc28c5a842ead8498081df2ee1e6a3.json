@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "teal and slate",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794823,
+  "id": "chatcmpl-9e77e407-fb8b-99a9-a9bd-78a592d4e892",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 4,
+    "prompt_tokens": 258,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 258
+    },
+    "total_tokens": 262
+  }
+}

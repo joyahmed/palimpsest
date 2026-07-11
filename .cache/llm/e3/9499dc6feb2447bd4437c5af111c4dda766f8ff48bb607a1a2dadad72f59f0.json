@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "joy_ahmed_007@yahoo.com",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783794821,
+  "id": "chatcmpl-60971af9-50b0-964a-a60b-733b0db817c2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 151,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 151
+    },
+    "total_tokens": 161
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"Joy Ahmed's git email is joy_ahmed_007@yahoo.com\",\n      \"kind\": \"identity\",\n      \"subject\": \"Joy Ahmed's git email\",\n      \"quote\": \"I'm Joy Ahmed, git email is joy_ahmed_007@yahoo.com\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The dev server is on port 3000\",\n      \"kind\": \"config\",\n      \"subject\": \"dev server port\",\n      \"quote\": \"Dev server is on port 3000.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Postgres is running in Docker for the current setup\",\n      \"kind\": \"config\",\n      \"subject\": \"database configuration\",\n      \"quote\": \"We're running Postgres in Docker for now, that's the setup.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The current branch is main\",\n      \"kind\": \"config\",\n      \"subject\": \"git branch\",\n      \"quote\": \"main for now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Joy prefers the UI to use teal and slate colors\",\n      \"kind\": \"preference\",\n      \"subject\": \"UI color scheme preference\",\n      \"quote\": \"And keep the UI teal and slate — that's my thing\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 739,
+    "completion_tokens": 358,
+    "total_tokens": 1097,
+    "completion_tokens_details": {
+      "text_tokens": 358
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 739
+    }
+  },
+  "created": 1783793248,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-72a8fae3-de36-9c24-be78-5962ea6d4a72"
+}

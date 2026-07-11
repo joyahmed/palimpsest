@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The team is dropping Docker.\",\n      \"kind\": \"decision\",\n      \"subject\": \"Docker usage\",\n      \"quote\": \"We're dropping it.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The project uses SQLite instead of Postgres.\",\n      \"kind\": \"decision\",\n      \"subject\": \"Database choice\",\n      \"quote\": \"We decided to go with SQLite instead — single file, no daemon.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The development branch is 'engine'.\",\n      \"kind\": \"config\",\n      \"subject\": \"Git branch\",\n      \"quote\": \"we're on 'engine' now, not main.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 714,
+    "completion_tokens": 198,
+    "total_tokens": 912,
+    "completion_tokens_details": {
+      "text_tokens": 198
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 714
+    }
+  },
+  "created": 1783793250,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-fac3c3fb-638e-9734-9940-2c6b6e23df75"
+}

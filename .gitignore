@@ -11,3 +11,5 @@ dist/
 # Internal working docs - strategy and delivery notes. Local only, never published.
 PLAN.md
 VIDEO-SCRIPT.md
+
+palimpsest.db

@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The current branch is 'palimpsest'.\",\n      \"kind\": \"config\",\n      \"subject\": \"current git branch\",\n      \"quote\": \"We're on the 'palimpsest' branch now.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The 'engine' branch has been squashed and is no longer active.\",\n      \"kind\": \"event\",\n      \"subject\": \"'engine' branch status\",\n      \"quote\": \"'engine' is dead, I squashed it.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"The project is using SQLite as its database.\",\n      \"kind\": \"config\",\n      \"subject\": \"database technology\",\n      \"quote\": \"Still SQLite\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Docker is not being used in the project.\",\n      \"kind\": \"config\",\n      \"subject\": \"containerization usage\",\n      \"quote\": \"still no Docker\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 660,
+    "completion_tokens": 265,
+    "total_tokens": 925,
+    "completion_tokens_details": {
+      "text_tokens": 265
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 660
+    }
+  },
+  "created": 1783793253,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-40de6245-9b26-9ede-a8aa-add46683b064"
+}

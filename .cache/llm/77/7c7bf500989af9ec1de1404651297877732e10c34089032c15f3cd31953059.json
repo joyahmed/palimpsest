@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"b28a9f20-8d93-4da0-8f8b-b59afc5f6b0c\", \"relation\": \"supersedes\", \"reason\": \"The project switched from Postgres to SQLite on 20 Jun; Postgres is no longer in use.\"}]}",
+        "reasoning_content": "Let me analyze this carefully.\n\nNEW CLAIM:\n- observed: 2026-06-20\n- kind: decision\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nOLD CLAIM:\n- id: b28a9f20-8d93-4da0-8f8b-b59afc5f6b0c\n- observed: 2026-06-12\n- kind: config\n- claim: \"Postgres is running in Docker for the current setup\"\n\nThe new claim says the project uses SQLite INSTEAD of Postgres. This directly contradicts the old claim which says Postgres is running in Docker.\n\nCan both be true at the same time?\n- Old: \"Postgres is running in Docker for the current setup\"\n- New: \"The project uses SQLite instead of Postgres\"\n\nThe new claim explicitly says \"instead of Postgres\" - meaning Postgres is NOT being used. The old claim says Postgres IS running. These cannot both be true at the same time.\n\nThe new claim is from 2026-06-20, which is LATER than the old claim from 2026-06-12. So the newer claim is superseding the older one. This is valid - time is moving forward.\n\nThis is a clear case of supersedes. The project switched from Postgres to SQLite. The old claim about Postgres running in Docker is now false because the project uses SQLite instead.\n\nRelation: supersedes\nReason: The project switched to SQLite on 20 Jun, replacing the Postgres setup that was in place on 12 Jun.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783793553,
+  "id": "chatcmpl-a9e7388a-50cc-93f9-97dd-bd18aa0ddf03",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 446,
+    "completion_tokens_details": {
+      "reasoning_tokens": 365,
+      "text_tokens": 446
+    },
+    "prompt_tokens": 720,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 720
+    },
+    "total_tokens": 1166
+  }
+}

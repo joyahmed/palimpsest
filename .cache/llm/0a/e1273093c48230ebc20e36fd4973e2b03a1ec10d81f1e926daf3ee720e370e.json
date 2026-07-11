@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"ba6feccf-57d8-453f-8c38-9b306d08a88a\", \"relation\": \"duplicate\", \"reason\": \"Both claims state the project uses SQLite; the new claim simply omits the mention of Postgres, adding no new information.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-07-10\n- kind: config\n- claim: \"The project is using SQLite as its database.\"\n\nEXISTING CLAIM:\n- id: ba6feccf-57d8-453f-8c38-9b306d08a88a\n- observed: 2026-06-20\n- kind: decision\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nAnalysis:\nThe new claim states the project is using SQLite as its database.\nThe existing claim states the project uses SQLite instead of Postgres.\nBoth claims convey the same core fact: the project uses SQLite.\nThe new claim is slightly less detailed (doesn't mention Postgres), but it's fundamentally the same fact.\nWait, is it a duplicate or a refinement?\n\"The project is using SQLite as its database.\" vs \"The project uses SQLite instead of Postgres.\"\nThey are essentially stating the same fact. The new claim doesn't add new information, it just restates the core fact (using SQLite).\nActually, it could be considered a duplicate. Let's look at the definitions.\n- duplicate: The same fact, restated. Both true. No new information.\n- refines: Adds detail. Does NOT contradict. Both remain true.\n\nThe new claim is \"The project is using SQLite as its database.\"\nThe old claim is \"The project uses SQLite instead of Postgres.\"\nThe new claim doesn't add detail; it actually drops the \"instead of Postgres\" part. So it's not a refinement. It's a duplicate of the core fact.\n\nLet's check if there's any contradiction. No.\nBoth are true.\nRelation: duplicate.\nReason: Both claims state that the project uses SQLite, with the new claim simply omitting the comparison to Postgres.\n\nWait, is it duplicate? Yes, \"The same fact, restated. Both true. No new information.\"\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"ba6feccf-57d8-453f-8c38-9b306d08a88a\",\n      \"relation\": \"duplicate\",\n      \"reason\": \"Both claims state that the project uses SQLite, with the new claim simply omitting the comparison to Postgres.\"\n    }\n  ]\n}\nDouble check the rules.\n\"Only rule 'supersedes' if the two claims CANNOT BOTH BE TRUE.\" -> They can both be true.\n\"Return JSON: ...\" -> Yes.\n\"reason is one plain sentence a human will read in an audit log.\" -> Yes.\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783793639,
+  "id": "chatcmpl-4a50282f-4bb4-952b-9b3f-eb97d1eca696",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 713,
+    "completion_tokens_details": {
+      "reasoning_tokens": 630,
+      "text_tokens": 713
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 719
+    },
+    "total_tokens": 1432
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"b93ac34e-a13f-48a8-92d3-9a69e15e9243\", \"relation\": \"supersedes\", \"reason\": \"The dev server moved to port 4000 on 2 Jul; port 3000 is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-07-02\n- kind: config\n- claim: \"The dev server is on port 4000\"\n\nEXISTING CLAIM:\n- id: b93ac34e-a13f-48a8-92d3-9a69e15e9243\n- observed: 2026-06-12\n- kind: config\n- claim: \"The dev server is on port 3000\"\n\nAnalysis:\nThe new claim states the dev server is on port 4000.\nThe old claim states the dev server is on port 3000.\nBoth are about the current configuration of the dev server port.\nThey cannot both be true at the same time (a single dev server cannot be on two different ports simultaneously, assuming it's the same dev server configuration).\nThe new claim is observed later (2026-07-02) than the old claim (2026-06-12).\nTherefore, the new claim supersedes the old claim. The port moved to 4000.\n\nRelation: supersedes\nReason: The dev server port was changed to 4000 in July, replacing the previous port 3000 configuration from June.\n\nLet's refine the reason to be a plain sentence for a human audit log.\n\"The dev server port was updated to 4000 on 2 Jul, replacing the previous port 3000.\"\nor\n\"The dev server moved to port 4000 on 2 Jul; port 3000 is no longer in use.\"\n\nLet's check the rules:\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- duplicate: Same fact.\n- refines: Adds detail.\n- unrelated: Same topic, both can be true.\n\nSince it's a config value that changed, it's a supersession.\n\nJSON output format:\n{\n  \"rulings\": [\n    {\n      \"id\": \"b93ac34e-a13f-48a8-92d3-9a69e15e9243\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The dev server port was updated to 4000 on 2 Jul, replacing the previous port 3000 configuration.\"\n    }\n  ]\n}\nDouble check dates:\nNew: 2026-07-02\nOld: 2026-06-12\nNew is later, so it can supersede.\nBoth cannot be true.\nResult: supersedes.\nReason: \"The dev server port was updated to 4000 on 2 Jul, replacing the previous port 3000 configuration.\"\nMatches all constraints.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783793582,
+  "id": "chatcmpl-80a74210-11ce-9417-ab40-fd27b42dba21",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 769,
+    "completion_tokens_details": {
+      "reasoning_tokens": 680,
+      "text_tokens": 769
+    },
+    "prompt_tokens": 726,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 726
+    },
+    "total_tokens": 1495
+  }
+}

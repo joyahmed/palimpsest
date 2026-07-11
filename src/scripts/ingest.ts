@@ -1,127 +1,89 @@
 /**
- * Ingest the sessions and show what came out.
+ * Watch a memory revise itself.
  *
  *   pnpm ingest
  *
- * This slice does extraction ONLY - no adjudication yet. That is deliberate: the
- * point is to see the store fill up with contradictory claims and NOT notice.
- * Right now, this IS an append-only memory. It will hold "port 3000" and "port
- * 4000" side by side, both marked active, both fully believed.
- *
- * That is the bug, reproduced in our own system, on purpose. Next slice kills it.
+ * Five sessions, four weeks. Facts change. Run it and watch the moment the memory
+ * notices - not retrieves harder, NOTICES - that something it believes has died.
  */
 
 import { rmSync } from 'node:fs';
 import { SESSIONS } from '../data/sessions.js';
-import { extractClaims } from '../memory/extract.js';
 import { ClaimStore } from '../memory/store.js';
-import { MODELS } from '../qwen/models.js';
-import { embed, cosine, cacheStats } from '../qwen/client.js';
-import { decayedConfidence, HALF_LIFE_DAYS } from '../memory/types.js';
+import { remember } from '../memory/remember.js';
+import { cacheStats } from '../qwen/client.js';
+import { decayedConfidence } from '../memory/types.js';
 
 const DB = './palimpsest.db';
-rmSync(DB, { force: true }); // fresh every run - this is a demo, not a database
+rmSync(DB, { force: true });
 const store = new ClaimStore(DB);
 
-const KIND_COLOR: Record<string, string> = {
-  identity: '\x1b[35m',
-  preference: '\x1b[36m',
-  decision: '\x1b[33m',
-  config: '\x1b[31m',
-  state: '\x1b[34m',
-  event: '\x1b[32m',
-};
+const DIM = '\x1b[2m';
+const R = '\x1b[0m';
+const BOLD = '\x1b[1m';
+const RED = '\x1b[31m';
+const GREEN = '\x1b[32m';
+const YELLOW = '\x1b[33m';
 
 console.log('');
 for (const session of SESSIONS) {
-  const observedAt = new Date(session.date).getTime();
-  const extracted = await extractClaims(session.transcript);
+  const { added, revisions } = await remember(store, session);
 
-  const vectors = await embed(
-    MODELS.embed,
-    extracted.map((c) => c.content),
-  );
+  console.log(`${BOLD}  ${session.date}${R} ${DIM}(${session.id})${R}`);
 
-  console.log(`\x1b[1m  ${session.date}\x1b[0m \x1b[2m(${session.id})\x1b[0m`);
-  for (const [i, c] of extracted.entries()) {
-    store.add({
-      content: c.content,
-      kind: c.kind,
-      subject: c.subject,
-      sourceSession: session.id,
-      sourceQuote: c.quote,
-      observedAt,
-      confidence: c.confidence,
-      embedding: vectors[i],
-    });
-    const col = KIND_COLOR[c.kind] ?? '';
+  for (const c of added) {
+    const killedHere = revisions.find((r) => r.incoming.id === c.id);
+    console.log(`    ${GREEN}+${R} ${c.content} ${DIM}· ${c.kind}${R}`);
+
+    for (const k of killedHere?.killed ?? []) {
+      console.log(`      ${RED}✗ SUPERSEDED${R} ${DIM}${strike(k.claim.content)}${R}`);
+      console.log(`        ${DIM}${k.reason}${R}`);
+    }
+  }
+
+  for (const r of revisions.filter((x) => x.duplicateOf.length > 0)) {
     console.log(
-      `    ${col}${c.kind.padEnd(10)}\x1b[0m ${c.content}` +
-        `  \x1b[2m[${c.subject}]\x1b[0m`,
+      `    ${YELLOW}=${R} ${DIM}"${r.incoming.content}"${R}\n` +
+        `      ${DIM}already known - not stored twice${R}`,
     );
   }
   console.log('');
 }
 
-// ---------------------------------------------------------------- the punchline
+// ---------------------------------------------------------------- what survives
 
 const now = new Date('2026-07-11').getTime();
 const all = store.all();
+const dead = all.filter((c) => c.status !== 'active');
+const believed = store.believed(now, 0);
 
-console.log(`\x1b[1m  ${all.length} claims stored. All active. All believed.\x1b[0m\n`);
-
-/**
- * Find collisions SEMANTICALLY, not by subject label.
- *
- * The first version of this grouped by exact `subject` string - and missed two of
- * the three real contradictions. The extractor had labelled the same topic
- * "git branch", "Git branch" and "current git branch" across three sessions,
- * because each session is extracted independently and it has no memory of what it
- * called things last time.
- *
- * That is worth sitting with: we asked the model, in the prompt, to be consistent.
- * It could not be. So contradictions cannot be found by matching labels either -
- * not by string equality, not by asking nicely. Cosine at least clusters them.
- * But cosine still cannot tell you WHICH ONE IS DEAD (0.93 contradiction vs 0.91
- * paraphrase, remember). Only reasoning can. That is the next slice.
- */
-const COLLISION_THRESHOLD = 0.62;
-const clusters: (typeof all)[] = [];
-for (const claim of all) {
-  if (!claim.embedding) continue;
-  const hit = clusters.find((cluster) =>
-    cluster.some((other) => cosine(claim.embedding!, other.embedding!) >= COLLISION_THRESHOLD),
-  );
-  if (hit) hit.push(claim);
-  else clusters.push([claim]);
+console.log(`${BOLD}  WHAT THE MEMORY BELIEVES NOW${R}\n`);
+for (const c of believed) {
+  const conf = decayedConfidence(c, now);
+  const bar = '▓'.repeat(Math.round(conf * 10)).padEnd(10, '░');
+  console.log(`    ${DIM}${bar}${R} ${conf.toFixed(2)}  ${c.content}`);
 }
 
-const collisions = clusters
-  .filter((c) => c.length > 1)
-  .map((cs) => [cs[0]!.subject, cs] as const);
-
-if (collisions.length) {
-  console.log('\x1b[31m\x1b[1m  UNRESOLVED COLLISIONS - the memory believes all of these:\x1b[0m\n');
-  for (const [subject, cs] of collisions) {
-    console.log(`  \x1b[1m~ ${subject}\x1b[0m`);
-    for (const c of [...cs].sort((a, b) => a.observedAt - b.observedAt)) {
-      const conf = decayedConfidence(c, now);
-      const date = new Date(c.observedAt).toISOString().slice(0, 10);
-      console.log(
-        `    \x1b[2m${date}\x1b[0m  ${c.content}\n` +
-          `              \x1b[2mconfidence ${conf.toFixed(2)} · ${c.kind} · half-life ${HALF_LIFE_DAYS[c.kind]}d · status ${c.status}\x1b[0m`,
-      );
-    }
-    console.log('');
-  }
-  console.log(
-    '\x1b[2m  Both are "active". Both are retrievable. Nothing here knows one is DEAD.\n' +
-      '  Ask this memory what port the server runs on and it flips a coin.\n\n' +
-      '  This is every agent memory shipping today - including, right now, ours.\x1b[0m\n',
-  );
-} else {
-  console.log('\x1b[33m  No collisions detected - check the extraction, that is suspicious.\x1b[0m\n');
+console.log(`\n${BOLD}  WHAT IT USED TO BELIEVE, AND WHY IT STOPPED${R}\n`);
+if (dead.length === 0) {
+  console.log(`    ${RED}Nothing died. Adjudication is not firing - investigate.${R}`);
+}
+for (const c of dead) {
+  const died = c.supersededAt ? new Date(c.supersededAt).toISOString().slice(0, 10) : '?';
+  console.log(`    ${DIM}${strike(c.content)}${R}`);
+  console.log(`      ${DIM}died ${died} - ${c.deathReason}${R}`);
 }
 
-console.log(`\x1b[2m  cache: ${cacheStats.hits} hit / ${cacheStats.misses} miss\x1b[0m\n`);
+console.log(
+  `\n${BOLD}  ${believed.length} believed · ${dead.length} superseded · nothing deleted${R}\n` +
+    `${DIM}  The dead claims are still here. That is the point - you can always ask what\n` +
+    `  the memory used to think, and exactly when it changed its mind.${R}\n`,
+);
+console.log(`${DIM}  cache: ${cacheStats.hits} hit / ${cacheStats.misses} miss${R}\n`);
+
 store.close();
+
+/** Unicode strike-through - the corpse stays legible. */
+function strike(s: string): string {
+  return [...s].map((ch) => ch + '̶').join('');
+}

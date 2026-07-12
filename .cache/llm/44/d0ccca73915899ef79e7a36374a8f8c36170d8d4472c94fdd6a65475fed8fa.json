@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Removing SQLite and adopting DuckDB are compatible facts; one describes what was dropped, the other what is now used.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against a list of EXISTING CLAIMS.\n\nNEW CLAIM:\n- observed: 2026-07-15\n- kind: state\n- claim: \"Meridian uses DuckDB as its database\"\n\nEXISTING CLAIMS:\n- id: 1\n  observed: 2026-07-15\n  kind: event\n  claim: \"SQLite was removed from the Meridian project\"\n\nRELATIONS:\n- supersedes: new makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, doesn't contradict.\n- unrelated: same topic, both can be true.\n\nLet's evaluate id 1:\nOld claim: \"SQLite was removed from the Meridian project\" (event, 2026-07-15)\nNew claim: \"Meridian uses DuckDB as its database\" (state, 2026-07-15)\n\nCan both be true?\nYes. SQLite was removed, and now DuckDB is used. They don't contradict. In fact, they complement each other, but they are distinct facts (one is an event of removal, the other is the current state of using DuckDB).\nWait, could it be \"refines\"? \"Adds detail. Does NOT contradict.\"\nOr \"unrelated\"? \"Same topic, but both can be true at once. Leave the old claim alone.\"\nThe old claim is about SQLite being removed. The new claim is about DuckDB being used.\nThey are related to the database choice, but they are distinct facts. One is an event (removal of SQLite), the other is a state (using DuckDB).\nI will rule it as \"unrelated\" because they are distinct facts about the database transition that can both be true at once. Or maybe \"refines\"? No, refines is usually adding detail to the *same* fact. \"We dropped Docker\" -> \"We dropped Docker because of build times\". Here, \"SQLite was removed\" -> \"Meridian uses DuckDB\". This is more like \"port 3000 collided\" (why) + \"dev server on port 4000\" (new value). The example for unrelated is exactly this: \"one explains WHY, the other states the new value - both true\".\nWait, the example for unrelated:\nold \"port 3000 collided with another project\" + new \"dev server on port 4000\" -> unrelated.\nHere:\nold \"SQLite was removed\" + new \"uses DuckDB\" -> unrelated.\n\nLet's double check.\nCan both be true? Yes.\nDoes the new make the old false? No.\nIs it a duplicate? No.\nDoes it refine? No, it's a different fact (what was removed vs what is used now).\n\nSo, relation: unrelated.\nReason: The removal of SQLite and the adoption of DuckDB are distinct facts that can both be true simultaneously.\n\nLet's write the reason clearly.\n\"The removal of SQLite and the adoption of DuckDB are distinct facts that can both be true at the same time.\"\nOr: \"The removal of SQLite and the current use of DuckDB are distinct facts that can both be true simultaneously.\"\n\nLet's review the prompt instructions.\n\"Return JSON: {\"rulings\": [{\"id\": string, \"relation\": \"supersedes\"|\"duplicate\"|\"refines\"|\"unrelated\", \"reason\": string}]}\"\n\"reason is one plain sentence a human will read in an audit log.\"\n\nid: 1\nrelation: unrelated\nreason: The removal of SQLite and the adoption of DuckDB are distinct facts that can both be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783876197,
+  "id": "chatcmpl-51d2fc5a-7a80-9789-bb75-22d5524287be",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 869,
+    "completion_tokens_details": {
+      "reasoning_tokens": 819,
+      "text_tokens": 869
+    },
+    "prompt_tokens": 688,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 688
+    },
+    "total_tokens": 1557
+  }
+}

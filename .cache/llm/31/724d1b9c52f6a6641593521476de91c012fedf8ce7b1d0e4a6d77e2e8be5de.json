@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The removal of SQLite and the adoption of DuckDB are complementary facts that can both be true simultaneously; one describes what was dropped, the other what replaced it.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-07-12\n- kind: state\n- claim: \"Meridian uses DuckDB as its database\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-07-12\n- kind: event\n- claim: \"SQLite was removed from the Meridian project\"\n\nAnalysis:\nThe new claim states that Meridian uses DuckDB as its database.\nThe existing claim states that SQLite was removed from the Meridian project.\nBoth claims are observed on the same date (2026-07-12).\nCan both be true at the same time?\nYes. Removing SQLite and adopting DuckDB are complementary actions. The removal of SQLite doesn't contradict the adoption of DuckDB; in fact, they often happen together when migrating databases.\nTherefore, the relation is 'unrelated' (or maybe 'refines' if it adds detail to the removal, but 'unrelated' fits better as they are distinct facts: one is an event of removal, the other is a state of current usage. Actually, the prompt says \"Same topic, but both can be true at once. Leave the old claim alone.\" -> unrelated).\n\nWait, let's look at the definitions:\n- supersedes: CANNOT both be true.\n- duplicate: same fact.\n- refines: adds detail, does not contradict.\n- unrelated: same topic, both can be true at once.\n\n\"SQLite was removed\" and \"Meridian uses DuckDB\". Both can be true. It's not a direct refinement of the removal event, it's a new state. So 'unrelated' is the best fit.\n\nLet's write the reason: \"Both claims can be true simultaneously, as removing SQLite and adopting DuckDB are complementary actions during a database migration.\"\nOr simpler: \"Removing SQLite and adopting DuckDB are complementary actions that can both be true at the same time.\"\nLet's use the format: \"The removal of SQLite and the adoption of DuckDB are complementary facts that can both be true simultaneously.\"\nWait, \"unrelated\" means \"Same topic, but both can be true at once. Leave the old claim alone.\"\n\nLet's double check.\nOld: \"SQLite was removed from the Meridian project\" (event)\nNew: \"Meridian uses DuckDB as its database\" (state)\nRelation: unrelated.\nReason: \"Removing SQLite and adopting DuckDB are complementary actions that can both be true at the same time.\"\nAnother option for reason: \"The removal of SQLite does not contradict the adoption of DuckDB; both facts can be true simultaneously.\"\n\nLet's refine the reason to be a plain sentence for an audit log.\n\"The removal of SQLite and the adoption of DuckDB are complementary facts that can both be true at the same time.\"\nOr: \"Removing SQLite and adopting DuckDB are complementary actions, so both claims can be true simultaneously.\"\n\nI will output the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Removing SQLite and adopting DuckDB are complementary actions, so both claims can be true simultaneously.\"\n    }\n  ]\n}\nWait, could it be \"refines\"? \"Adds detail. Does NOT contradict.\"\nDoes \"Meridian uses DuckDB\" add detail to \"SQLite was removed\"? Not really, it's a separate fact about the new database. \"Unrelated\" is better because it's a different topic (removing old vs adopting new), even though they are in the same domain. The prompt example for unrelated: \"port 3000 collided... + dev server on port 4000\". Here, \"SQLite removed + uses DuckDB\" is very similar.\n\nI'll go with unrelated.\nReason: \"The removal of SQLite and the adoption of DuckDB are complementary facts that can both be true at the same time.\"\nLet's make it concise.\n\"Removing SQLite and adopting DuckDB are complementary actions that can both be true at the same time.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783875963,
+  "id": "chatcmpl-dcde818a-0334-960e-b864-8e0b99dbcbe0",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 956,
+    "completion_tokens_details": {
+      "reasoning_tokens": 897,
+      "text_tokens": 956
+    },
+    "prompt_tokens": 688,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 688
+    },
+    "total_tokens": 1644
+  }
+}

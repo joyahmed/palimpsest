@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"SQLite was removed from the Meridian project\",\n      \"kind\": \"event\",\n      \"subject\": \"Meridian database technology change\",\n      \"quote\": \"We ripped SQLite out this morning.\",\n      \"confidence\": 1.0\n    },\n    {\n      \"content\": \"Meridian uses DuckDB as its database\",\n      \"kind\": \"state\",\n      \"subject\": \"Meridian database technology change\",\n      \"quote\": \"Meridian runs on DuckDB now.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 630,
+    "completion_tokens": 139,
+    "total_tokens": 769,
+    "completion_tokens_details": {
+      "text_tokens": 139
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 630
+    }
+  },
+  "created": 1783875894,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-085442c9-5225-9dff-a987-c0261c895dc8"
+}

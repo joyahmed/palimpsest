@@ -47,6 +47,7 @@ const TARBALL = `node-${NODE_VERSION}-${ARCH}.tar.xz`;
 const DIST = `https://nodejs.org/dist/${NODE_VERSION}`;
 
 const CACHE = '.cache/node';
+const SEED_CACHE = '.cache/llm'; // the committed replay cache, shipped read-only inside the package
 const OUT = 'deploy';
 
 const mb = (bytes: number): string => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
@@ -127,6 +128,29 @@ cpSync('build', `${OUT}/build`, { recursive: true });
 copyFileSync('palimpsest.db', `${OUT}/palimpsest.db`);
 copyFileSync('bootstrap', `${OUT}/bootstrap`);
 chmodSync(`${OUT}/bootstrap`, 0o755); // FC execs it directly; without +x the function never starts.
+
+/**
+ * The replay cache travels WITH the function. This is not an optimisation either.
+ *
+ * FC gives the function a writable /tmp and nothing else, and /tmp belongs to one
+ * INSTANCE. Warm the cache by asking a question, let the instance idle out, and the
+ * cache is gone with it - the next visitor pays the full extract -> embed -> retrieve
+ * -> adjudicate pipeline, ~109s of it, into a timeout. The site answered in under a
+ * second all afternoon and then started returning 502 to anyone who came back later.
+ *
+ * Shipping the cache in the read-only code package fixes that at the root: a cold
+ * instance is born already knowing the answers it has been paid for once. Named
+ * without a leading dot so nothing along the zip/upload path quietly drops it.
+ */
+if (!existsSync(SEED_CACHE)) {
+  throw new Error(
+    `${SEED_CACHE} is missing - the function would deploy with an empty cache and every\n` +
+      'request would be a cold ~109s Qwen call into a timeout. That is the 502.',
+  );
+}
+cpSync(SEED_CACHE, `${OUT}/llm-cache`, { recursive: true });
+const entries = execFileSync('find', [`${OUT}/llm-cache`, '-name', '*.json']).toString().trim();
+console.log(`  llm-cache/         ${entries.split('\n').length} entries  (replayed, not re-paid)`);
 
 // Prod dependencies, installed with npm rather than pnpm ON PURPOSE. pnpm's
 // node_modules is a farm of symlinks into a global store - it works locally and

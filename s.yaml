@@ -50,7 +50,18 @@ resources:
       # POST /api/remember runs the whole extract -> embed -> retrieve -> adjudicate
       # pipeline, and adjudication is a reasoning call to qwen3.7-plus. The default
       # 10s would truncate it mid-thought.
-      timeout: 120
+      #
+      # 120 was not enough either, and the way it failed was ugly. A COLD, uncached
+      # run of that pipeline measured 108.8s against this 120s ceiling - so the site
+      # was passing with 11 seconds to spare, and any instance a little slower than
+      # that got killed mid-adjudication and returned a bare 502 to the browser.
+      # Reasoning-model latency is not something we control; a ceiling that sits ~10%
+      # above the measured cost of the work is not a ceiling, it is a coin toss.
+      #
+      # The cache (below) is what makes the common path fast. This is what makes the
+      # UNCACHED path merely slow instead of broken - a question nobody has asked
+      # before now waits, and then answers, rather than 502ing.
+      timeout: 600
       # Required: the function calls Qwen Cloud over the public internet.
       internetAccess: true
 
@@ -62,6 +73,10 @@ resources:
         PALIMPSEST_SEED: /code/palimpsest.db
         PALIMPSEST_DB: /tmp/palimpsest.db
         PALIMPSEST_CACHE_DIR: /tmp/llm-cache
+        # Read-only, shipped inside the package by `pnpm package:fc`. /tmp is per-instance
+        # and dies with it; this does not. A cold instance starts already able to replay
+        # every call we have paid for, so the demo cannot rot back into a 502 while idle.
+        PALIMPSEST_CACHE_SEED: /code/llm-cache
 
       triggers:
         - triggerName: http

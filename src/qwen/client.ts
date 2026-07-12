@@ -25,6 +25,23 @@ const BASE_URL =
 const CACHE_DIR = process.env.PALIMPSEST_CACHE_DIR ?? '.cache/llm';
 const CACHE_ONLY = process.env.PALIMPSEST_CACHE_ONLY === '1';
 
+/**
+ * A read-only cache we can READ but never WRITE.
+ *
+ * On Function Compute the writable cache has to live in /tmp, because /code is
+ * mounted read-only. But /tmp is per-INSTANCE and evaporates when FC recycles the
+ * instance - so a cache warmed by one request is gone by the next cold start, and
+ * the request after that pays the full ~109s pipeline against a 120s timeout. That
+ * is not a slow demo; it is a 502, and it is what took the live site down.
+ *
+ * So we ship the committed replay cache inside the code package and read it from
+ * there. Writes still go to CACHE_DIR (/tmp); this directory is only ever read.
+ * Same entries, same keys, same replay as the benchmark - it just survives a cold
+ * start now, because it is part of the artifact rather than a side effect of having
+ * been asked once already.
+ */
+const SEED_DIR = process.env.PALIMPSEST_CACHE_SEED;
+
 let _client: OpenAI | undefined;
 function client(): OpenAI {
   if (_client) return _client;
@@ -57,6 +74,12 @@ function cachePath(key: string): string {
   return join(dir, `${key.slice(2)}.json`);
 }
 
+/** Same layout as cachePath, but never creates anything: SEED_DIR is read-only. */
+function seedPath(key: string): string | undefined {
+  if (!SEED_DIR) return undefined;
+  return join(SEED_DIR, key.slice(0, 2), `${key.slice(2)}.json`);
+}
+
 function cacheKey(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
@@ -86,6 +109,12 @@ async function cached<T>(payload: unknown, compute: () => Promise<T>): Promise<T
   if (existsSync(path)) {
     cacheStats.hits++;
     return JSON.parse(readFileSync(path, 'utf8')) as T;
+  }
+
+  const seed = seedPath(key);
+  if (seed && existsSync(seed)) {
+    cacheStats.hits++;
+    return JSON.parse(readFileSync(seed, 'utf8')) as T;
   }
 
   const pending = inFlight.get(key);

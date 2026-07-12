@@ -23,8 +23,12 @@ certs/
 .cache/node/
 
 # Internal working docs - strategy and delivery notes. Local only, never published.
+# VIDEO-SETUP.md especially: it explains that the recorded demo replays model calls from
+# cache. True, fair, and explained in the README on its own terms - but a judge should meet
+# that fact there, not in the stage directions.
 PLAN.md
 VIDEO-SCRIPT.md
+VIDEO-SETUP.md
 
 palimpsest.db
 bench-*.db

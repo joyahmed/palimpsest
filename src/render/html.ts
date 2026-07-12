@@ -252,10 +252,11 @@ const CSS = `
     padding:.1rem .35rem; font-size:.9em; cursor:pointer; }
 
   /* A claim can only be killed ONCE. Tell it "we moved to DuckDB" twice and the second time it
-     correctly says "I already knew that" - right, but a dead demo. So: a way back to the seed. */
-  .reset { float:right; color:var(--muted); font-size:.78rem; text-decoration:none;
-    border-bottom:1px dotted var(--line); }
-  .reset:hover { color:var(--rose); border-bottom-color:var(--rose); }
+     correctly says "I already knew that" - right, but a dead demo. So: a way back to the seed,
+     sitting next to the button that does the killing, because that is when you need it. */
+  .tell button.ghost { background:transparent; color:var(--muted); border:1px solid var(--line);
+    font-weight:550; }
+  .tell button.ghost:hover { color:var(--rose); border-color:var(--rose); }
 
   .status { margin-top:.85rem; font-size:.82rem; color:var(--teal); display:none; }
   .status.on { display:block; }
@@ -387,13 +388,13 @@ export function renderMemory(all: Claim[], now: number, opts: RenderOptions = {}
     <div class="tell-row">
       <input id="say" autocomplete="off" placeholder="We moved off SQLite - Meridian runs on DuckDB now." />
       <button type="submit" id="go">Remember</button>
+      <button type="button" id="reset" class="ghost" title="Put the memory back to its seeded state">Reset</button>
     </div>
     <div class="hint">
       It will extract the claim, check it against everything it already believes, and decide
       whether anything has to <em>die</em>. Try
       <code class="eg">The launch slipped to November.</code>
       <code class="eg">We're back on Postgres.</code>
-      <a class="reset" id="reset" href="#" title="Put the memory back to its seeded state">reset</a>
     </div>
     <div class="status" id="status"></div>
   </form>
@@ -516,7 +517,8 @@ for (const eg of document.querySelectorAll('.eg')) {
 const resetBtn = $('#reset');
 if (resetBtn) resetBtn.onclick = async (e) => {
   e.preventDefault();
-  resetBtn.textContent = 'resetting...';
+  resetBtn.disabled = true;
+  resetBtn.textContent = 'Resetting...';
   await fetch(API + '/api/reset', { method: 'POST' });
   location.reload();
 };

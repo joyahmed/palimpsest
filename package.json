@@ -25,7 +25,8 @@
     "serve": "tsx --env-file=.env src/server.ts",
     "diagram": "tsx src/scripts/diagram.ts",
     "shots": "tsx --env-file=.env src/scripts/shots.ts",
-    "shot:bench": "tsx --env-file=.env src/scripts/shot-bench.ts"
+    "shot:bench": "tsx --env-file=.env src/scripts/shot-bench.ts",
+    "proof": "tsx src/scripts/proof.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

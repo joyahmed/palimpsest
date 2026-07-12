@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1598" viewBox="0 0 1600 1598">
+  <rect width="1600" height="1598" fill="#0b1120"/>
+
+  <text x="28" y="44" font-family="Inter, DejaVu Sans, Liberation Sans, sans-serif" font-size="23" font-weight="700" fill="#e2e8f0">
+    Palimpsest — running on Alibaba Cloud Function Compute
+  </text>
+  <text x="28" y="72" font-family="Inter, DejaVu Sans, Liberation Sans, sans-serif" font-size="14" fill="#94a3b8">
+    Function <tspan font-family="DejaVu Sans Mono, monospace" fill="#5eead4">palimpsest</tspan> ·
+    region <tspan font-family="DejaVu Sans Mono, monospace" fill="#5eead4">ap-southeast-1 (Singapore)</tspan> ·
+    <tspan font-weight="650" fill="#fbbf24">496 invocations</tspan> in the last 24h ·
+    <tspan font-weight="650" fill="#5eead4">0 errors</tspan>
+  </text>
+
+  <!-- the console screenshot is composited over this rect by sharp -->
+  <rect x="28" y="118" width="1544" height="840" rx="8" fill="#0f172a" stroke="#1e293b"/>
+
+  <!-- the code that deployed it -->
+  <rect x="28" y="980" width="1544" height="526" rx="10"
+        fill="#0f172a" stroke="#1e293b"/>
+  <text x="48" y="1008" font-family="DejaVu Sans Mono, monospace" font-size="13" fill="#94a3b8">
+    s.yaml — the Serverless Devs config that deployed it (excerpt, verbatim)
+  </text>
+  <text x="48" y="1034" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">edition: 3.0.0</text>
+<text x="48" y="1055" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">name: palimpsest</text>
+<text x="48" y="1076" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">access: default</text>
+<text x="48" y="1097" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1"></text>
+<text x="48" y="1118" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">  region: ap-southeast-1</text>
+<text x="48" y="1139" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">    component: fc3</text>
+<text x="48" y="1160" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">      region: ${vars.region}</text>
+<text x="48" y="1181" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">      functionName: palimpsest</text>
+<text x="48" y="1202" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">      runtime: custom.debian10</text>
+<text x="48" y="1223" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">      customRuntimeConfig:</text>
+<text x="48" y="1244" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">        command:</text>
+<text x="48" y="1265" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">          - ./bootstrap</text>
+<text x="48" y="1286" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">        port: 9000</text>
+<text x="48" y="1307" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">      internetAccess: true</text>
+<text x="48" y="1328" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">          triggerType: http</text>
+<text x="48" y="1349" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">            authType: anonymous</text>
+<text x="48" y="1370" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">    component: fc3-domain</text>
+<text x="48" y="1391" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">      region: ${vars.region}</text>
+<text x="48" y="1412" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#5eead4">      domainName: palimpsest.zettabyteincorp.com</text>
+<text x="48" y="1433" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">      protocol: HTTP,HTTPS</text>
+<text x="48" y="1454" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">      certConfig:</text>
+<text x="48" y="1475" xml:space="preserve"
+           font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+           fill="#cbd5e1">          - functionName: palimpsest</text>
+
+  <text x="28" y="1558" font-family="DejaVu Sans Mono, monospace" font-size="15" fill="#fbbf24">
+    github.com/joyahmed/palimpsest/blob/main/s.yaml
+  </text>
+  <text x="1572" y="1558" font-family="DejaVu Sans Mono, monospace" font-size="15" fill="#5eead4"
+        text-anchor="end">palimpsest.zettabyteincorp.com</text>
+  <text x="28" y="1580" font-family="Inter, DejaVu Sans, Liberation Sans, sans-serif" font-size="12.5" fill="#94a3b8">
+    Qwen Cloud (DashScope International) for adjudication, extraction and embeddings · deployed with Serverless Devs
+  </text>
+</svg>

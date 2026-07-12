@@ -142,6 +142,46 @@ pnpm explain              # see the bug for yourself
 > invalid_api_key` even though the key is perfectly valid. This will cost you an
 > hour if you let it.
 
+## It's live
+
+**[palimpsest.zettabyteincorp.com](https://palimpsest.zettabyteincorp.com)** — running on
+Alibaba Cloud Function Compute (Singapore).
+
+Tell it something that contradicts what it believes, and watch the old belief die: struck
+through, with the reason it was killed, and the claim that replaced it underneath. Real calls
+to Qwen. Nothing staged.
+
+### Proof of deployment
+
+![Proof of deployment](docs/proof-of-deployment.png)
+
+The Function Compute console (function `palimpsest`, `ap-southeast-1`, 496 invocations, 0
+errors) alongside the [`s.yaml`](s.yaml) that deployed it. Both halves are in this repo so you
+can check either one:
+
+| | |
+|---|---|
+| **The deployment config** | [`s.yaml`](s.yaml) — FC3 component, region, custom runtime, HTTP trigger, custom domain + TLS, Qwen endpoint |
+| **The backend it deploys** | [`src/server.ts`](src/server.ts) — the audit view, `/api/believe`, `/api/remember` |
+| **How it's packaged** | [`src/scripts/package-fc.ts`](src/scripts/package-fc.ts) — and why it vendors its own Node 24 |
+
+> **Two things worth knowing if you deploy to FC yourself**, because neither is discoverable
+> from the error message:
+>
+> 1. **`node:sqlite` needs Node 22+, and every Function Compute runtime stops at Node 20** -
+>    managed `nodejs20` and the `custom.debian10` image alike. A naive deploy crashes on cold
+>    start. We vendor Node 24 into the package and `exec` it from `bootstrap`, which is exactly
+>    what a custom runtime is *for*.
+> 2. **Alibaba force-downloads any HTML served from its own domains** - `Content-Disposition:
+>    attachment` on `*.fcapp.run`, `*.aliyuncs.com` and OSS static hosting, every region, no
+>    setting to disable. The browser downloads the audit view instead of rendering it. A custom
+>    domain is the only supported escape.
+
+**Honest limitation:** Function Compute's filesystem is ephemeral. The deployment ships with a
+pre-seeded store; writes made during your session live in `/tmp` and vanish when the container
+recycles. That is fine for a demo and wrong for a database, and we say so here rather than
+implying durability we do not have.
+
 ## Stack
 
 TypeScript · Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`, `text-embedding-v4`) ·

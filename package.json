@@ -22,7 +22,8 @@
     "bench": "tsx --env-file=.env src/bench/run.ts",
     "render": "tsx --env-file=.env src/scripts/render.ts",
     "mcp": "tsx --env-file=.env src/mcp/server.ts",
-    "serve": "tsx --env-file=.env src/server.ts"
+    "serve": "tsx --env-file=.env src/server.ts",
+    "diagram": "tsx src/scripts/diagram.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/node": "^22.10.5",
     "acme-client": "^5.4.0",
+    "sharp": "^0.35.3",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

@@ -9,6 +9,8 @@ Built for the **Global AI Hackathon Series with Qwen Cloud** · Track: **MemoryA
 
 ---
 
+![Architecture](docs/architecture.png)
+
 ## The bug
 
 Ask any AI agent with memory what port your dev server runs on. It will answer

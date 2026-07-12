@@ -32,7 +32,26 @@ const SEED = process.env.PALIMPSEST_SEED ?? './palimpsest.db';
 const LIVE = process.env.PALIMPSEST_DB ?? '/tmp/palimpsest.db';
 if (SEED !== LIVE && existsSync(SEED) && !existsSync(LIVE)) copyFileSync(SEED, LIVE);
 
-const store = new ClaimStore(LIVE);
+let store = new ClaimStore(LIVE);
+
+/**
+ * Put the memory back to its seeded state.
+ *
+ * Needed because the demo is stateful and the interesting claims are killable exactly ONCE - tell
+ * it "we moved to DuckDB" twice and the second time it correctly answers "I already knew that",
+ * which is right but makes for a terrible demo. Anyone showing this to someone else needs a way
+ * back to a clean slate, and so does a judge who wants to try it twice.
+ *
+ * Deliberately unauthenticated, like the rest of the API. The worst anyone can do is return a
+ * public demo to the exact state it ships in.
+ */
+function resetStore(): { claims: number; dead: number } {
+  store.close();
+  copyFileSync(SEED, LIVE);
+  store = new ClaimStore(LIVE);
+  const all = store.all();
+  return { claims: all.length, dead: all.filter((c) => c.status !== 'active').length };
+}
 
 function json(res: ServerResponse, code: number, body: unknown): void {
   const payload = JSON.stringify(body, null, 2);
@@ -106,6 +125,19 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
         ),
         alreadyKnew: result.revisions.flatMap((r) => r.duplicateOf.map((d) => d.content)),
       });
+    }
+
+    // ---- back to the seeded state. The demo is stateful; you need a way to run it twice.
+    if (url.pathname === '/api/reset' && (req.method === 'POST' || req.method === 'GET')) {
+      const { claims, dead } = resetStore();
+      // A GET is allowed so you can reset by pasting the URL in the address bar - which is what
+      // you want when you are mid-demo and do not have a terminal to hand.
+      if (req.method === 'GET') {
+        res.writeHead(302, { location: '/' });
+        res.end();
+        return;
+      }
+      return json(res, 200, { reset: true, claims, dead });
     }
 
     // ---- the raw belief set, corpses included

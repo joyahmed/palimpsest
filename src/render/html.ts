@@ -251,6 +251,12 @@ const CSS = `
   .tell .hint code { background:var(--bg); border:1px solid var(--line); border-radius:4px;
     padding:.1rem .35rem; font-size:.9em; cursor:pointer; }
 
+  /* A claim can only be killed ONCE. Tell it "we moved to DuckDB" twice and the second time it
+     correctly says "I already knew that" - right, but a dead demo. So: a way back to the seed. */
+  .reset { float:right; color:var(--muted); font-size:.78rem; text-decoration:none;
+    border-bottom:1px dotted var(--line); }
+  .reset:hover { color:var(--rose); border-bottom-color:var(--rose); }
+
   .status { margin-top:.85rem; font-size:.82rem; color:var(--teal); display:none; }
   .status.on { display:block; }
   .status .blink { animation:blink 1s steps(2) infinite; }
@@ -387,6 +393,7 @@ export function renderMemory(all: Claim[], now: number, opts: RenderOptions = {}
       whether anything has to <em>die</em>. Try
       <code class="eg">The launch slipped to November.</code>
       <code class="eg">We're back on Postgres.</code>
+      <a class="reset" id="reset" href="#" title="Put the memory back to its seeded state">reset</a>
     </div>
     <div class="status" id="status"></div>
   </form>
@@ -504,6 +511,15 @@ function showChanged() {
 for (const eg of document.querySelectorAll('.eg')) {
   eg.onclick = () => { say.value = eg.textContent.trim(); say.focus(); };
 }
+
+// Back to the seeded state, so the demo can be run more than once.
+const resetBtn = $('#reset');
+if (resetBtn) resetBtn.onclick = async (e) => {
+  e.preventDefault();
+  resetBtn.textContent = 'resetting...';
+  await fetch(API + '/api/reset', { method: 'POST' });
+  location.reload();
+};
 
 const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

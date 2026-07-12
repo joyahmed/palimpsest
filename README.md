@@ -144,7 +144,7 @@ pnpm explain              # see the bug for yourself
 
 ## It's live
 
-**[palimpsest.zettabyteincorp.com](https://palimpsest.zettabyteincorp.com)** — running on
+**[palimpsest.zettabyteincorp.com](https://palimpsest.zettabyteincorp.com)** - running on
 Alibaba Cloud Function Compute (Singapore).
 
 Tell it something that contradicts what it believes, and watch the old belief die: struck
@@ -161,9 +161,9 @@ can check either one:
 
 | | |
 |---|---|
-| **The deployment config** | [`s.yaml`](s.yaml) — FC3 component, region, custom runtime, HTTP trigger, custom domain + TLS, Qwen endpoint |
-| **The backend it deploys** | [`src/server.ts`](src/server.ts) — the audit view, `/api/believe`, `/api/remember` |
-| **How it's packaged** | [`src/scripts/package-fc.ts`](src/scripts/package-fc.ts) — and why it vendors its own Node 24 |
+| **The deployment config** | [`s.yaml`](s.yaml) - FC3 component, region, custom runtime, HTTP trigger, custom domain + TLS, Qwen endpoint |
+| **The backend it deploys** | [`src/server.ts`](src/server.ts) - the audit view, `/api/believe`, `/api/remember` |
+| **How it's packaged** | [`src/scripts/package-fc.ts`](src/scripts/package-fc.ts) - and why it vendors its own Node 24 |
 
 > **Two things worth knowing if you deploy to FC yourself**, because neither is discoverable
 > from the error message:

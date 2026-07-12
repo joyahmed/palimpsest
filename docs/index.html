@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I built an agent memory that forgets - and my first benchmark said it was worthless</title>
+<meta name="description" content="Building Palimpsest on Qwen Cloud: agent memory as claims with a lifecycle. The benchmark, the negative result, the grader that disagreed with itself, and the number I had to correct downward.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1120'/%3E%3Crect x='6' y='9' width='17' height='3' rx='1.5' fill='%2364748b'/%3E%3Crect x='4' y='9.2' width='21' height='2.6' rx='1.3' fill='%23fb7185'/%3E%3Crect x='6' y='19' width='20' height='3.4' rx='1.7' fill='%235eead4'/%3E%3Ccircle cx='26.5' cy='10.5' r='2' fill='%23fb7185'/%3E%3C/svg%3E">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --bg:#0b1120; --panel:#0f172a; --ink:#e2e8f0; --muted:#94a3b8; --line:#1e293b;
+    --teal:#5eead4; --rose:#fb7185; --amber:#fbbf24; --dead:#8b9cb3;
+  }
+  body { margin:0; padding:0 1.25rem 6rem; background:var(--bg); color:var(--ink);
+    font:17px/1.72 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  main { max-width:720px; margin:0 auto; }
+
+  header { padding:4.5rem 0 2.5rem; border-bottom:1px solid var(--line); margin-bottom:2.5rem; }
+  h1 { font-size:2.15rem; line-height:1.22; font-weight:700; letter-spacing:-0.025em; margin:0 0 1rem; }
+  .standfirst { color:var(--muted); font-size:1.12rem; margin:0 0 1.4rem; }
+  .meta { color:var(--muted); font-size:.9rem; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; }
+  .meta a { color:var(--teal); }
+  .dot { opacity:.4; }
+
+  h2 { font-size:1.42rem; font-weight:650; letter-spacing:-0.015em; margin:3.2rem 0 1rem; }
+  h3 { font-size:1.1rem; font-weight:650; margin:2.2rem 0 .7rem; }
+  p { margin:0 0 1.15rem; }
+  a { color:var(--teal); }
+  strong { color:#f1f5f9; font-weight:650; }
+  em { color:var(--ink); }
+
+  pre { background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--teal);
+    border-radius:8px; padding:1rem 1.1rem; overflow-x:auto; margin:1.5rem 0;
+    font:13.5px/1.6 "SF Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace; color:#cbd5e1; }
+  code { font:0.88em/1.5 "SF Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;
+    background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:.1rem .35rem; }
+  pre code { background:none; border:0; padding:0; }
+
+  blockquote { margin:1.6rem 0; padding:.9rem 1.2rem; background:var(--panel);
+    border-left:2px solid var(--rose); border-radius:0 8px 8px 0; color:var(--muted); }
+  blockquote p:last-child { margin:0; }
+  blockquote strong { color:var(--rose); }
+
+  figure { margin:2rem 0; }
+  figure img { width:100%; border-radius:10px; border:1px solid var(--line); display:block; }
+  figcaption { color:var(--muted); font-size:.86rem; margin-top:.6rem; text-align:center; }
+
+  table { width:100%; border-collapse:collapse; margin:1.6rem 0; font-size:.95rem; }
+  th, td { text-align:left; padding:.6rem .7rem; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
+  td.n { font-variant-numeric:tabular-nums; }
+  .win { color:var(--teal); font-weight:650; }
+  .lose { color:var(--rose); font-weight:650; }
+
+  .cta { display:flex; gap:.75rem; flex-wrap:wrap; margin:2.5rem 0; }
+  .cta a { display:inline-block; padding:.7rem 1.15rem; border-radius:9px; text-decoration:none;
+    font-weight:600; font-size:.93rem; }
+  .cta a.primary { background:var(--teal); color:#04231f; }
+  .cta a.ghost { border:1px solid var(--line); color:var(--ink); background:var(--panel); }
+
+  hr { border:0; border-top:1px solid var(--line); margin:3rem 0; }
+  footer { color:var(--muted); font-size:.9rem; padding-top:2rem; border-top:1px solid var(--line);
+    margin-top:3.5rem; }
+
+  @media (max-width:640px) {
+    body { font-size:16px; } h1 { font-size:1.7rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>I built an agent memory that forgets - and my first benchmark said it was worthless</h1>
+  <p class="standfirst">
+    Every AI memory shipping today is append-only, and append-only memory rots. Here's what it
+    took to build one that can kill a belief - including the part where my own numbers proved
+    me wrong, twice.
+  </p>
+  <div class="meta">
+    <span>Joy Ahmed</span><span class="dot">·</span>
+    <span>12 July 2026</span><span class="dot">·</span>
+    <span>Built on <strong>Qwen Cloud</strong>, deployed on <strong>Alibaba Cloud Function Compute</strong></span>
+  </div>
+</header>
+
+<p>
+  Ask any AI agent with memory what port your dev server runs on. It answers instantly,
+  confidently - and if the port ever changed, <strong>wrong</strong>.
+</p>
+<p>
+  Not because retrieval failed. Because retrieval <em>worked exactly as designed</em>.
+</p>
+
+<h2>The bug is in the geometry</h2>
+
+<p>
+  Every memory system shipping today stores text, embeds it, and retrieves whatever is most
+  <strong>similar</strong> to your question. Watch what that does to two claims that flatly
+  contradict each other:
+</p>
+
+<pre><code>"We decided to use Postgres."    vs   "We decided NOT to use Postgres."      0.93
+"The API listens on port 3000."  vs   "Port 3000 is where the API listens."  0.91</code></pre>
+
+<p>
+  <strong>The contradiction scores higher than the paraphrase.</strong> To a vector store,
+  "we decided to use Postgres" and "we decided <em>not</em> to use Postgres" are more alike
+  than two ways of saying the same true thing - because embeddings capture <em>topic</em>, not
+  <em>truth</em>. The single word that reverses the entire meaning barely moves the number.
+</p>
+<p>
+  You cannot fix this with a threshold. Any cutoff that keeps the paraphrase keeps the
+  contradiction. <strong>The signal is not in the number.</strong>
+</p>
+<p>
+  So the retriever hands the model the live fact and the dead one, ranked side by side, with no
+  way to tell them apart. The model serves whichever won the cosine coin-flip. That is why your
+  agent lies to you fluently.
+</p>
+
+<h2>Why nobody fixes it</h2>
+
+<p>
+  Memory systems store <strong>chunks</strong>. A chunk is not a unit of truth - one paragraph
+  holds five facts, three still true and two dead. You cannot delete half a chunk. You cannot
+  edit it, because you don't know which sentence went bad.
+</p>
+<p>
+  So the only move left is to append a new chunk and leave the old one there.
+</p>
+<p>
+  <strong>That is why every memory system is append-only.</strong> Not for lack of imagination -
+  they have no unit small enough to kill.
+</p>
+
+<h2>Claims, not chunks</h2>
+
+<p>
+  A memory in Palimpsest is not a chunk. It is a <strong>claim</strong>: one atomic assertion,
+  independently true or false - which means it can have a status, which means it can
+  <strong>die</strong>.
+</p>
+<p>Each claim carries:</p>
+<ul>
+  <li><strong>Provenance</strong> - where it came from, and when it became true in the world.</li>
+  <li><strong>Kind</strong> - because facts don't rot at one universal rate. <code>identity</code>
+      has a ten-year half-life; <code>config</code> has thirty days; an <code>event</code> never
+      decays at all, because a thing that happened cannot become false.</li>
+  <li><strong>Confidence</strong> - decaying exponentially from birth at the rate its kind implies.</li>
+  <li><strong>History</strong> - when a claim dies, we keep the body, the killer, the date, and the reason.</li>
+</ul>
+
+<p>
+  When a new claim arrives it doesn't just get appended. Cosine finds what it <em>might</em>
+  collide with, and then <code>qwen3.7-plus</code> <strong>rules</strong>: update, contradiction,
+  refinement, or genuinely new?
+</p>
+
+<blockquote>
+  <p>
+    <strong>Cosine can only shortlist. Only reasoning can rule.</strong> Every other memory system
+    stops one arrow earlier.
+  </p>
+</blockquote>
+
+<figure>
+  <img src="architecture.png" alt="Palimpsest architecture: transcript → extract → embed → shortlist → adjudicate; the store; the read path; the Alibaba Cloud deployment">
+  <figcaption>The write path (how a belief dies), the store (nothing is deleted), and the read path (why a corpse is never served).</figcaption>
+</figure>
+
+<h2>Then I measured it, and it said I'd wasted my time</h2>
+
+<p>
+  A thesis without a number is a vibe. So I built a benchmark: twelve sessions of a real-shaped
+  project across three months, where facts <em>change</em> - the database is swapped, the launch
+  slips, the brand colour moves, the PM is replaced. Then ask what is true <strong>now</strong>.
+</p>
+<p>
+  The baseline is naive RAG - chunk, embed, top-k retrieve - given the <em>same</em> extraction,
+  the <em>same</em> embeddings and the <em>same</em> answering model. The only difference between
+  the two systems is that one of them can kill a claim.
+</p>
+<p>The first run:</p>
+
+<pre><code>                     naive RAG    Palimpsest
+FACTS THAT CHANGED      80%          80%
+NEVER CHANGED          100%         100%
+OVERALL                 88%          88%
+SERVED A DEAD FACT        0            0</code></pre>
+
+<p>
+  <strong>Identical.</strong> Adjudication worked mechanically - four claims correctly superseded
+  - it just didn't <em>matter</em>. My clever idea bought precisely nothing.
+</p>
+<p>That result is still in the repo. Two flaws, both mine.</p>
+
+<h3>1. My fixture leaked the answer</h3>
+
+<p>Every change in my test data announced its own death:</p>
+<blockquote>
+  <p><em>"It's on port 4000 now, <strong>3000 was colliding</strong> with the other project."</em></p>
+</blockquote>
+<p>
+  Real speech doesn't work like that. You say <em>"we're on 4000 now."</em> You do not file a
+  death certificate for 3000. The naive memory was retrieving the obituary alongside the corpse
+  - and any competent model can infer which one is dead from that.
+</p>
+
+<h3>2. Fifteen claims with top-5 retrieval isn't RAG</h3>
+
+<p>
+  It hands the model a third of the entire store. The failure mode I'm targeting <em>cannot
+  occur</em> when the disambiguating context lands in the context window by accident.
+</p>
+
+<p>Before re-running, I wrote down the condition in advance:</p>
+<blockquote>
+  <p>
+    <strong>Pre-registered:</strong> if the corrected benchmark still shows no meaningful gap,
+    the thesis is wrong and I change the <strong>design</strong>, not the <strong>chart</strong>.
+  </p>
+</blockquote>
+
+<h2>The gap appeared</h2>
+
+<p>
+  Facts no longer announce their own death - the new value is simply stated, months later, with
+  no reference to what it replaced. And ~100 claims instead of 15, so top-k retrieval is
+  genuinely selective.
+</p>
+
+<table>
+  <thead>
+    <tr><th></th><th>naive RAG</th><th>Palimpsest</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Facts that <strong>changed</strong></td><td class="n lose">36% (4/11)</td><td class="n win">73% (8/11)</td></tr>
+    <tr><td>Facts that never changed</td><td class="n">88% (7/8)</td><td class="n">88% (7/8)</td></tr>
+    <tr><td>Overall</td><td class="n">58% (11/19)</td><td class="n win">79% (15/19)</td></tr>
+    <tr><td><strong>Served a dead fact</strong></td><td class="n lose">3</td><td class="n win">0</td></tr>
+  </tbody>
+</table>
+
+<p>
+  Twice as accurate on facts that moved. But the row I'd check, if I were you, is the second one.
+</p>
+<p>
+  <strong>A memory so eager to forget that it destroys facts which are still true is worse than
+  append-only, not better.</strong> That column could have killed the project. It didn't - but I'd
+  have published it if it had.
+</p>
+<p>
+  Naive RAG served three dead facts - "Postgres", "September 1st", "#1E4D8C" - with total
+  confidence, weeks after each one died. Palimpsest served none.
+</p>
+
+<figure>
+  <img src="shot-bench.png" alt="Benchmark output: naive RAG 36% vs Palimpsest 73% on facts that changed; 3 dead facts served vs 0">
+  <figcaption>Not a table I typed into a design tool - the literal stdout of <code>pnpm bench</code>, replayed from the committed cache.</figcaption>
+</figure>
+
+<h2>Then the measuring instrument betrayed me</h2>
+
+<p>
+  The grader marked two systems that had returned the <strong>identical</strong> answer -
+  <code>"Session cookies"</code> - one correct and the other wrong.
+</p>
+<p>
+  Same input. Different verdict. <strong>An instrument that disagrees with itself cannot certify
+  anything</strong>, and my headline number was resting on it.
+</p>
+<p>
+  Fixing it - majority of three independent votes, with the disagreement rate printed next to
+  every number it produces - exposed something worse underneath.
+</p>
+<p>
+  Claim IDs are random UUIDs, minted fresh on every run. And they were being interpolated straight
+  into the adjudication prompt. So two runs over <strong>byte-identical inputs built different
+  prompts</strong>, missed the cache, and re-sampled the model every single time.
+</p>
+
+<blockquote>
+  <p>
+    <strong>My benchmark had been quietly re-rolling its own dice.</strong>
+  </p>
+</blockquote>
+
+<p>
+  And it meant one of my published numbers was wrong: naive RAG serves <strong>3</strong> dead
+  facts, not the 4 I had reported. One of those corpses was an artefact of my own
+  non-determinism.
+</p>
+<p>
+  The corrected number is <em>less</em> flattering to me. It's the one in the table above.
+</p>
+<p>
+  The model now sees candidates by ordinal (1, 2, 3) instead of by UUID, so the prompt is a pure
+  function of its inputs. Which means the whole thing finally replays:
+</p>
+
+<pre><code>PALIMPSEST_CACHE_ONLY=1 pnpm bench
+  → 448 cache hits, 0 misses</code></pre>
+
+<p>
+  Clone the repo, replay the benchmark, get bit-identical numbers - <strong>no API key, no
+  spend</strong>. <code>CACHE_ONLY</code> makes a cache miss <em>throw</em> rather than quietly hit
+  the API, so a replay cannot silently drift from what's published. I'd rather you checked than
+  trusted me.
+</p>
+
+<h2>Watch a belief die</h2>
+
+<figure>
+  <img src="shot-kill.png" alt="A revision chain: 'Postgres is running in Docker' struck through, died 20 Jun. 'The project uses SQLite instead of Postgres' struck through, died just now. 'SQLite was removed from the Meridian project' alive.">
+  <figcaption>Three generations of one belief, on the live deployment. Nothing was deleted - the corpses keep their date, their killer, and the reason.</figcaption>
+</figure>
+
+<p>
+  That screenshot isn't staged. A script opened the deployed site, typed <em>"We ripped SQLite out
+  this morning. Meridian runs on DuckDB now"</em> into the box, and waited for the memory to
+  actually kill something. The reason text - <em>"SQLite was removed from the project on 12 Jul, so
+  the earlier decision to use SQLite is no longer true"</em> - was written by
+  <code>qwen3.7-plus</code>, not by me.
+</p>
+
+<div class="cta">
+  <a class="primary" href="https://palimpsest.zettabyteincorp.com">Try it live →</a>
+  <a class="ghost" href="https://github.com/joyahmed/palimpsest">Read the code</a>
+</div>
+
+<h2>Two traps in deploying to Function Compute</h2>
+
+<p>Both cost me real time, and neither is discoverable from the error message.</p>
+
+<h3>1. <code>node:sqlite</code> needs Node 22+. Every FC runtime stops at Node 20.</h3>
+<p>
+  Managed <code>nodejs20</code> and the <code>custom.debian10</code> base image alike. Deployed
+  naively, the function crashes on cold start with an unhelpful module error - and you find out on
+  deploy day, with the clock running.
+</p>
+<p>
+  The fix is to <strong>bring your own Node</strong>: vendor Node 24 into the code package
+  (checksum-verified) and <code>exec</code> it from <code>bootstrap</code>. That isn't a hack around
+  the platform - it's precisely what a custom runtime is <em>for</em>. It hands you a bare Debian and
+  asks for an executable. The application deploys unmodified; nothing about the architecture bends to
+  fit the host.
+</p>
+<p>
+  One detail: Singapore permits a 500&nbsp;MB code package where most regions cap at 100&nbsp;MB -
+  and Singapore is where you must deploy anyway, because a Qwen Cloud key is only valid against the
+  DashScope <em>International</em> endpoint. Point it at the mainland-China endpoint and you get
+  <code>401 invalid_api_key</code> with a perfectly good key.
+</p>
+
+<h3>2. Alibaba force-downloads any HTML served from its own domains.</h3>
+<p>
+  <code>Content-Disposition: attachment</code> is added to every <code>text/html</code> response from
+  <code>*.fcapp.run</code>, <code>*.aliyuncs.com</code>, and OSS static website hosting - in every
+  region, since 2019. It's an anti-abuse policy and <strong>there is no setting to disable it</strong>.
+</p>
+<p>
+  Your browser <em>downloads</em> the audit view instead of rendering it. The API worked the whole
+  time; only the one artefact a human would actually look at was broken. A custom domain is the only
+  supported escape. (The expensive part - ICP filing - applies only to mainland-China regions.
+  Singapore is exempt.)
+</p>
+
+<figure>
+  <img src="proof-of-deployment.png" alt="Alibaba Cloud Function Compute console showing the palimpsest function running in ap-southeast-1 with 496 invocations and 0 errors, alongside the s.yaml that deployed it">
+  <figcaption>Function Compute, Singapore. 496 invocations, 0 errors - and the <code>s.yaml</code> that put it there.</figcaption>
+</figure>
+
+<h2>What I'd tell you if you're building memory</h2>
+
+<p>
+  <strong>The benchmark is the product.</strong> Anyone can build something that forgets. The hard
+  part is forgetting <em>only what's dead</em> - and the only way to know whether you've managed it
+  is to build an honest measuring instrument and then be willing to publish what it tells you.
+</p>
+<p>
+  Mine told me my idea was worthless. Then it told me my grader was broken. Then it told me one of my
+  numbers was wrong, in my own favour.
+</p>
+<p>
+  Each time, the fix went to the design or to the instrument. <strong>Never to the chart.</strong>
+</p>
+
+<h3>Where it still fails</h3>
+<p>
+  Three of eleven changed facts. It answers <code>"ams"</code> - the Fly.io <em>region</em> - instead
+  of <code>"Fly.io"</code>, because the region claim outranked the platform claim at retrieval. The
+  correct claim was <em>alive in the store</em> and simply wasn't reached. That's a retrieval failure,
+  not an adjudication failure, which tells me the next win is reranking, not more reasoning.
+</p>
+<p>
+  And the deployed function's filesystem is ephemeral: writes made during your visit live in
+  <code>/tmp</code> and vanish when the container recycles. Fine for a demo, wrong for a database. I'd
+  rather say that here than imply a durability I don't have.
+</p>
+
+<hr>
+
+<h2>The stack</h2>
+<table>
+  <tbody>
+    <tr><td><strong>Adjudication</strong> - the one call that decides whether a belief lives or dies</td><td><code>qwen3.7-plus</code></td></tr>
+    <tr><td>Claim extraction - cheap, fast, high volume</td><td><code>qwen3.6-flash</code></td></tr>
+    <tr><td>Collision retrieval</td><td><code>text-embedding-v4</code></td></tr>
+    <tr><td>Deployment</td><td>Alibaba Cloud Function Compute 3.0, Singapore</td></tr>
+    <tr><td>Store</td><td>SQLite (<code>node:sqlite</code>) - no vector database</td></tr>
+  </tbody>
+</table>
+<p>
+  No vector DB, deliberately. At a few thousand claims, brute-force cosine is microseconds - and the
+  hard problem here was never retrieval <em>speed</em>. It was deciding which retrieved claims are
+  still <strong>true</strong>.
+</p>
+<p>
+  There's also an MCP server, so any MCP-capable agent can plug this in as its memory layer.
+</p>
+
+<div class="cta">
+  <a class="primary" href="https://palimpsest.zettabyteincorp.com">palimpsest.zettabyteincorp.com</a>
+  <a class="ghost" href="https://github.com/joyahmed/palimpsest">github.com/joyahmed/palimpsest</a>
+</div>
+
+<footer>
+  <p>
+    <em>palimpsest (n.) - a manuscript scraped clean and written over, where traces of the earlier
+    text still show through.</em>
+  </p>
+  <p>
+    Built in a day for the Global AI Hackathon Series with Qwen Cloud, MemoryAgent track. MIT
+    licensed. Every model call is cached and committed, so every number above is reproducible without
+    an API key.
+  </p>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
+  <rect width="1500" height="1000" fill="#0b1120"/>
+  <rect x="22" y="22" width="1456" height="956" rx="12" fill="#0d1526" stroke="#1e293b"/>
+  <circle cx="48" cy="46" r="5" fill="#fb7185" opacity="0.55"/>
+  <circle cx="66" cy="46" r="5" fill="#fbbf24" opacity="0.55"/>
+  <circle cx="84" cy="46" r="5" fill="#5eead4" opacity="0.55"/>
+  <text x="106" y="51" font-family="DejaVu Sans Mono, monospace" font-size="13" fill="#7c8ba1">
+    PALIMPSEST_CACHE_ONLY=1 pnpm bench — replayed from cache, no API key, no spend
+  </text>
+  <g transform="translate(0, 34)"><text x="46" y="244" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">  naive: 85 claims, 0 dead</tspan></text>
+<text x="46" y="277" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">  palimpsest: 84 claims, 12 dead</tspan></text>
+<text x="46" y="310" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"></text>
+<text x="46" y="343" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="700">  RESULTS</tspan></text>
+<text x="46" y="376" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"></text>
+<text x="46" y="409" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">──────────────────────────────────────────────────────────────────</tspan></text>
+<text x="46" y="442" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">                             </tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="700">naive RAG         palimpsest        </tspan></text>
+<text x="46" y="475" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">──────────────────────────────────────────────────────────────────</tspan></text>
+<text x="46" y="508" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  FACTS THAT CHANGED          36%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(4/11)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">         73%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(8/11)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">        </tspan></text>
+<text x="46" y="541" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  FACTS THAT NEVER CHANGED    88%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(7/8)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">          88%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(7/8)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">         </tspan></text>
+<text x="46" y="574" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  OVERALL                     58%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(11/19)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">        79%  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">(15/19)</tspan><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">       </tspan></text>
+<text x="46" y="607" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  </tspan><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">──────────────────────────────────────────────────────────────────</tspan></text>
+<text x="46" y="640" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#cbd5e1" font-weight="400">  served a DEAD fact           3                       0</tspan></text>
+<text x="46" y="673" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"></text>
+<text x="46" y="706" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">  grader: majority of 3 votes · disagreed with itself on 0/19 questions</tspan></text>
+<text x="46" y="739" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"><tspan xml:space="preserve" fill="#7c8ba1" font-weight="400">  cache: 448 hit / 0 miss / 0 coalesced</tspan></text>
+<text x="46" y="772" font-family="DejaVu Sans Mono, monospace"
+     font-size="20"></text></g>
+
+  <text x="46" y="956" font-family="DejaVu Sans Mono, monospace" font-size="13.5" fill="#7c8ba1">
+    19 questions · 12 sessions over 3 months · same extraction, same embeddings, same answering model
+  </text>
+  <text x="1454" y="956" font-family="DejaVu Sans Mono, monospace" font-size="13.5"
+        fill="#5eead4" text-anchor="end">the only difference: one of them can kill a claim</text>
+</svg>

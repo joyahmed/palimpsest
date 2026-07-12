@@ -29,3 +29,10 @@ VIDEO-SCRIPT.md
 palimpsest.db
 bench-*.db
 dist/
+
+# Submission drafts - the Devpost story, the X thread, the coaching notes on how to land
+# them. Same reason PLAN.md and VIDEO-SCRIPT.md are ignored: strategy and delivery notes,
+# local only, never published. A judge should read the repo, not the pitch about the repo.
+DEVPOST.md
+X-THREAD.md
+X-POSTS.txt

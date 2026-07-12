@@ -13,6 +13,10 @@ runtime/
 # NOTE: .cache/llm is deliberately NOT ignored - the model-call cache is committed
 # so anyone can replay the benchmark and reproduce our numbers without a key
 # and without spending anything. That reproducibility is part of the submission.
+#
+# .cache/node IS ignored - it's a ~30 MB Node tarball, re-downloadable and
+# checksum-verified on every package build. Nothing reproducible depends on it.
+.cache/node/
 
 # Internal working docs - strategy and delivery notes. Local only, never published.
 PLAN.md

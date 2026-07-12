@@ -1,0 +1,74 @@
+# Palimpsest -> Alibaba Cloud Function Compute 3.0
+#
+#   pnpm build && pnpm package:fc && s deploy
+#
+# This file, with the deployed function it produces, IS the proof-of-deployment
+# artifact the hackathon rules ask for: a real backend, on Alibaba Cloud
+# infrastructure, calling Qwen Cloud APIs.
+#
+# REGION is Singapore (ap-southeast-1), and not by preference:
+#   - Qwen Cloud keys are valid ONLY against the DashScope *International* endpoint.
+#     Point one at the mainland-China endpoint and it returns 401 invalid_api_key
+#     even though the key is perfectly good.
+#   - Singapore permits a 500 MB code package. Most regions cap at 100 MB, and we
+#     ship a Node runtime inside ours.
+#
+# RUNTIME is custom.debian10 and we bring our own Node 24, because the claim store
+# uses `node:sqlite` (Node 22+) and every FC-provided Node stops at 20. See
+# src/scripts/package-fc.ts.
+#
+# SECRETS are not in this file, not in git, and not in the package. DASHSCOPE_API_KEY
+# is read from the deploying shell's environment and set as a function env var by FC.
+
+edition: 3.0.0
+name: palimpsest
+access: default
+
+vars:
+  region: ap-southeast-1
+
+resources:
+  palimpsest:
+    component: fc3
+    props:
+      region: ${vars.region}
+      functionName: palimpsest
+      description: Agent memory that forgets. Claims with a lifecycle - provenance, decay, contradiction, revision.
+
+      runtime: custom.debian10
+      # Staged by `pnpm package:fc`. Never the repo root: that would ship .git, the
+      # 6 MB replay cache, the source, and the .env.
+      code: ./deploy
+      customRuntimeConfig:
+        command:
+          - ./bootstrap
+        port: 9000
+
+      cpu: 0.5
+      memorySize: 1024
+      diskSize: 512
+      # POST /api/remember runs the whole extract -> embed -> retrieve -> adjudicate
+      # pipeline, and adjudication is a reasoning call to qwen3.7-plus. The default
+      # 10s would truncate it mid-thought.
+      timeout: 120
+      # Required: the function calls Qwen Cloud over the public internet.
+      internetAccess: true
+
+      environmentVariables:
+        DASHSCOPE_API_KEY: ${env('DASHSCOPE_API_KEY')}
+        QWEN_BASE_URL: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+        # FC mounts the code read-only. server.ts copies the seed to /tmp and writes
+        # there - an honest limitation, stated in the README rather than hidden.
+        PALIMPSEST_SEED: /code/palimpsest.db
+        PALIMPSEST_DB: /tmp/palimpsest.db
+        PALIMPSEST_CACHE_DIR: /tmp/llm-cache
+
+      triggers:
+        - triggerName: http
+          triggerType: http
+          triggerConfig:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - OPTIONS

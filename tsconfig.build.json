@@ -1,0 +1,20 @@
+/*
+ * Emit config for the deployed container. The base tsconfig is `noEmit` because
+ * everything else in this repo runs through tsx; only the Function Compute image
+ * needs real JavaScript on disk.
+ *
+ * Output goes to build/, NOT dist/ - dist/index.html is the statically rendered
+ * audit page (`pnpm render`) and compiling over it would clobber that.
+ */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "build",
+    // Source already imports with explicit .js extensions, which is what NodeNext
+    // ESM emit wants. The base config's "Bundler" resolution cannot emit.
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["src/**/*.ts"]
+}

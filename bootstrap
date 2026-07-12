@@ -1,0 +1,16 @@
+#!/bin/bash
+# Function Compute custom-runtime entrypoint.
+#
+# FC starts this, and this starts our HTTP server. The server must listen on
+# 0.0.0.0:9000 - FC routes every request to that port and will report the function
+# as failed if nothing is listening there.
+#
+# We exec our OWN Node, vendored into the package, rather than the Node on the base
+# image. The base image ships Node 20; the claim store is built on `node:sqlite`,
+# which landed in Node 22. Bringing your own executable is precisely what a custom
+# runtime is FOR - see scripts/package-fc.ts for how it gets here.
+#
+# `exec` matters: it replaces this shell with node, so node becomes PID 1 and
+# receives FC's shutdown signals directly instead of having them swallowed by bash.
+set -e
+exec ./runtime/bin/node ./build/server.js

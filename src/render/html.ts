@@ -99,6 +99,23 @@ function claimRow(c: Claim, now: number, isDead: boolean): string {
     </div>`;
 }
 
+/**
+ * The favicon: a dead claim above a live one. The whole product at 16 pixels.
+ *
+ * Inlined as a data URI rather than served as a file, because this page is one
+ * self-contained document - it must render identically from the deployed function, from
+ * disk, and from a static export, none of which can be relied on to serve a sibling asset.
+ */
+const FAVICON = `data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0b1120"/>
+    <rect x="6" y="9" width="17" height="3" rx="1.5" fill="#64748b"/>
+    <rect x="4" y="9.2" width="21" height="2.6" rx="1.3" fill="#fb7185"/>
+    <rect x="6" y="19" width="20" height="3.4" rx="1.7" fill="#5eead4"/>
+    <circle cx="26.5" cy="10.5" r="2" fill="#fb7185"/>
+  </svg>`,
+)}`;
+
 const CSS = `
   /* width:100% + padding + border must NOT add up to more than 100%. Without this, the
      tab strip is ~12px wider than every card beneath it and hangs off to the right. */
@@ -108,19 +125,22 @@ const CSS = `
     --bg:#f8fafc; --panel:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
     --teal:#0f766e; --teal-soft:#ccfbf1; --dead:#94a3b8; --rose:#9f1239;
   }
+  /* --dead was #475569: near-invisible on a near-black panel. A struck-through claim is the
+     most important thing on this page - it is the whole product - and it was the hardest
+     thing to read. Lifted until it is legible but still clearly subordinate to the living. */
   @media (prefers-color-scheme: dark) {
     :root { --bg:#0b1120; --panel:#0f172a; --ink:#e2e8f0; --muted:#94a3b8; --line:#1e293b;
-            --teal:#5eead4; --teal-soft:#134e4a; --dead:#475569; --rose:#fb7185; }
+            --teal:#5eead4; --teal-soft:#134e4a; --dead:#8b9cb3; --rose:#fb7185; }
   }
   :root[data-theme="dark"] { --bg:#0b1120; --panel:#0f172a; --ink:#e2e8f0; --muted:#94a3b8;
-    --line:#1e293b; --teal:#5eead4; --teal-soft:#134e4a; --dead:#475569; --rose:#fb7185; }
+    --line:#1e293b; --teal:#5eead4; --teal-soft:#134e4a; --dead:#8b9cb3; --rose:#fb7185; }
   :root[data-theme="light"] { --bg:#f8fafc; --panel:#fff; --ink:#0f172a; --muted:#64748b;
     --line:#e2e8f0; --teal:#0f766e; --teal-soft:#ccfbf1; --dead:#94a3b8; --rose:#9f1239; }
 
   body { margin:0; padding:2rem 1.5rem 3rem; background:var(--bg); color:var(--ink);
     font:14.5px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased; }
-  main { max-width:820px; margin:0 auto; position:relative; z-index:1; }
+  main { max-width:980px; margin:0 auto; position:relative; z-index:1; }
 
   /* ---------------------------------------------------------------- the palimpsest itself
      A palimpsest is a manuscript scraped clean and written over, where traces of the
@@ -133,10 +153,13 @@ const CSS = `
   .ghosts { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
     user-select:none; }
   .ghosts span { position:absolute; white-space:nowrap; font-weight:600; letter-spacing:-.02em;
-    color:var(--ink); opacity:.035; text-decoration:line-through;
+    color:var(--ink); opacity:.022; text-decoration:line-through;
     text-decoration-thickness:.06em; transform:rotate(-4deg); }
-  @media (prefers-color-scheme: dark) { .ghosts span { opacity:.055; } }
-  :root[data-theme="dark"] .ghosts span { opacity:.055; }
+  @media (prefers-color-scheme: dark) { .ghosts span { opacity:.03; } }
+  :root[data-theme="dark"] .ghosts span { opacity:.03; }
+  /* Below ~1400px the gutters are too narrow for the ghosts to sit BEHIND the page - they
+     end up crowding the column instead of haunting it. Hide them rather than compete. */
+  @media (max-width:1400px) { .ghosts { display:none; } }
 
   /* A slow drift, so the page feels alive without ever asking to be looked at. */
   @keyframes drift { to { transform:rotate(-4deg) translateY(-18px); } }
@@ -169,7 +192,11 @@ const CSS = `
   .claim + .claim { margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--line); }
   .claim-head { display:flex; gap:.6rem; align-items:baseline; }
   .content { font-weight:480; }
-  .claim.dead .content { text-decoration:line-through; text-decoration-thickness:1px;
+  /* The strike is rose, not grey. A killed claim should look KILLED, not merely faded -
+     and the text under it stays legible, because "what you used to believe" is the thing
+     a judge came here to read. */
+  .claim.dead .content { text-decoration:line-through; text-decoration-thickness:1.5px;
+    text-decoration-color:color-mix(in srgb, var(--rose) 70%, transparent);
     color:var(--dead); font-weight:400; }
 
   .kind { font-size:.64rem; text-transform:uppercase; letter-spacing:.07em; font-weight:650;
@@ -333,6 +360,8 @@ export function renderMemory(all: Claim[], now: number, opts: RenderOptions = {}
     .join('');
 
   return `<title>Palimpsest - what this memory believes, and what it used to</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="${FAVICON}">
 <style>${CSS}</style>
 <div class="ghosts" aria-hidden="true">${ghosts}</div>
 <main>

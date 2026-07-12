@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"4b743639-4335-4521-a470-3c82bd16b28d\", \"relation\": \"unrelated\", \"reason\": \"Vitest for unit testing and Playwright for end-to-end testing are complementary tools that can coexist in the same project.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW claim relates to an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nEXISTING CLAIM:\n- id: 4b743639-4335-4521-a470-3c82bd16b28d\n- observed: 2026-06-04\n- kind: config\n- claim: \"Playwright is used for end-to-end testing.\"\n\nAnalysis:\nThe new claim is about unit testing (Vitest).\nThe existing claim is about end-to-end testing (Playwright).\nThese are two different testing tools for different types of testing. They can both be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReasoning:\nBoth claims can be true simultaneously as they refer to different testing frameworks for different testing scopes (unit vs. e2e).\n\nLet's format the output as requested.\n```json\n{\"rulings\": [{\"id\": \"4b743639-4335-4521-a470-3c82bd16b28d\", \"relation\": \"unrelated\", \"reason\": \"Vitest is for unit testing and Playwright is for end-to-end testing, so both can be true at the same time.\"}]}\n```\nWait, the reason should be one plain sentence.\n\"Vitest is used for unit testing while Playwright is used for end-to-end testing, so both can be true simultaneously.\"\nPerfect.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830102,
+  "id": "chatcmpl-83966b63-6d75-9fd3-a383-8a4aa61546d9",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 463,
+    "completion_tokens_details": {
+      "reasoning_tokens": 378,
+      "text_tokens": 463
+    },
+    "prompt_tokens": 721,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 721
+    },
+    "total_tokens": 1184
+  }
+}

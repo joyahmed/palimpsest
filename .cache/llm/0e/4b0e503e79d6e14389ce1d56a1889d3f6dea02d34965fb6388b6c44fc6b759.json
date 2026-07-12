@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Marcus asking about SOC 2 and Joy stating it's a next-year problem are both true; one is a question, the other is a response or stance.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: decision\n- claim: \"Joy stated that SOC 2 compliance is a next-year problem.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-06-04\n- kind: event\n- claim: \"Marcus asked about SOC 2 compliance.\"\n\nAnalysis:\nThe new claim is about Joy stating something about SOC 2 compliance.\nThe existing claim is about Marcus asking about SOC 2 compliance.\nBoth happened on the same day (2026-06-04).\nThey are about the same general topic (SOC 2 compliance), but they describe different events/actions by different people (Joy stating vs Marcus asking).\nCan both be true at the same time? Yes. Marcus could have asked about it, and Joy could have stated it's a next-year problem (perhaps in response, or in a different context).\nTherefore, they are unrelated.\n\nRelation: unrelated\nReason: Both events can be true simultaneously as they describe different actions by different people regarding the same topic.\n\nLet's double check the rules.\n- supersedes: Cannot both be true. (They can both be true).\n- duplicate: Same fact. (Different facts).\n- refines: Adds detail, doesn't contradict. (Not really a refinement, just a different event).\n- unrelated: Same topic, both can be true at once. (Fits perfectly).\n\nReason formulation: \"Both events can be true simultaneously as they describe different actions by different people regarding the same topic.\" or \"Marcus asking about SOC 2 and Joy stating it is a next-year problem are distinct events that can both be true.\"\n\nLet's write a concise, human-readable reason.\n\"Marcus asking about SOC 2 and Joy stating it is a next-year problem are distinct events that can both be true.\"\nor\n\"Joy's statement and Marcus's question are distinct events that can both be true.\"\n\nI'll output:\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Joy's statement and Marcus's question are distinct events that can both be true.\"}]}\nWait, the prompt says: \"e.g. old \"port 3000 collided with another project\" + new \"dev server on port 4000\" (one explains WHY, the other states the new value - both true)\"\nMy reason: \"Joy's statement and Marcus's question are distinct events that can both be true.\" - this is good.\nAnother option: \"Marcus asking about SOC 2 and Joy stating it is a next-year problem are separate events that can both be true.\"\n\nLet's use: \"Marcus asking about SOC 2 and Joy stating it is a next-year problem are separate events that can both be true.\"\nActually, \"Joy's statement and Marcus's question are distinct events that can both be true.\" is more concise.\n\nLet's review the prompt instructions.\nReturn JSON:\n{\"rulings\": [{\"id\": string, \"relation\": \"supersedes\"|\"duplicate\"|\"refines\"|\"unrelated\", \"reason\": string}]}\n\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Joy's statement and Marcus's question are distinct events that can both be true.\"\n    }\n  ]\n}\n```\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832449,
+  "id": "chatcmpl-7bb8d339-8f13-9fb2-83d8-a74fe5900ab2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 839,
+    "completion_tokens_details": {
+      "reasoning_tokens": 780,
+      "text_tokens": 839
+    },
+    "prompt_tokens": 691,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 691
+    },
+    "total_tokens": 1530
+  }
+}

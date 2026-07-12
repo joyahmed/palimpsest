@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"cfa111a6-548d-4493-9216-c43bc6e94ca9\", \"relation\": \"supersedes\", \"reason\": \"The primary colour changed from blue (#1E4D8C) to teal (#0F766E) as of 15 Jun 2026.\"}, {\"id\": \"547bc94d-2a46-4bf8-923b-6781e49de3c8\", \"relation\": \"unrelated\", \"reason\": \"The typeface (Inter) is a separate config concern from the primary colour and is unaffected by this change.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against two existing claims in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: config\n- claim: \"The primary colour is teal (#0F766E).\"\n\nEXISTING CLAIM 1:\n- id: cfa111a6-548d-4493-9216-c43bc6e94ca9\n- observed: 2026-04-14\n- kind: config\n- claim: \"The primary brand color for Halcyon is blue with hex code #1E4D8C.\"\n\nEXISTING CLAIM 2:\n- id: 547bc94d-2a46-4bf8-923b-6781e49de3c8\n- observed: 2026-04-14\n- kind: config\n- claim: \"The typeface used is Inter.\"\n\nAnalysis for Claim 1:\n- New claim: Primary colour is teal (#0F766E).\n- Old claim: Primary brand color is blue (#1E4D8C).\n- Both are about the primary color. They cannot both be true at the same time (a primary color cannot be both blue and teal, assuming it's a single primary color, or at least the hex codes are different and they contradict the specific primary color).\n- The new claim is observed later (2026-06-15 vs 2026-04-14).\n- Therefore, the new claim supersedes the old claim.\n\nAnalysis for Claim 2:\n- New claim: Primary colour is teal (#0F766E).\n- Old claim: Typeface used is Inter.\n- These are about completely different things (color vs typeface).\n- They can both be true at the same time.\n- Therefore, the new claim is unrelated to the old claim.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"cfa111a6-548d-4493-9216-c43bc6e94ca9\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The primary color was changed from blue to teal in June, replacing the previous blue color set in April.\"\n    },\n    {\n      \"id\": \"547bc94d-2a46-4bf8-923b-6781e49de3c8\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim specifies the primary color, while the old claim specifies the typeface; both can be true simultaneously.\"\n    }\n  ]\n}\n```\nWait, the reason should be \"one plain sentence a human will read in an audit log\".\nReason 1: \"The primary color was updated to teal in June, replacing the previous blue color from April.\"\nReason 2: \"The new claim defines the primary color, which is independent of the typeface specified in the old claim.\"\n\nLet's refine the reasons to be very clear and concise.\nReason 1: \"The primary color was changed to teal in June, replacing the blue color established in April.\"\nReason 2: \"The new claim specifies the primary color, which is entirely independent of the typeface specified in the old claim.\"\n\nCheck constraints:\n- \"supersedes\" if they CANNOT BOTH BE TRUE. Yes, primary color cannot be both blue and teal.\n- \"unrelated\" if same topic but both can be true. Wait, is it same topic? No, color vs typeface. So unrelated is correct.\n- Return JSON.\n\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"cfa111a6-548d-4493-9216-c43bc6e94ca9\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The primary color was updated to teal in June, replacing the blue color established in April.\"\n    },\n    {\n      \"id\": \"547bc94d-2a46-4bf8-923b-6781e49de3c8\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim specifies the primary color, which is independent of the typeface specified in the old claim.\"\n    }\n  ]\n}\n```\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798361,
+  "id": "chatcmpl-b8f2f5eb-a47c-9307-b410-760bd667b043",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1192,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1025,
+      "text_tokens": 1192
+    },
+    "prompt_tokens": 804,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 804
+    },
+    "total_tokens": 1996
+  }
+}

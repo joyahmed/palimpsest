@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"547bc94d-2a46-4bf8-923b-6781e49de3c8\", \"relation\": \"duplicate\", \"reason\": \"Both claims state the same fact: the font/typeface in use is Inter, with no new information added.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: config\n- claim: \"The font type remains Inter.\"\n\nEXISTING CLAIM:\n- id: 547bc94d-2a46-4bf8-923b-6781e49de3c8\n- observed: 2026-04-14\n- kind: config\n- claim: \"The typeface used is Inter.\"\n\nAnalysis:\nThe new claim states \"The font type remains Inter.\"\nThe old claim states \"The typeface used is Inter.\"\nBoth claims state that the font/typeface is Inter.\nThe new claim uses the word \"remains\", which implies it was Inter before and still is.\nThis is essentially the same fact, restated.\nRelation: duplicate.\nReason: Both claims state that the font/typeface used is Inter, with no new information added.\n\nLet's double check.\n\"font type\" vs \"typeface\" - synonymous in this context.\n\"remains Inter\" vs \"used is Inter\" - same meaning.\nNo contradiction. No new detail. Just a restatement.\nRelation: duplicate.\nReason: The new claim restates that the font is Inter, adding no new information to the existing claim.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798395,
+  "id": "chatcmpl-3ee5126f-8467-95b3-ad70-d75c2e3d980a",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 386,
+    "completion_tokens_details": {
+      "reasoning_tokens": 306,
+      "text_tokens": 386
+    },
+    "prompt_tokens": 715,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 715
+    },
+    "total_tokens": 1101
+  }
+}

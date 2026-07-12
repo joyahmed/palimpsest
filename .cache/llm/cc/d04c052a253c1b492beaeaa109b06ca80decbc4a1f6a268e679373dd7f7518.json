@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Vitest for unit testing and Playwright for end-to-end testing are complementary tools that can both be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nEXISTING CLAIMS:\n- id: 1\n  observed: 2026-06-04\n  kind: config\n  claim: \"Playwright is used for end-to-end testing.\"\n\nRELATIONS:\n- supersedes: makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, doesn't contradict.\n- unrelated: same topic, both can be true.\n\nAnalysis:\nNew claim: Vitest is used for unit testing.\nOld claim 1: Playwright is used for end-to-end testing.\n\nThese are about different testing frameworks for different types of testing (unit vs e2e). They can both be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReason: Vitest is for unit testing and Playwright is for end-to-end testing, so both can be true simultaneously.\n\nLet's format the output as JSON.\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Vitest is used for unit testing while Playwright is used for end-to-end testing, so both statements can be true simultaneously.\"}]}\nWait, the prompt says \"reason is one plain sentence a human will read in an audit log.\"\n\"Vitest is for unit testing and Playwright is for end-to-end testing, so both can be true at the same time.\" -> good.\nLet's refine: \"Vitest is used for unit testing and Playwright for end-to-end testing, so both can be true simultaneously.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832401,
+  "id": "chatcmpl-31501f08-fb21-9b52-adb4-c4534d54195a",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 458,
+    "completion_tokens_details": {
+      "reasoning_tokens": 408,
+      "text_tokens": 458
+    },
+    "prompt_tokens": 688,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 688
+    },
+    "total_tokens": 1146
+  }
+}

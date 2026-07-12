@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The new claim states the project is on track for an October launch, which contradicts the previously held target of September 1st; the launch date has shifted.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The security review in August is a separate event that does not conflict with the project's October launch timeline.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-07-09\n- kind: state\n- claim: \"The project remains on track for an October launch.\"\n\nEXISTING CLAIMS:\n1. id: 1\n   observed: 2026-04-06\n   kind: event\n   claim: \"The target launch date for the Meridian project is September 1st.\"\n2. id: 2\n   observed: 2026-07-09\n   kind: event\n   claim: \"A security review has been scheduled for August.\"\n\nLet's evaluate Claim 1:\nOld: \"The target launch date for the Meridian project is September 1st.\" (observed 2026-04-06)\nNew: \"The project remains on track for an October launch.\" (observed 2026-07-09)\nCan both be true? No. The target launch date was September 1st, but now it's October. The launch date has changed. The new claim supersedes the old claim because the target date has moved from September to October. Wait, is it \"supersedes\"? Yes, the target date changed. The old claim says target is Sept 1. The new claim says target is October. They cannot both be true at the same time (the current target date).\nWait, \"remains on track for an October launch\" implies the target is October. The old claim says target is Sept 1. This is a change in the target date. So it supersedes.\n\nLet's evaluate Claim 2:\nOld: \"A security review has been scheduled for August.\" (observed 2026-07-09)\nNew: \"The project remains on track for an October launch.\" (observed 2026-07-09)\nCan both be true? Yes. A security review in August and an October launch are perfectly compatible. They are related to the project timeline but do not contradict. So it's \"unrelated\" (or maybe \"refines\"? No, it doesn't add detail to the security review, it's just another fact about the timeline). The prompt says \"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\"\n\nLet's double check Claim 1.\nOld: \"The target launch date for the Meridian project is September 1st.\"\nNew: \"The project remains on track for an October launch.\"\nSince the new claim is observed later (July vs April), it can supersede. The target date changed from Sept 1 to October. Thus, the old claim is now false (the target is no longer Sept 1).\nRelation: supersedes.\nReason: The target launch date has been pushed back to October, making the previous September 1st target obsolete.\n\nLet's double check Claim 2.\nOld: \"A security review has been scheduled for August.\"\nNew: \"The project remains on track for an October launch.\"\nRelation: unrelated.\nReason: Both the August security review and the October launch can be true simultaneously as part of the project timeline.\n\nWait, is there any possibility that Claim 1 is \"unrelated\" because one is an event and one is a state? No, the target date is a state/fact that changed. \"The target launch date... is Sept 1\" vs \"on track for an October launch\". The target date changed. Supersedes.\n\nLet's write out the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The target launch date has been pushed to October, making the previous September 1st target obsolete.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"An August security review and an October launch are compatible events in the project timeline.\"\n    }\n  ]\n}\n\nCheck constraints:\n- \"reason\" is one plain sentence a human will read in an audit log.\n- Return JSON.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832910,
+  "id": "chatcmpl-b67fc53c-3782-9aa7-8fc3-10cd626f3384",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1037,
+    "completion_tokens_details": {
+      "reasoning_tokens": 937,
+      "text_tokens": 1037
+    },
+    "prompt_tokens": 735,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 735
+    },
+    "total_tokens": 1772
+  }
+}

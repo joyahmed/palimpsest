@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"grade\": \"wrong\",\n  \"why\": \"The system explicitly stated UNKNOWN instead of providing the correct answer TypeScript.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830589,
+  "id": "chatcmpl-3cece451-6c87-9765-965e-17809432bd54",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 30,
+    "prompt_tokens": 285,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 285
+    },
+    "total_tokens": 315
+  }
+}

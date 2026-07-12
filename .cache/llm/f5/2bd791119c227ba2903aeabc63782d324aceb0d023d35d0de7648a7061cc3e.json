@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The new claim is about rate limiting configuration, while the old claim is about authentication implementation using JWT; these are distinct security concerns that can coexist.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against a list of EXISTING CLAIMS.\n\nNEW CLAIM:\n- observed: 2026-05-02\n- kind: config\n- claim: \"Rate limiting is implemented at 100 requests a minute per key.\"\n\nEXISTING CLAIMS:\n- id: 1\n  observed: 2026-04-06\n  kind: config\n  claim: \"Authentication for the Meridian API will be implemented using JWT.\"\n\nRELATIONS:\n- supersedes: makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, doesn't contradict.\n- unrelated: same topic, both can be true. Leave old alone.\n\nAnalysis:\nNew claim is about rate limiting (100 req/min per key).\nOld claim 1 is about authentication (JWT).\nThese are completely different configuration details. They can both be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nWait, are they even the same topic? Rate limiting and authentication are both API security/config, but they are distinct features. The prompt says \"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\" Actually, they are just different facts. I will classify as unrelated.\n\nLet's write the JSON output.\nid: \"1\"\nrelation: \"unrelated\"\nreason: \"Rate limiting and authentication are distinct configuration details that can both be true simultaneously.\"",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831353,
+  "id": "chatcmpl-98fe16b6-a9eb-9c5a-a4c1-cfad54d50cc2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 402,
+    "completion_tokens_details": {
+      "reasoning_tokens": 345,
+      "text_tokens": 402
+    },
+    "prompt_tokens": 697,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 697
+    },
+    "total_tokens": 1099
+  }
+}

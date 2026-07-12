@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The dev server moved to port 4000 as of 1 Jul 2026; port 3000 is no longer in use.\"}]}",
+        "reasoning_content": "Let me analyze this situation:\n\nNEW CLAIM:\n- observed: 2026-07-01\n- claim: \"The dev server is running on port 4000\"\n\nOLD CLAIM (id: 1):\n- observed: 2026-04-06\n- claim: \"The development server for the Meridian project runs on port 3000.\"\n\nAnalysis:\n- The new claim is about the dev server running on port 4000\n- The old claim is about the dev server running on port 3000\n- The new claim is MORE RECENT (2026-07-01 vs 2026-04-06)\n- These are about the same subject (dev server port)\n- They CANNOT both be true at the same time - a server cannot be running on both port 3000 and port 4000 simultaneously (assuming this is the same server)\n\nThis is a clear case of supersession. The port changed from 3000 to 4000. The new claim makes the old one false. The old claim should die.\n\nThe new claim is newer, so it's valid to supersede the old one (not backwards in time).\n\nRelation: supersedes\nReason: The dev server port changed from 3000 to 4000 between April and July 2026.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832546,
+  "id": "chatcmpl-ecad633d-fb63-9cc2-9229-9b3885f44f81",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 378,
+    "completion_tokens_details": {
+      "reasoning_tokens": 316,
+      "text_tokens": 378
+    },
+    "prompt_tokens": 700,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 700
+    },
+    "total_tokens": 1078
+  }
+}

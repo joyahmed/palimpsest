@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"f950be48-45a5-4568-92f5-e98bf51f8184\", \"relation\": \"unrelated\", \"reason\": \"One claim describes the data structure of a shipment, while the other states that Joy is building the tracking module; both can be true simultaneously without conflict.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI have a NEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nAnd one EXISTING CLAIM:\n- id: f950be48-45a5-4568-92f5-e98bf51f8184\n- observed: 2026-04-21\n- kind: state\n- claim: \"Joy is building out the shipment tracking module.\"\n\nI need to determine the relationship between the new claim and the existing claim.\nThe new claim is about the data structure/config of a shipment (manifest, route, customs docs).\nThe existing claim is about a person (Joy) building a shipment tracking module.\n\nThese are related to the same general topic (shipments), but they describe completely different things (data structure vs. who is building the module). They can both be true at the same time.\nTherefore, the relationship is \"unrelated\".\n\nReason: The new claim describes the data structure of a shipment, while the existing claim describes who is building the tracking module; both can be true simultaneously.\n\nLet's format the output as JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"f950be48-45a5-4568-92f5-e98bf51f8184\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim describes the data structure of a shipment, while the existing claim describes who is building the tracking module; both can be true simultaneously.\"\n    }\n  ]\n}\nDouble check the rules.\n- supersedes: CANNOT both be true. (False here)\n- duplicate: same fact. (False here)\n- refines: adds detail, doesn't contradict. (False here, they are about different aspects)\n- unrelated: same topic, both can be true. (True here)\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797703,
+  "id": "chatcmpl-f035ff16-733c-9600-bbdc-096a989df87e",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 555,
+    "completion_tokens_details": {
+      "reasoning_tokens": 466,
+      "text_tokens": 555
+    },
+    "prompt_tokens": 726,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 726
+    },
+    "total_tokens": 1281
+  }
+}

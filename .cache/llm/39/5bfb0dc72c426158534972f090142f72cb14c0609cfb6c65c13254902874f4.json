@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"stale\", \"why\": \"The answer matches the stale value Postgres instead of the current true value SQLite.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830556,
+  "id": "chatcmpl-fb255119-b535-99e1-a69b-dea527b5f8fe",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 28,
+    "prompt_tokens": 281,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 281
+    },
+    "total_tokens": 309
+  }
+}

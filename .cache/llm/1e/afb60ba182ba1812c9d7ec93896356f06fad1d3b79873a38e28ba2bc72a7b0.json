@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The middle tier price changed from $29 to $19 per month; the old price is no longer valid.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The middle tier's role as an anchor is independent of its price; both facts can coexist.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The number of pricing tiers is independent of the price of the middle tier; both facts can coexist.\"}]}",
+        "reasoning_content": "Let me analyze each existing claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-06-23\n- kind: config\n- claim: \"The middle tier of the service costs $19 per month.\"\n\nCLAIM 1:\n- observed: 2026-04-14\n- claim: \"The middle pricing tier costs $29 per month.\"\n\nThe new claim says the middle tier costs $19/month. The old claim says it costs $29/month. These CANNOT both be true at the same time - the price is either $19 or $29. The new claim is newer (2026-06-23 vs 2026-04-14), so it supersedes the old one. The price changed from $29 to $19.\n\nRelation: supersedes\nReason: The middle tier price changed from $29 to $19 per month as of June 2026.\n\nCLAIM 2:\n- observed: 2026-04-14\n- claim: \"The middle pricing tier serves as the anchor.\"\n\nThe new claim is about the price of the middle tier ($19/month). The old claim is about the role of the middle tier (serves as the anchor). These are different facts about the middle tier - both can be true at the same time. The middle tier can cost $19/month AND serve as the anchor.\n\nRelation: unrelated\nReason: The middle tier's price and its role as an anchor are independent facts that can both be true simultaneously.\n\nCLAIM 3:\n- observed: 2026-04-14\n- claim: \"The pricing model consists of three tiers.\"\n\nThe new claim mentions \"the middle tier\" which implies there are multiple tiers, consistent with three tiers. The new claim doesn't contradict the fact that there are three tiers. Both can be true at the same time.\n\nRelation: unrelated\nReason: The new claim about the middle tier's price is consistent with and does not contradict the existence of three pricing tiers.\n\nWait, let me reconsider claim 3. Could it be \"refines\"? The new claim adds detail about the middle tier's price, but it doesn't really add detail to the claim that there are three tiers. It's more of an unrelated fact that happens to be about the same pricing model. I'll stick with unrelated.\n\nActually, let me reconsider claim 2 as well. Could it be \"refines\"? The new claim adds detail about the middle tier (its price), but the old claim is about its role as an anchor. These are different aspects. I'll stick with unrelated.\n\nLet me finalize:\n- Claim 1: supersedes - price changed from $29 to $19\n- Claim 2: unrelated - role as anchor is independent of price\n- Claim 3: unrelated - number of tiers is independent of middle tier price",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832510,
+  "id": "chatcmpl-93fc83e7-f311-93b1-afd5-4fe04fd589b6",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 767,
+    "completion_tokens_details": {
+      "reasoning_tokens": 638,
+      "text_tokens": 767
+    },
+    "prompt_tokens": 773,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 773
+    },
+    "total_tokens": 1540
+  }
+}

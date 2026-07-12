@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"e35a1d59-c9e2-4fa3-b9c9-3948c4b2a386\", \"relation\": \"unrelated\", \"reason\": \"The new claim is about a database migration on the 3rd, while the old claim is about audit logging being added; these are distinct events that can both be true.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-05-19\n- kind: event\n- claim: \"The database migration ran on the 3rd.\"\n\nEXISTING CLAIM:\n- id: e35a1d59-c9e2-4fa3-b9c9-3948c4b2a386\n- observed: 2026-05-11\n- kind: event\n- claim: \"Audit logging was added to the system.\"\n\nAnalysis:\nThe new claim is about a database migration running on the 3rd.\nThe existing claim is about audit logging being added to the system.\nThese are completely different events. They can both be true at the same time. They are unrelated.\n\nRelation: unrelated\nReason: The new claim is about a database migration, while the existing claim is about audit logging; they describe different events that can both be true.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"e35a1d59-c9e2-4fa3-b9c9-3948c4b2a386\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim describes a database migration, while the existing claim describes the addition of audit logging; these are distinct events that can both be true.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- \"reason\" is one plain sentence.\n- Return JSON.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Past is fixed.\n- Time check: new is 2026-05-19, old is 2026-05-11.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829942,
+  "id": "chatcmpl-2535eae6-ac4c-97c7-8cc8-25e90045ddc1",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 527,
+    "completion_tokens_details": {
+      "reasoning_tokens": 433,
+      "text_tokens": 527
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 719
+    },
+    "total_tokens": 1246
+  }
+}

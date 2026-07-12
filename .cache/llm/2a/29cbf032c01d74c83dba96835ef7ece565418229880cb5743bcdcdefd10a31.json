@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The number of tests and the testing framework used are independent facts that can both be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nAnalysis:\nThe new claim is about the *number* of tests in the test suite (about 400).\nThe existing claim is about the *tool* used for unit testing (Vitest).\nThese two facts can easily be true at the same time. They are related to testing, but they don't contradict, duplicate, or refine each other. They are just different facts about the testing setup.\n\nRelation: unrelated\nReason: The new claim states the number of tests, while the existing claim states the testing framework; both can be true simultaneously.\n\nLet's format the output as requested.\n```json\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The new claim states the number of tests in the suite, while the existing claim identifies the testing framework; both facts can be true simultaneously.\"}]}\n```\nWait, the prompt says \"reason is one plain sentence a human will read in an audit log.\"\n\"The new claim states the number of tests, while the existing claim identifies the testing framework; both facts can be true simultaneously.\" -> Good.\nLet's double check.\nNew: \"There are about 400 tests in the test suite.\"\nOld: \"Vitest is used for unit testing.\"\nBoth are about testing. They don't contradict. Unrelated.\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832411,
+  "id": "chatcmpl-9c0cc3f6-fd7d-9b74-b71b-1ab663ff4839",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 449,
+    "completion_tokens_details": {
+      "reasoning_tokens": 403,
+      "text_tokens": 449
+    },
+    "prompt_tokens": 691,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 691
+    },
+    "total_tokens": 1140
+  }
+}

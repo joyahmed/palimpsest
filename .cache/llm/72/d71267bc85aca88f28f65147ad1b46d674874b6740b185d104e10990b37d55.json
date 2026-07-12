@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"stale\", \"why\": \"The answer matches the stale fact (Postgres) instead of the current true fact (SQLite).\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830556,
+  "id": "chatcmpl-24ece4c6-e74d-9eca-9bd3-cc64fd6561ff",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 31,
+    "prompt_tokens": 281,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 281
+    },
+    "total_tokens": 312
+  }
+}

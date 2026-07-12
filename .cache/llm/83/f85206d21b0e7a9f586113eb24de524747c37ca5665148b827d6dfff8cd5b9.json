@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"7a873559-6cf9-43b5-ae52-596b27856805\", \"relation\": \"unrelated\", \"reason\": \"The new claim describes an event where Sarah Vance communicated a launch date, while the existing claim establishes her role as Project Manager; both facts can coexist without contradiction.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-04-06\n- kind: event\n- claim: \"Sarah Vance provided the September 1st launch date to Joy.\"\n\nEXISTING CLAIM:\n- id: 7a873559-6cf9-43b5-ae52-596b27856805\n- observed: 2026-04-06\n- kind: identity\n- claim: \"Sarah Vance is the Project Manager for the Meridian project.\"\n\nAnalysis:\nThe new claim is about an event where Sarah Vance provided a launch date to Joy.\nThe existing claim is about Sarah Vance's identity/role as the Project Manager for the Meridian project.\nThese two claims are about the same person (Sarah Vance), but they describe completely different things (an event vs. a role/identity). They do not contradict each other. They can both be true at the same time. The new claim does not make the old one false, nor is it a duplicate, nor does it refine it (it doesn't add detail to her being the PM, it just states an action she took). Wait, could it be \"unrelated\"? Yes, same topic (Sarah Vance), but both can be true at once.\n\nLet's check the definitions:\n- supersedes: CANNOT both be true. (False here)\n- duplicate: same fact restated. (False here)\n- refines: adds detail, does not contradict. (False here, it's not adding detail to her being PM, it's a separate event).\n- unrelated: Same topic, but both can be true at once. Leave the old claim alone. (True here).\n\nReasoning for unrelated: The new claim describes an action taken by Sarah Vance, while the existing claim describes her role; both facts can coexist without contradiction.\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"7a873559-6cf9-43b5-ae52-596b27856805\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim describes an action taken by Sarah Vance, while the existing claim describes her project role; both facts can coexist without contradiction.\"\n    }\n  ]\n}\nDouble check constraints:\n- 'reason' is one plain sentence.\n- Return JSON.\n- Only rule 'supersedes' if CANNOT BOTH BE TRUE.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797660,
+  "id": "chatcmpl-dd19bab4-c7a9-9dd9-98d0-119b4439fa68",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 668,
+    "completion_tokens_details": {
+      "reasoning_tokens": 575,
+      "text_tokens": 668
+    },
+    "prompt_tokens": 728,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 728
+    },
+    "total_tokens": 1396
+  }
+}

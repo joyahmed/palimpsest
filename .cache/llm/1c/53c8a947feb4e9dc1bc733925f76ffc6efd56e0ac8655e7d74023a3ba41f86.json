@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"0d12965c-aa35-4b93-9625-3e7d772731f2\", \"relation\": \"refines\", \"reason\": \"The new claim adds the judgment that Postgres full-text search is sufficient for current data volume, refining the existing fact that it is used for search.\"}, {\"id\": \"98360f5c-8e4c-4e1d-94fe-adc13cba905c\", \"relation\": \"unrelated\", \"reason\": \"The old claim states Postgres is the database for the project; the new claim adds a preference about its full-text search capability, which is a separate concern that can coexist.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against two EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: preference\n- claim: \"Postgres full-text search is considered sufficient for the current data volume.\"\n\nEXISTING CLAIM 1:\n- id: 0d12965c-aa35-4b93-9625-3e7d772731f2\n- observed: 2026-05-11\n- kind: config\n- claim: \"Search functionality uses Postgres full-text search.\"\n\nEXISTING CLAIM 2:\n- id: 98360f5c-8e4c-4e1d-94fe-adc13cba905c\n- observed: 2026-04-06\n- kind: config\n- claim: \"The database used for the Meridian project is Postgres.\"\n\nLet's evaluate the relationship between the NEW CLAIM and EXISTING CLAIM 1.\nNew: \"Postgres full-text search is considered sufficient for the current data volume.\"\nOld: \"Search functionality uses Postgres full-text search.\"\nBoth can be true at the same time. The new claim adds the context/reasoning that it is considered sufficient for the current data volume. It refines the old claim by adding detail about why it's used or its adequacy.\nRelation: refines.\nReason: The new claim adds the context that Postgres full-text search is deemed sufficient for the current data volume, complementing the fact that it is used.\n\nLet's evaluate the relationship between the NEW CLAIM and EXISTING CLAIM 2.\nNew: \"Postgres full-text search is considered sufficient for the current data volume.\"\nOld: \"The database used for the Meridian project is Postgres.\"\nBoth can be true at the same time. One states the database is Postgres, the other states that its full-text search is sufficient for the data volume. They are related to Postgres but don't contradict or duplicate each other.\nRelation: unrelated.\nReason: The new claim discusses the adequacy of Postgres full-text search, while the old claim simply states that Postgres is the database used for the project; both facts can coexist.\n\nWait, is there any overlap?\n\"Postgres full-text search is considered sufficient...\" vs \"Search functionality uses Postgres full-text search.\" -> refines.\n\"Postgres full-text search is considered sufficient...\" vs \"The database used for the Meridian project is Postgres.\" -> unrelated.\n\nLet's double check.\nCan \"Postgres full-text search is considered sufficient\" supersede \"Search functionality uses Postgres full-text search\"? No, they don't contradict.\nCan it be duplicate? No, \"sufficient for current data volume\" is new information.\nSo \"refines\" is correct for 0d12965c.\n\nFor 98360f5c: \"The database used for the Meridian project is Postgres.\"\nNew claim: \"Postgres full-text search is considered sufficient for the current data volume.\"\nThey are about the same general topic (Postgres), but both can be true at once. One is about the DB choice, the other is about the search feature's adequacy. \"unrelated\" is correct.\n\nFormat:\n{\"rulings\": [{\"id\": \"0d12965c-aa35-4b93-9625-3e7d772731f2\", \"relation\": \"refines\", \"reason\": \"The new claim adds the context that Postgres full-text search is deemed sufficient for the current data volume, complementing the fact that it is used.\"}, {\"id\": \"98360f5c-8e4c-4e1d-94fe-adc13cba905c\", \"relation\": \"unrelated\", \"reason\": \"The new claim discusses the adequacy of Postgres full-text search, while the old claim simply states that Postgres is the database used for the project; both facts can coexist.\"}]}\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if CANNOT BOTH BE TRUE.\n- BE CAREFUL WITH EVENTS/TIME. (Not applicable here, no events, dates are same or new is newer).\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829816,
+  "id": "chatcmpl-ac544652-7c59-9a75-b11e-53bc3510d0c8",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1159,
+    "completion_tokens_details": {
+      "reasoning_tokens": 984,
+      "text_tokens": 1159
+    },
+    "prompt_tokens": 800,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 800
+    },
+    "total_tokens": 1959
+  }
+}

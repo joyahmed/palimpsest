@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"stale\", \"why\": \"The answer matches the stale date of September 1st instead of the true date.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830565,
+  "id": "chatcmpl-9ad5b6b6-3306-9bb0-98a4-32dc578b7a62",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 29,
+    "prompt_tokens": 288,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 288
+    },
+    "total_tokens": 317
+  }
+}

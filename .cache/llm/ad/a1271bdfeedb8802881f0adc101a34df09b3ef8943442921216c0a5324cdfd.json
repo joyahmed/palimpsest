@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"grade\": \"stale\",\n  \"why\": \"The answer matches the stale hex code exactly.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830569,
+  "id": "chatcmpl-a24b36b8-e5a4-9383-81db-f390ac14c45a",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 27,
+    "prompt_tokens": 302,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 302
+    },
+    "total_tokens": 329
+  }
+}

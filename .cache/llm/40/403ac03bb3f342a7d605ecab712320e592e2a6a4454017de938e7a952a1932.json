@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"e783707e-384e-4468-b698-e8df5994562b\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting configuration is independent of the authentication method; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-02\n- kind: config\n- claim: \"Rate limiting is implemented at 100 requests a minute per key.\"\n\nEXISTING CLAIM:\n- id: e783707e-384e-4468-b698-e8df5994562b\n- observed: 2026-04-06\n- kind: config\n- claim: \"Authentication for the Meridian API will be implemented using JWT.\"\n\nRELATIONS:\n- supersedes: makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, does not contradict.\n- unrelated: same topic, both can be true.\n\nAnalysis:\nNew claim is about rate limiting (100 requests a minute per key).\nOld claim is about authentication (JWT).\nThese are completely different configuration aspects of an API. They can both be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReason: The new claim specifies rate limiting parameters, while the old claim specifies the authentication method; both configurations can coexist.\n\nLet's format the output as requested.\n```json\n{\"rulings\": [{\"id\": \"e783707e-384e-4468-b698-e8df5994562b\", \"relation\": \"unrelated\", \"reason\": \"The new claim specifies rate limiting parameters, while the old claim specifies the authentication method; both configurations can coexist.\"}]}\n```\nWait, the prompt says \"reason is one plain sentence a human will read in an audit log.\"\n\"The new claim specifies rate limiting parameters, while the old claim specifies the authentication method; both configurations can coexist.\" - This is one sentence.\n\nDouble check the rules.\n- supersedes: no.\n- duplicate: no.\n- refines: no.\n- unrelated: yes.\n\nOutput format:\n{\"rulings\": [{\"id\": string, \"relation\": \"...\", \"reason\": \"...\"}]}\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829687,
+  "id": "chatcmpl-a591b312-cd50-9317-a34f-cfe92df52d86",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 574,
+    "completion_tokens_details": {
+      "reasoning_tokens": 499,
+      "text_tokens": 574
+    },
+    "prompt_tokens": 728,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 728
+    },
+    "total_tokens": 1302
+  }
+}

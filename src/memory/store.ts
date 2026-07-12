@@ -165,7 +165,10 @@ export class ClaimStore {
       .filter((c) => c.embedding)
       .map((c) => ({ ...c, sim: cosine(embedding, c.embedding!) }))
       .filter((c) => c.sim >= minSim)
-      .sort((a, b) => b.sim - a.sim)
+      // Ties break on content, not on insertion order. Two claims with identical
+      // similarity must not be able to swap places between runs - that would change
+      // the adjudication prompt, and with it the cache key, and with it the numbers.
+      .sort((a, b) => b.sim - a.sim || a.content.localeCompare(b.content))
       .slice(0, k);
   }
 

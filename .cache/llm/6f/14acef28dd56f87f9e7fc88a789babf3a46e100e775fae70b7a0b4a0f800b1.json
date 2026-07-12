@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"12509c85-57b2-4a45-8d03-8c2c55b79e9e\", \"relation\": \"supersedes\", \"reason\": \"The CI system changed from CircleCI to GitHub Actions; the old provider is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"The CI system is GitHub Actions.\"\n\nEXISTING CLAIM:\n- id: 12509c85-57b2-4a45-8d03-8c2c55b79e9e\n- observed: 2026-04-14\n- kind: decision\n- claim: \"The CI/CD provider is CircleCI.\"\n\nAnalysis:\nThe new claim states the CI system is GitHub Actions (observed 2026-06-04).\nThe old claim states the CI/CD provider is CircleCI (observed 2026-04-14).\nThese two claims cannot both be true at the same time regarding the current CI system. The new claim is newer (June vs April).\nTherefore, the new claim supersedes the old claim.\n\nRelation: supersedes\nReason: The CI system was changed from CircleCI to GitHub Actions by June 2026.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- duplicate: same fact.\n- refines: adds detail.\n- unrelated: both can be true.\n\nSince a project typically has one primary CI system, and the new claim says it's GitHub Actions while the old says CircleCI, they contradict. The new one is later, so it supersedes.\n\nReason formulation: \"The CI system was updated to GitHub Actions in June 2026, replacing CircleCI.\" or \"The project switched its CI provider from CircleCI to GitHub Actions by June 2026.\"\nLet's use a clear, human-readable sentence. \"The CI provider was changed from CircleCI to GitHub Actions by June 2026.\"\nWait, \"The CI system is GitHub Actions\" vs \"The CI/CD provider is CircleCI\".\n\"The project switched its CI provider from CircleCI to GitHub Actions by June 2026.\"\nThis is one plain sentence.\nLet's refine: \"The CI provider was changed from CircleCI to GitHub Actions by June 2026.\"\nOr simply: \"The CI system was changed from CircleCI to GitHub Actions in June 2026.\"\nI'll go with: \"The CI provider was changed from CircleCI to GitHub Actions by June 2026.\"\nActually, \"The project switched its CI system from CircleCI to GitHub Actions by June 2026.\"\nLet's just say: \"The CI system was changed from CircleCI to GitHub Actions by June 2026.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830072,
+  "id": "chatcmpl-d6f3be7d-560a-9682-9f0a-cd06cade93b7",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 707,
+    "completion_tokens_details": {
+      "reasoning_tokens": 624,
+      "text_tokens": 707
+    },
+    "prompt_tokens": 721,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 721
+    },
+    "total_tokens": 1428
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"547bc94d-2a46-4bf8-923b-6781e49de3c8\", \"relation\": \"unrelated\", \"reason\": \"The typeface being Inter and dark mode being implemented are independent facts that can both be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: state\n- claim: \"Dark mode has been implemented.\"\n\nEXISTING CLAIM:\n- id: 547bc94d-2a46-4bf8-923b-6781e49de3c8\n- observed: 2026-04-14\n- kind: config\n- claim: \"The typeface used is Inter.\"\n\nAnalysis:\nThe new claim is about \"Dark mode has been implemented.\"\nThe existing claim is about \"The typeface used is Inter.\"\nThese two claims are about completely different things (dark mode vs typeface). They can both be true at the same time. They are unrelated.\n\nRelation: unrelated\nReason: The new claim is about the implementation of dark mode, while the existing claim is about the typeface used; both can be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798403,
+  "id": "chatcmpl-49d1c613-68f4-946a-950e-f315c7250518",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 303,
+    "completion_tokens_details": {
+      "reasoning_tokens": 224,
+      "text_tokens": 303
+    },
+    "prompt_tokens": 715,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 715
+    },
+    "total_tokens": 1018
+  }
+}

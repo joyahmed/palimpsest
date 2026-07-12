@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The client identity (Halcyon Freight) and the technology stack (TypeScript) are independent facts that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The project name (Meridian) and the technology stack (TypeScript) are independent facts that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"3\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The scope contact (Sarah Vance) and the technology stack (TypeScript) are independent facts that can both be true simultaneously.\"\n    }\n  ]\n}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\nThe NEW claim is: \"The technology stack for the Meridian project uses TypeScript throughout.\" (observed: 2026-04-06)\n\nEXISTING CLAIMS:\n1. \"The client for the Meridian project is Halcyon Freight.\" (observed: 2026-04-06)\n2. \"The new project is named Meridian.\" (observed: 2026-04-06)\n3. \"Scope-related matters for the Meridian project are handled through Sarah Vance.\" (observed: 2026-04-06)\n\nLet's evaluate each:\nClaim 1: Client is Halcyon Freight. New claim: Tech stack uses TypeScript.\nRelation: unrelated. They are about the same project (Meridian) but cover completely different aspects (client vs tech stack). Both can be true.\n\nClaim 2: Project is named Meridian. New claim: Tech stack uses TypeScript.\nRelation: unrelated. Same project, different aspects. Both can be true.\n\nClaim 3: Scope matters handled by Sarah Vance. New claim: Tech stack uses TypeScript.\nRelation: unrelated. Same project, different aspects. Both can be true.\n\nWait, are there any contradictions? No.\nAre there any duplicates? No.\nAre there any refinements? No.\n\nLet's write the JSON output.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The client identity and the technology stack are independent facts about the Meridian project that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The project's name and its technology stack are distinct pieces of information that do not contradict each other.\"\n    },\n    {\n      \"id\": \"3\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The point of contact for scope matters is unrelated to the programming languages used in the project's technology stack.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- Return JSON.\n- \"reason\" is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- All relations are 'unrelated'.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830900,
+  "id": "chatcmpl-26edc81b-a4c7-98a4-afef-e259409adcc7",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 730,
+    "completion_tokens_details": {
+      "reasoning_tokens": 549,
+      "text_tokens": 730
+    },
+    "prompt_tokens": 779,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 779
+    },
+    "total_tokens": 1509
+  }
+}

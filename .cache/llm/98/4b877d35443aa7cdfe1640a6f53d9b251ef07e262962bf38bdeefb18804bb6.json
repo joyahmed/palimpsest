@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"dea2b3f9-715a-46bf-a2bc-b3be22327324\", \"relation\": \"unrelated\", \"reason\": \"The storage backend (Redis) and the httpOnly flag are independent configuration details that can both be true simultaneously.\"}, {\"id\": \"17215435-32f0-4c2f-ba24-35071bc56852\", \"relation\": \"unrelated\", \"reason\": \"The fact that authentication uses session cookies and the fact that those cookies have the httpOnly flag are complementary details, not contradictory.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims and determine their relationship based on specific rules.\n\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: config\n- claim: \"The session cookies are set with the httpOnly flag.\"\n\nEXISTING CLAIMS:\n1. id: dea2b3f9-715a-46bf-a2bc-b3be22327324\n   observed: 2026-05-11\n   kind: config\n   claim: \"The session cookie storage backend is Redis.\"\n\n2. id: 17215435-32f0-4c2f-ba24-35071bc56852\n   observed: 2026-05-11\n   kind: config\n   claim: \"Authentication is implemented using session cookies.\"\n\nEVALUATION:\nClaim 1: \"The session cookie storage backend is Redis.\"\n- New claim: \"The session cookies are set with the httpOnly flag.\"\n- Relationship: These are about session cookies, but one is about the storage backend (Redis) and the other is about a specific flag (httpOnly). They can both be true at the same time.\n- Ruling: unrelated\n\nClaim 2: \"Authentication is implemented using session cookies.\"\n- New claim: \"The session cookies are set with the httpOnly flag.\"\n- Relationship: One states that session cookies are used for authentication, the other states a property of those session cookies (httpOnly flag). They can both be true at the same time. The new claim adds detail about the session cookies mentioned in the old claim, but it doesn't contradict it. Wait, is it \"refines\" or \"unrelated\"?\n\"refines: Adds detail. Does NOT contradict. Both remain true.\"\n\"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\"\nActually, \"Authentication is implemented using session cookies\" and \"The session cookies are set with the httpOnly flag\" are just two different facts about session cookies. One is about their purpose (authentication), the other is about their security configuration (httpOnly). They don't really refine each other in a direct way, but they are related to the same topic. Let's look at the \"unrelated\" example: \"port 3000 collided with another project\" + \"dev server on port 4000\" (one explains WHY, the other states the new value).\nWait, \"refines\" example: \"we dropped Docker\" + \"we dropped Docker because of build times\".\nHere, \"Authentication is implemented using session cookies\" + \"The session cookies are set with the httpOnly flag\". This is just another fact about session cookies. I'll rule it \"unrelated\" because it's a separate configuration detail, not a refinement of the authentication implementation itself. Or maybe \"unrelated\" is better because they are just two distinct facts about session cookies. Let's use \"unrelated\".\n\nLet's double check.\nClaim 1: Storage backend is Redis. New: httpOnly flag. -> unrelated.\nClaim 2: Auth uses session cookies. New: session cookies have httpOnly flag. -> unrelated. Both are true, they are just different attributes of session cookies.\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"dea2b3f9-715a-46bf-a2bc-b3be22327324\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The storage backend being Redis and the cookies having the httpOnly flag are independent configuration details that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"17215435-32f0-4c2f-ba24-35071bc56852\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Using session cookies for authentication and setting the httpOnly flag on those cookies are distinct facts that do not contradict each other.\"\n    }\n  ]\n}\nWait, could Claim 2 be \"refines\"? \"Authentication is implemented using session cookies\" -> \"The session cookies are set with the httpOnly flag\". It adds detail about the session cookies. But \"refines\" usually means adding detail to the *same* fact. E.g., \"we dropped Docker\" -> \"we dropped Docker because...\". Here, the fact is \"Auth uses session cookies\". The new fact is \"Session cookies have httpOnly\". It's a different fact. So \"unrelated\" is more accurate.\n\nLet's refine the reasons to be one plain sentence.\nReason 1: \"The storage backend being Redis and the cookies having the httpOnly flag are independent configuration details that can both be true simultaneously.\" -> \"The storage backend and the httpOnly flag are independent configuration details that can both be true at the same time.\"\nReason 2: \"Using session cookies for authentication and setting the httpOnly flag on those cookies are distinct facts that do not contradict each other.\" -> \"The purpose of the session cookies for authentication and their httpOnly security flag are distinct facts that can both be true.\"\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829738,
+  "id": "chatcmpl-17419556-bad8-9f18-beee-c9443db4ad67",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1316,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1163,
+      "text_tokens": 1316
+    },
+    "prompt_tokens": 788,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 788
+    },
+    "total_tokens": 2104
+  }
+}

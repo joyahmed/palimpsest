@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "GitHub Actions",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830571,
+  "id": "chatcmpl-7b4b2597-311e-98d1-ad11-a13d3d2ff80f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 2,
+    "prompt_tokens": 144,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 144
+    },
+    "total_tokens": 146
+  }
+}

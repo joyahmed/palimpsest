@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"02ad3b78-0653-4dc4-bd1a-cc046adaa213\", \"relation\": \"refines\", \"reason\": \"The old claim states that customs docs exist; the new claim adds that they are in PDF format, which is additional detail that does not contradict the original.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"Customs documents are in PDF format.\"\n\nEXISTING CLAIM:\n- id: 02ad3b78-0653-4dc4-bd1a-cc046adaa213\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nAnalysis:\nThe new claim states the format of the customs documents (PDF).\nThe existing claim states that each shipment has a set of customs docs (among other things).\nThese two claims do not contradict each other. They can both be true at the same time.\nThe new claim adds detail about the format of the customs docs mentioned in the existing claim.\nWait, is it \"refines\" or \"unrelated\"?\n\"refines: Adds detail. Does NOT contradict. Both remain true.\"\n\"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\"\nActually, \"refines\" is for adding detail to the *same* fact or a closely related one. The existing claim mentions \"customs docs\". The new claim specifies their format. This is adding detail to the customs docs.\nLet's look at the example for refines: old \"we dropped Docker\" + new \"we dropped Docker because of build times\".\nHere, old \"Each shipment has ... a set of customs docs\" + new \"Customs documents are in PDF format.\"\nThis adds detail about the customs docs. So \"refines\" is appropriate.\nWait, could it be \"unrelated\"? \"Same topic, but both can be true at once.\"\nUsually, if it's adding a specific attribute to an entity mentioned in the old claim, it's refines.\nLet's use \"refines\" because it specifies the format of the customs docs mentioned in the old claim.\nWait, let's re-read the definitions.\nrefines: Adds detail. Does NOT contradict. Both remain true.\nunrelated: Same topic, but both can be true at once. Leave the old claim alone. (e.g. one explains WHY, the other states the new value).\nI'll go with \"refines\" as it adds the detail of the format of the customs documents.\nActually, let me consider if \"unrelated\" is better. The old claim is about the components of a shipment. The new claim is about the format of one of those components. It's a related fact, adding detail. I will use \"refines\".\nWait, the example for unrelated: \"port 3000 collided with another project\" + \"dev server on port 4000\".\nHere, \"Each shipment has ... customs docs\" + \"Customs documents are in PDF format\".\nI'll output \"refines\".\nLet me double check. Both are true. The new claim adds detail about the customs docs.\nReason: \"The new claim adds the specific file format of the customs documents mentioned in the existing claim.\"\nLet's write the JSON.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797751,
+  "id": "chatcmpl-62352f85-903e-9893-89d0-49c50a7e0f5e",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 786,
+    "completion_tokens_details": {
+      "reasoning_tokens": 699,
+      "text_tokens": 786
+    },
+    "prompt_tokens": 723,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 723
+    },
+    "total_tokens": 1509
+  }
+}

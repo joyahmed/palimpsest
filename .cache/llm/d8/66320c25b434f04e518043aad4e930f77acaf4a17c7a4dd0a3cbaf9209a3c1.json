@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n\"grade\": \"correct\",\n\"why\": \"The answer correctly confirms the migration has run, aligning with the true answer.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830593,
+  "id": "chatcmpl-e0d6fdd5-6e7f-980b-aea4-ba1dc6de820c",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 31,
+    "prompt_tokens": 288,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 288
+    },
+    "total_tokens": 319
+  }
+}

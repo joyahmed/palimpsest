@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1e23942d-33aa-4ba1-9f47-c2a7499a9a00\", \"relation\": \"unrelated\", \"reason\": \"The new claim specifies the rate limiting configuration, while the existing claim details the authentication method; these are distinct aspects of the API's security and can coexist.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate the relationship between a NEW CLAIM and an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-05-02\n- kind: config\n- claim: \"Rate limiting is implemented at 100 requests a minute per key.\"\n\nEXISTING CLAIM:\n- id: 1e23942d-33aa-4ba1-9f47-c2a7499a9a00\n- observed: 2026-04-06\n- kind: config\n- claim: \"Authentication for the Meridian API will be implemented using JWT.\"\n\nAnalysis:\nThe new claim is about rate limiting (100 requests a minute per key).\nThe existing claim is about authentication (JWT for Meridian API).\nThese are completely different topics within the broad category of API configuration/security. They do not contradict each other, they are not duplicates, and one does not refine the other. They are unrelated.\n\nRelation: unrelated\nReason: The new claim specifies rate limiting parameters, while the existing claim details the authentication method; both can be true simultaneously as they address different security configurations.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1e23942d-33aa-4ba1-9f47-c2a7499a9a00\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim specifies rate limiting parameters, while the existing claim details the authentication method; both can be true simultaneously as they address different security configurations.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- 'reason' is one plain sentence.\n- Return JSON.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- They can both be true.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783797874,
+  "id": "chatcmpl-40b68674-3124-9a48-b58d-71e725236c38",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 525,
+    "completion_tokens_details": {
+      "reasoning_tokens": 434,
+      "text_tokens": 525
+    },
+    "prompt_tokens": 729,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 729
+    },
+    "total_tokens": 1254
+  }
+}

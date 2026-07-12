@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"da531752-8400-4292-be57-d59c97273599\", \"relation\": \"unrelated\", \"reason\": \"The number of tests and the code coverage percentage are related metrics but distinct facts; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW claim relates to an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: state\n- claim: \"Current code coverage is 71%.\"\n\nEXISTING CLAIM:\n- id: da531752-8400-4292-be57-d59c97273599\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nAnalysis:\nThe new claim is about code coverage (71%).\nThe existing claim is about the number of tests (about 400).\nThese are related to testing, but they measure different things. Both can be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReasoning:\nCode coverage and the number of tests are distinct metrics; knowing one does not invalidate the other, so both can be true simultaneously.\n\nLet's format the output as requested.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"da531752-8400-4292-be57-d59c97273599\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Code coverage and the number of tests are distinct metrics that can both be true at the same time.\"\n    }\n  ]\n}\n```\nWait, the prompt says: \"Return JSON: {\"rulings\": [{\"id\": string, \"relation\": \"supersedes\"|\"duplicate\"|\"refines\"|\"unrelated\", \"reason\": string}]}\"\nI will provide exactly that.\nNo markdown around the JSON if possible, or just standard JSON. The prompt says \"Return JSON:\". I'll output just the JSON object.\nActually, it's safer to just output the raw JSON or a markdown block. I'll output raw JSON.\nWait, \"reason is one plain sentence a human will read in an audit log.\"\n\"Code coverage and the number of tests are distinct metrics that can both be true at the same time.\" -> \"Code coverage and the total number of tests are distinct metrics, so both statements can be true simultaneously.\"\nLet's refine the reason: \"Code coverage and the number of tests are distinct metrics, so both statements can be true at the same time.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798305,
+  "id": "chatcmpl-de2ecbc6-3caf-92d0-980e-662156a4038d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 631,
+    "completion_tokens_details": {
+      "reasoning_tokens": 551,
+      "text_tokens": 631
+    },
+    "prompt_tokens": 722,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 722
+    },
+    "total_tokens": 1353
+  }
+}

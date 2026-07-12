@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"grade\": \"wrong\",\n  \"why\": \"The answer omits the critical 'Redis-backed' detail required by the true answer.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830558,
+  "id": "chatcmpl-89a63228-d759-9204-b33f-4d5db068e2d7",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 34,
+    "prompt_tokens": 282,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 282
+    },
+    "total_tokens": 316
+  }
+}

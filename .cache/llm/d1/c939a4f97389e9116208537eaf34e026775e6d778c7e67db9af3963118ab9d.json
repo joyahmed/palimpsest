@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Audit logging and session cookie authentication are independent features that can coexist.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Adding audit logging is unrelated to the number of lanes the system runs.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\nThe NEW claim is:\n- observed: 2026-05-11\n- kind: event\n- claim: \"Audit logging was added to the system.\"\n\nEXISTING CLAIMS:\n1. id: 1, observed: 2026-05-11, kind: config, claim: \"Authentication is implemented using session cookies.\"\n2. id: 2, observed: 2026-04-21, kind: state, claim: \"The system currently runs only one lane.\"\n\nI need to determine the relationship between the new claim and each existing claim.\nRelations: supersedes, duplicate, refines, unrelated.\n\nNew claim: \"Audit logging was added to the system.\" (Event, 2026-05-11)\n\nClaim 1: \"Authentication is implemented using session cookies.\" (Config, 2026-05-11)\nRelationship: Unrelated. Audit logging and authentication via session cookies are different features/configurations. They can both be true.\n\nClaim 2: \"The system currently runs only one lane.\" (State, 2026-04-21)\nRelationship: Unrelated. Audit logging and the number of lanes the system runs are different aspects of the system. They can both be true.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Audit logging and session cookie authentication are distinct system features that can coexist.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Adding audit logging does not affect or contradict the number of lanes the system runs.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- Return JSON with \"rulings\" array.\n- Each ruling has \"id\", \"relation\", \"reason\".\n- \"reason\" is one plain sentence.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831482,
+  "id": "chatcmpl-cc06d7db-0592-9d38-833d-8064e200cb84",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 552,
+    "completion_tokens_details": {
+      "reasoning_tokens": 479,
+      "text_tokens": 552
+    },
+    "prompt_tokens": 724,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 724
+    },
+    "total_tokens": 1276
+  }
+}

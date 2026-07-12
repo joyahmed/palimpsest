@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"2d883d1b-5136-4e7a-bac4-b8ba2dafcfd6\", \"relation\": \"unrelated\", \"reason\": \"The new claim is about keeping a process warm for websockets, while the old claim is about session cookie configuration; these are independent facts that can both be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: preference\n- claim: \"The process is kept warm for websocket functionality.\"\n\nEXISTING CLAIM:\n- id: 2d883d1b-5136-4e7a-bac4-b8ba2dafcfd6\n- observed: 2026-05-11\n- kind: config\n- claim: \"The session cookies are set with the httpOnly flag.\"\n\nAnalysis:\nThe new claim is about keeping a process warm for websocket functionality.\nThe existing claim is about session cookies having the httpOnly flag.\nThese two claims are about completely different aspects of the system (process warming/websockets vs. session cookie security flags).\nThey can both be true at the same time. They are unrelated.\n\nRelation: unrelated\nReason: The new claim discusses process warming for websockets, while the existing claim is about session cookie security flags; both can be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798196,
+  "id": "chatcmpl-b1531655-6300-975e-b55d-6e1854309376",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 338,
+    "completion_tokens_details": {
+      "reasoning_tokens": 249,
+      "text_tokens": 338
+    },
+    "prompt_tokens": 718,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 718
+    },
+    "total_tokens": 1056
+  }
+}

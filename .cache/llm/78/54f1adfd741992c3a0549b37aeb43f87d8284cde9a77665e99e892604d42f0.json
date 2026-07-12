@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The new claim describes a flag on the session cookies, while the old claim describes the storage backend; both can be true simultaneously.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The new claim adds a detail about how session cookies are configured, while the old claim states that session cookies are used for authentication; both facts coexist without contradiction.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against two EXISTING claims and determine the relationship: `supersedes`, `duplicate`, `refines`, or `unrelated`.\n\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: config\n- claim: \"The session cookies are set with the httpOnly flag.\"\n\nEXISTING CLAIM 1:\n- id: 1\n- observed: 2026-05-11\n- kind: config\n- claim: \"The session cookie storage backend is Redis.\"\n\nEXISTING CLAIM 2:\n- id: 2\n- observed: 2026-05-11\n- kind: config\n- claim: \"Authentication is implemented using session cookies.\"\n\nAnalysis of Claim 1 vs New Claim:\n- Claim 1: \"The session cookie storage backend is Redis.\" (Where the session data is stored)\n- New Claim: \"The session cookies are set with the httpOnly flag.\" (A property of the cookie itself)\n- Can both be true? Yes. The session data can be stored in Redis, and the cookie can have the httpOnly flag.\n- Relation: `unrelated` (Same topic - session cookies - but both can be true at once. One is about storage backend, the other is about a cookie flag).\n\nAnalysis of Claim 2 vs New Claim:\n- Claim 2: \"Authentication is implemented using session cookies.\" (How auth is implemented)\n- New Claim: \"The session cookies are set with the httpOnly flag.\" (A property of the cookie)\n- Can both be true? Yes. Auth can be implemented using session cookies, and those cookies can have the httpOnly flag.\n- Relation: `unrelated` (Same topic - session cookies - but both can be true at once. One is about the auth mechanism, the other is about a specific cookie flag).\n\nWait, let me double check the definitions.\n- unrelated: Same topic, but both can be true at once. Leave the old claim alone.\n\nLet's write the JSON output.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The storage backend being Redis and the cookie having the httpOnly flag are independent configuration details that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Using session cookies for authentication and setting the httpOnly flag on those cookies are distinct facts that do not contradict each other.\"\n    }\n  ]\n}\n```\n\nCheck constraints:\n- \"reason\" is one plain sentence a human will read in an audit log.\n- Return JSON.\n\nLet's refine the reasons to be exactly one plain sentence.\nReason 1: \"The storage backend being Redis and the cookie having the httpOnly flag are independent configuration details that can both be true simultaneously.\" -> 1 sentence.\nReason 2: \"Using session cookies for authentication and setting the httpOnly flag on those cookies are distinct facts that do not contradict each other.\" -> 1 sentence.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831440,
+  "id": "chatcmpl-b1dae49c-e889-9fcc-a1da-812002897fc2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 807,
+    "completion_tokens_details": {
+      "reasoning_tokens": 703,
+      "text_tokens": 807
+    },
+    "prompt_tokens": 727,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 727
+    },
+    "total_tokens": 1534
+  }
+}

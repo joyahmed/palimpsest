@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The CI system was changed from CircleCI to GitHub Actions; the old provider is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"The CI system is GitHub Actions.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-04-14\n- kind: decision\n- claim: \"The CI/CD provider is CircleCI.\"\n\nAnalysis:\nThe new claim states the CI system is GitHub Actions (observed 2026-06-04).\nThe old claim states the CI/CD provider is CircleCI (observed 2026-04-14).\nThese two claims cannot both be true at the same time regarding the current CI system. The new claim is more recent (June 4 vs April 14).\nTherefore, the new claim supersedes the old claim. The CI system changed from CircleCI to GitHub Actions.\n\nWait, is it \"supersedes\"? Yes, they cannot both be true at the same time. The new claim makes the old one false (as of the current state).\nLet's double check the rules.\n\"supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\"\nYes, if the CI system is GitHub Actions, it is not CircleCI.\n\nReason: \"The CI system was changed to GitHub Actions in June, replacing the previous CircleCI setup.\" or \"The CI provider was updated to GitHub Actions in June, replacing CircleCI.\"\n\nLet's write a clear, one-sentence reason.\n\"The CI system was updated to GitHub Actions in June, replacing the previous CircleCI decision.\"\nOr simply: \"The CI provider was changed to GitHub Actions in June, replacing CircleCI.\"\n\nLet's check the date. New claim is 2026-06-04. Old claim is 2026-04-14. Newer claim supersedes older claim.\n\nRuling:\nid: 1\nrelation: supersedes\nreason: \"The CI provider was changed to GitHub Actions in June, replacing the previous CircleCI setup.\"",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832368,
+  "id": "chatcmpl-760839d9-ec6a-9665-874c-cc50251e355d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 532,
+    "completion_tokens_details": {
+      "reasoning_tokens": 483,
+      "text_tokens": 532
+    },
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 686
+    },
+    "total_tokens": 1218
+  }
+}

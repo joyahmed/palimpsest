@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"efd4d945-9cd8-4f54-b552-c79e5854c40c\", \"relation\": \"unrelated\", \"reason\": \"The number of tests and the code coverage percentage are related metrics but distinct facts; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: state\n- claim: \"Current code coverage is 71%.\"\n\nEXISTING CLAIM:\n- id: efd4d945-9cd8-4f54-b552-c79e5854c40c\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nAnalysis:\nThe new claim is about code coverage (71%).\nThe existing claim is about the number of tests (about 400).\nThese are related to testing, but they are distinct facts. Both can be true at the same time.\nTherefore, the relation is \"unrelated\".\n\nReasoning:\nThe new claim states the code coverage percentage, while the existing claim states the number of tests; both are distinct metrics that can be true simultaneously.\n\nLet's format the output as requested.\n{\"rulings\": [{\"id\": \"efd4d945-9cd8-4f54-b552-c79e5854c40c\", \"relation\": \"unrelated\", \"reason\": \"Code coverage percentage and the total number of tests are distinct metrics that can both be true at the same time.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830123,
+  "id": "chatcmpl-95d8f81e-0ef1-9fef-8788-7483f2174a3e",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 398,
+    "completion_tokens_details": {
+      "reasoning_tokens": 319,
+      "text_tokens": 398
+    },
+    "prompt_tokens": 722,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 722
+    },
+    "total_tokens": 1120
+  }
+}

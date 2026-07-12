@@ -82,14 +82,49 @@ did you stop?*
 
 ## The benchmark
 
-*(Runs Day 5. Numbers go here - whatever they actually are.)*
+12 sessions of a real-shaped project, spread over three months. Facts change: the
+database is swapped, the launch slips, the brand colour moves, the PM is replaced.
+Then we ask both memories what is true **now**.
 
-Every model call is cached to disk and committed to this repo. **Clone it, replay
-the benchmark, and get bit-identical numbers - with no API key, and without
-spending anything.** `PALIMPSEST_CACHE_ONLY=1` makes a cache miss throw rather than
-silently hit the API.
+The baseline is naive RAG - chunk, embed, top-k retrieve - given the *same*
+extraction, the *same* embeddings and the *same* answering model. The only
+difference between the two systems is that one of them can kill a claim.
 
-We'd rather you checked than trusted us.
+|                          | naive RAG    | Palimpsest     |
+|--------------------------|--------------|----------------|
+| Facts that **changed**   | 36% (4/11)   | **73% (8/11)** |
+| Facts that never changed | 88% (7/8)    | 88% (7/8)      |
+| **Overall**              | 58% (11/19)  | **79% (15/19)**|
+| **Served a DEAD fact**   | **3**        | **0**          |
+
+Twice as accurate on facts that moved - and, just as importantly, **no worse on the
+facts that didn't**. A memory eager enough to forget that it destroys stable facts
+would be worse than append-only, not better. That column is the one that could have
+killed this project, and it's printed as loudly as the one that flatters it.
+
+Naive RAG served three dead facts - "Postgres", "September 1st", "#1E4D8C" - with
+total confidence, weeks after each one died. Palimpsest served none.
+
+**Where it still fails**, because that belongs in the README too: it answers `"ams"`
+(a region) instead of `"Fly.io"` for where the app is deployed, and it never finds
+the PM handover at all. Both are *retrieval* failures - the right claim was alive in
+the store and simply wasn't reached. Full breakdown, including every question both
+systems got wrong: [`src/bench/RESULTS.md`](src/bench/RESULTS.md).
+
+### Check it yourself
+
+Every model call is cached to disk and committed to this repo.
+
+```bash
+PALIMPSEST_CACHE_ONLY=1 pnpm bench     # 448 cache hits, 0 misses, no API key, no spend
+```
+
+**Clone it, replay the benchmark, and get bit-identical numbers.**
+`PALIMPSEST_CACHE_ONLY=1` makes a cache miss *throw* rather than quietly hit the API,
+so a replay cannot silently drift from what we published.
+
+We'd rather you checked than trusted us. (We checked, too - and the first time we
+tried this, it threw. See v3 in the results file.)
 
 ## Running it
 

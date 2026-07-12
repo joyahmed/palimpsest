@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Meridian",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830579,
+  "id": "chatcmpl-2eef0ec8-73d3-9377-bce3-d2a98e2625b6",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 2,
+    "prompt_tokens": 244,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 244
+    },
+    "total_tokens": 246
+  }
+}

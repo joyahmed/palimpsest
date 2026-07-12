@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"wrong\", \"why\": \"The system explicitly returned UNKNOWN instead of the correct answer.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830560,
+  "id": "chatcmpl-87ac2499-16a6-99ca-8c70-673ccd6e4235",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 22,
+    "prompt_tokens": 281,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 281
+    },
+    "total_tokens": 303
+  }
+}

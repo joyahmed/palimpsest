@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The project name and its target launch date are independent facts that coexist without conflict.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The choice of database and the target launch date are independent facts that coexist without conflict.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The dev server port and the target launch date are independent facts that coexist without conflict.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The client identity and the target launch date are independent facts that coexist without conflict.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The technology stack and the target launch date are independent facts that coexist without conflict.\"}]}",
+        "reasoning_content": "Let me analyze the new claim against each existing claim.\n\nNEW CLAIM:\n- observed: 2026-04-06\n- kind: event\n- claim: \"The target launch date for the Meridian project is September 1st.\"\n\nThis is about the target launch date for the Meridian project.\n\nCLAIM 1: \"The new project is named Meridian.\"\n- This is about the project name. The new claim is about the launch date. These are different facts about the same project. Both can be true at the same time.\n- Relation: unrelated\n\nCLAIM 2: \"The database used for the Meridian project is Postgres.\"\n- This is about the database. The new claim is about the launch date. Different facts, both can be true.\n- Relation: unrelated\n\nCLAIM 3: \"The development server for the Meridian project runs on port 3000.\"\n- This is about the dev server port. The new claim is about the launch date. Different facts, both can be true.\n- Relation: unrelated\n\nCLAIM 4: \"The client for the Meridian project is Halcyon Freight.\"\n- This is about the client. The new claim is about the launch date. Different facts, both can be true.\n- Relation: unrelated\n\nCLAIM 5: \"The technology stack for the Meridian project uses TypeScript throughout.\"\n- This is about the tech stack. The new claim is about the launch date. Different facts, both can be true.\n- Relation: unrelated\n\nNone of the existing claims are about the launch date, so none of them can be superseded, duplicated, or refined by the new claim. They are all unrelated facts about the Meridian project.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830994,
+  "id": "chatcmpl-a3d355ac-b044-9308-b9c6-215b79260715",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 552,
+    "completion_tokens_details": {
+      "reasoning_tokens": 366,
+      "text_tokens": 552
+    },
+    "prompt_tokens": 871,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 871
+    },
+    "total_tokens": 1423
+  }
+}

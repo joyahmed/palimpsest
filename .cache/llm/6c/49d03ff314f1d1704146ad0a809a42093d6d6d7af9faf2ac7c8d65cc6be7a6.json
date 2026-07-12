@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"One states a standing requirement (Marcus requires a review before launch), the other states a specific scheduling event (review scheduled for August); both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-07-09\n- kind: event\n- claim: \"A security review has been scheduled for August.\"\n\nEXISTING CLAIMS:\n- id: 1\n  observed: 2026-07-09\n  kind: decision\n  claim: \"Marcus requires a security review before launch.\"\n\nRELATIONS:\n- supersedes: makes old FALSE. Cannot both be true.\n- duplicate: same fact, restated.\n- refines: adds detail, does not contradict.\n- unrelated: same topic, both can be true.\n\nAnalysis:\nNew claim: A security review is scheduled for August.\nOld claim 1: Marcus requires a security review before launch.\n\nCan both be true?\nYes. Marcus requires a security review before launch, and that review has been scheduled for August. They are related (both about security reviews), but they don't contradict. One is a requirement/decision, the other is a scheduling event.\n\nTherefore, the relation is \"unrelated\" (or maybe \"refines\"? No, it doesn't add detail to the *requirement*, it's a separate fact about the scheduling of the review. Actually, \"unrelated\" fits best: \"Same topic, but both can be true at once. Leave the old claim alone.\") Wait, could it be \"refines\"? \"Adds detail. Does NOT contradict.\" Scheduling it for August adds detail to the requirement? Not really, it's a separate event. Let's use \"unrelated\" as they are distinct facts (one is a requirement, one is a schedule). Or maybe \"refines\" if we consider the schedule as a detail of the review process. Let's stick to \"unrelated\" because one is a decision/requirement and the other is an event/schedule. Actually, \"unrelated\" is defined as \"Same topic, but both can be true at once.\" This perfectly fits.\n\nLet's write the reason: \"The requirement for a security review and its scheduling for August are distinct facts that can both be true simultaneously.\"\n\nWait, what if it's \"refines\"? \"Adds detail. Does NOT contradict.\" Scheduling it for August is a detail about the security review. But the old claim is about *Marcus requiring* it. The new claim is about it being *scheduled*. I'll go with unrelated.\n\nLet's double check.\nOld: \"Marcus requires a security review before launch.\"\nNew: \"A security review has been scheduled for August.\"\nRelation: unrelated.\nReason: The decision to require a review and the scheduling of that review are distinct facts that can both be true at the same time.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832895,
+  "id": "chatcmpl-33ce52cb-fe60-9d0d-b992-9e3da3f812ba",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 662,
+    "completion_tokens_details": {
+      "reasoning_tokens": 603,
+      "text_tokens": 662
+    },
+    "prompt_tokens": 687,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 687
+    },
+    "total_tokens": 1349
+  }
+}

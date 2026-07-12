@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"5321f2e3-0204-4b19-8b0a-60b7f30926be\", \"relation\": \"unrelated\", \"reason\": \"The client identity and the technology stack are independent facts about the Meridian project; both can be true simultaneously.\"}, {\"id\": \"184c46ec-099c-446c-bf92-24705bbb503a\", \"relation\": \"unrelated\", \"reason\": \"The project name and the technology stack are independent facts; knowing the project is named Meridian does not conflict with knowing it uses TypeScript.\"}, {\"id\": \"f0e1f3c0-2030-4e68-891b-60e7ffbdf2cc\", \"relation\": \"unrelated\", \"reason\": \"The scope contact person and the technology stack are independent facts about the Meridian project; both can be true at once.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\nThe NEW claim is: \"The technology stack for the Meridian project uses TypeScript throughout.\" (observed: 2026-04-06)\n\nEXISTING CLAIMS:\n1. id: 5321f2e3-0204-4b19-8b0a-60b7f30926be\n   observed: 2026-04-06\n   claim: \"The client for the Meridian project is Halcyon Freight.\"\n2. id: 184c46ec-099c-446c-bf92-24705bbb503a\n   observed: 2026-04-06\n   claim: \"The new project is named Meridian.\"\n3. id: f0e1f3c0-2030-4e68-891b-60e7ffbdf2cc\n   observed: 2026-04-06\n   claim: \"Scope-related matters for the Meridian project are handled through Sarah Vance.\"\n\nEVALUATION:\nNew claim is about the technology stack (TypeScript) of the Meridian project.\nClaim 1 is about the client (Halcyon Freight). Unrelated.\nClaim 2 is about the project name (Meridian). Unrelated.\nClaim 3 is about the scope contact (Sarah Vance). Unrelated.\n\nAll existing claims are about different aspects of the Meridian project (client, name, scope contact) and do not contradict or overlap with the technology stack.\n\nRULINGS:\n1. 5321f2e3... -> unrelated (Client identity vs technology stack)\n2. 184c46ec... -> unrelated (Project name vs technology stack)\n3. f0e1f3c0... -> unrelated (Scope contact vs technology stack)\n\nLet's write the JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"5321f2e3-0204-4b19-8b0a-60b7f30926be\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The client identity and the technology stack are distinct facts that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"184c46ec-099c-446c-bf92-24705bbb503a\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The project name and its technology stack are separate pieces of information that do not conflict.\"\n    },\n    {\n      \"id\": \"f0e1f3c0-2030-4e68-891b-60e7ffbdf2cc\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The point of contact for scope matters is unrelated to the choice of programming language for the project.\"\n    }\n  ]\n}\n```\nDouble check the rules.\n- \"unrelated: Same topic, but both can be true at once. Leave the old claim alone.\"\n- \"reason is one plain sentence a human will read in an audit log.\"\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829299,
+  "id": "chatcmpl-12568765-d2e5-9cef-92d1-8371a3c804ee",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1002,
+    "completion_tokens_details": {
+      "reasoning_tokens": 770,
+      "text_tokens": 1002
+    },
+    "prompt_tokens": 874,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 874
+    },
+    "total_tokens": 1876
+  }
+}

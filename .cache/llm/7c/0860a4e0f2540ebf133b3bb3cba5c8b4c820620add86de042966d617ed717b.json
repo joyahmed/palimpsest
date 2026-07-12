@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "teal (#0F766E)",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830569,
+  "id": "chatcmpl-8e861306-d73a-9158-b789-0763383d20a4",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 251,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 251
+    },
+    "total_tokens": 261
+  }
+}

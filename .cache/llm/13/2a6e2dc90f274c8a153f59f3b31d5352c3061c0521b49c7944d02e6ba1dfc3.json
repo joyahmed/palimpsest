@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"rulings\": [\n    {\n      \"id\": \"103c3be1-b73e-4be3-8b9c-42974fb7403b\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The new claim states the project is on track for an October launch, which contradicts the earlier September 1st target date; the launch window has shifted.\"\n    },\n    {\n      \"id\": \"a9b8b42f-8486-4612-98ff-8ad1da9ed51b\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"A security review scheduled for August is a separate event that does not conflict with the project's overall October launch timeline.\"\n    }\n  ]\n}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-07-09\n- kind: state\n- claim: \"The project remains on track for an October launch.\"\n\nCLAIM 1:\n- id: 103c3be1-b73e-4be3-8b9c-42974fb7403b\n- observed: 2026-04-06\n- kind: event\n- claim: \"The target launch date for the Meridian project is September 1st.\"\n\nAnalysis: The old claim says the target launch date is September 1st. The new claim says the project is on track for an October launch. These are contradictory - the launch date cannot be both September 1st and October. The new claim (observed 2026-07-09) is newer than the old claim (observed 2026-04-06), so the new claim can supersede the old one. The launch date has apparently been pushed back from September to October. This is a supersedes relationship.\n\nCLAIM 2:\n- id: a9b8b42f-8486-4612-98ff-8ad1da9ed51b\n- observed: 2026-07-09\n- kind: event\n- claim: \"A security review has been scheduled for August.\"\n\nAnalysis: The old claim says a security review is scheduled for August. The new claim says the project is on track for an October launch. These are not contradictory - a security review in August is perfectly compatible with an October launch. They are about related topics (project timeline) but both can be true at the same time. This is an unrelated relationship.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830538,
+  "id": "chatcmpl-50667588-3701-9926-8652-6da3a2eb472d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 590,
+    "completion_tokens_details": {
+      "reasoning_tokens": 397,
+      "text_tokens": 590
+    },
+    "prompt_tokens": 796,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 796
+    },
+    "total_tokens": 1386
+  }
+}

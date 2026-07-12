@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"9deda114-830b-448b-9d42-895eb7ab4c16\", \"relation\": \"supersedes\", \"reason\": \"The deployment target changed from Vercel to Fly.io; the two platforms cannot both be the current deployment target.\"}]}",
+        "reasoning_content": "Let me analyze this situation carefully.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The deployment target is Fly.io.\"\n\nOLD CLAIM:\n- id: 9deda114-830b-448b-9d42-895eb7ab4c16\n- observed: 2026-04-14\n- kind: decision\n- claim: \"The deployment platform is Vercel.\"\n\nAnalysis:\n- The new claim says the deployment target is Fly.io (observed 2026-05-28)\n- The old claim says the deployment platform is Vercel (observed 2026-04-14)\n- These are about the same topic: deployment target/platform\n- They CANNOT both be true at the same time - you can't have the deployment target be both Fly.io and Vercel simultaneously (assuming this is about the same project's primary deployment)\n- The new claim is NEWER (May 28 vs April 14), so it's not time-traveling backwards\n- This appears to be a case where the deployment platform changed from Vercel to Fly.io\n\nThis is a clear case of \"supersedes\" - the new claim makes the old one false. They cannot both be true. The deployment target moved from Vercel to Fly.io.\n\nWait, let me reconsider. Could both be true? Could a project be deployed to both Vercel and Fly.io? The claims say \"the deployment target\" and \"the deployment platform\" - using the definite article \"the\" suggests a single primary deployment target. If they were both true, they would likely say \"one of the deployment targets\" or similar.\n\nGiven the language used (\"the deployment target\" and \"the deployment platform\"), these are mutually exclusive statements about what THE deployment target/platform is. The new claim supersedes the old one.\n\nThe new claim is newer (May 28 vs April 14), so time ordering is correct for supersession.\n\nRuling: supersedes\nReason: The deployment target changed from Vercel to Fly.io; the April decision was replaced by the May configuration.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798153,
+  "id": "chatcmpl-f0ea4e8d-dad1-9472-a960-54daf7e09161",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 570,
+    "completion_tokens_details": {
+      "reasoning_tokens": 488,
+      "text_tokens": 570
+    },
+    "prompt_tokens": 716,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 716
+    },
+    "total_tokens": 1286
+  }
+}

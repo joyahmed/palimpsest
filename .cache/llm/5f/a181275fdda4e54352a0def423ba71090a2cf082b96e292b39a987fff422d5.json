@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"88b9b705-b29b-4c4a-a983-05ec1d7d405f\", \"relation\": \"supersedes\", \"reason\": \"The runtime was upgraded from Node 20 to Node 24; the old version is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against an EXISTING claim.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The runtime environment is Node 24.\"\n\nEXISTING CLAIM:\n- id: 88b9b705-b29b-4c4a-a983-05ec1d7d405f\n- observed: 2026-04-14\n- kind: config\n- claim: \"The Node runtime version is 20.\"\n\nAnalysis:\nThe new claim states the Node runtime version is 24, observed on 2026-05-28.\nThe old claim states the Node runtime version is 20, observed on 2026-04-14.\nThese two claims cannot both be true at the same time for the current state of the system (assuming it's a single environment, which is the standard assumption for config claims unless specified otherwise). The new claim is newer (May 28 vs April 14).\nTherefore, the new claim supersedes the old claim. The runtime environment was updated from Node 20 to Node 24.\n\nRelation: supersedes\nReason: The runtime environment was upgraded to Node 24 in late May, replacing the previous Node 20 version.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true. (Node 24 vs Node 20 - cannot both be the current runtime version).\n- Time check: New claim (May 28) is newer than old claim (April 14). So it's valid for the newer claim to supersede the older one.\n\nDrafting the response:\n{\"rulings\": [{\"id\": \"88b9b705-b29b-4c4a-a983-05ec1d7d405f\", \"relation\": \"supersedes\", \"reason\": \"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\"}]}\nWait, let's make the reason a plain sentence for an audit log.\n\"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\" -> Good.\nOr: \"The Node runtime was upgraded to version 24 in May, making the previous version 20 obsolete.\"\nLet's use: \"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\"\nActually, \"The runtime environment was updated to Node 24 in May, replacing the previous Node 20 version.\"\nLet's keep it simple: \"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\"\nWait, \"The Node runtime version was upgraded to 24 in May, replacing the previous version 20.\"\nAny of these is fine. I'll go with: \"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\"\nLet's refine: \"The runtime environment was upgraded to Node 24 in May, making the previous Node 20 version obsolete.\"\nLet's just say: \"The runtime environment was upgraded to Node 24 in May, replacing the previous Node 20 version.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798180,
+  "id": "chatcmpl-b9da3c84-3fb4-9249-81ff-9200d8f329f5",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 850,
+    "completion_tokens_details": {
+      "reasoning_tokens": 766,
+      "text_tokens": 850
+    },
+    "prompt_tokens": 720,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 720
+    },
+    "total_tokens": 1570
+  }
+}

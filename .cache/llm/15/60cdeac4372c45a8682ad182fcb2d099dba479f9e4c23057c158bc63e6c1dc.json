@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module is a development activity, not a pricing or tier cap configuration.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The middle tier's price and the free tier's shipment cap are independent facts about different tiers; both can be true simultaneously.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The data structure of a shipment (manifest, route, customs docs) is unrelated to the free tier's monthly shipment limit.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims and determine the relationship: supersedes, duplicate, refines, or unrelated.\n\nNEW CLAIM:\nobserved: 2026-06-23\nkind: config\nclaim: \"The free tier of the service is capped at 50 shipments per month.\"\n\nEXISTING CLAIMS:\n1. id: 1, observed: 2026-04-21, kind: state, claim: \"Joy is building out the shipment tracking module.\"\n2. id: 2, observed: 2026-06-23, kind: config, claim: \"The middle tier of the service costs $19 per month.\"\n3. id: 3, observed: 2026-04-21, kind: config, claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nLet's evaluate each:\n\nClaim 1: \"Joy is building out the shipment tracking module.\"\nRelation to new claim: The new claim is about the free tier cap on shipments. Claim 1 is about Joy building a shipment tracking module. They are about the same general domain (shipments) but are completely different facts. Both can be true.\nRuling: unrelated.\nReason: The new claim specifies a pricing limit for the free tier, while the old claim describes Joy's development work on the tracking module; both can be true simultaneously.\n\nClaim 2: \"The middle tier of the service costs $19 per month.\"\nRelation to new claim: The new claim is about the free tier cap. Claim 2 is about the middle tier cost. They are about different tiers of the same service. Both can be true.\nRuling: unrelated.\nReason: The new claim details the shipment limit for the free tier, whereas the old claim states the price of the middle tier; these are distinct pricing details that do not contradict each other.\n\nClaim 3: \"Each shipment has a manifest, a route, and a set of customs docs.\"\nRelation to new claim: The new claim is about the free tier cap on shipments. Claim 3 is about the components of a shipment. Both can be true.\nRuling: unrelated.\nReason: The new claim defines a monthly usage limit for the free tier, while the old claim describes the structural components of an individual shipment; both facts coexist without conflict.\n\nLet's double check.\nAre any of them duplicates? No.\nAre any of them refines? No.\nAre any of them supersedes? No.\nAll are unrelated.\n\nFormat:\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"...\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"...\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"...\"}]}\n\nReasons should be one plain sentence.\n1: \"The new claim specifies a usage limit for the free tier, while the old claim describes Joy's development work on the tracking module; both can be true simultaneously.\"\n2: \"The new claim details the shipment limit for the free tier, whereas the old claim states the price of the middle tier; these are distinct pricing details that do not contradict each other.\"\n3: \"The new claim defines a monthly usage limit for the free tier, while the old claim describes the structural components of an individual shipment; both facts coexist without conflict.\"\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832525,
+  "id": "chatcmpl-b6c4d82d-51a9-9c41-8084-d50d00d02ed2",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 901,
+    "completion_tokens_details": {
+      "reasoning_tokens": 769,
+      "text_tokens": 901
+    },
+    "prompt_tokens": 786,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 786
+    },
+    "total_tokens": 1687
+  }
+}

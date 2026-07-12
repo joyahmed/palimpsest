@@ -81,7 +81,9 @@ not for a machine. e.g. "The port moved to 4000 on 2 Jul; 3000 was abandoned."`;
 const Schema = z.object({
   rulings: z.array(
     z.object({
-      id: z.string(),
+      // The model is asked for ordinals and usually returns them as strings ("2"),
+      // but it is entitled to emit a bare JSON number. Accept both.
+      id: z.union([z.string(), z.number()]).transform(String),
       relation: z.enum(['supersedes', 'duplicate', 'refines', 'unrelated']),
       reason: z.string(),
     }),
@@ -94,9 +96,23 @@ export interface Ruling {
   reason: string;
 }
 
-function describe(c: Claim & { sim?: number }): string {
+/**
+ * Candidates are shown to the model by ORDINAL (1, 2, 3...), never by their real id.
+ *
+ * WHY THIS MATTERS MORE THAN IT LOOKS. Claim ids are random UUIDs, minted fresh on
+ * every run. When they were interpolated into this prompt, two runs over byte-identical
+ * inputs produced two DIFFERENT prompts - so the prompt cache could never hit, every
+ * run re-sampled the model, and the benchmark quietly re-rolled its own dice. That is
+ * exactly how the dead-fact count drifted between runs, and it made the README's
+ * central promise - "clone it, replay it, get the same numbers" - untrue.
+ *
+ * The model does not need a UUID. It needs a way to point at a candidate. An ordinal
+ * does that, and it depends only on the content, so the prompt is a pure function of
+ * the inputs and replay is exact.
+ */
+function describe(c: Claim & { sim?: number }, i: number): string {
   const date = new Date(c.observedAt).toISOString().slice(0, 10);
-  return `- id: ${c.id}\n  observed: ${date}\n  kind: ${c.kind}\n  claim: "${c.content}"`;
+  return `- id: ${i + 1}\n  observed: ${date}\n  kind: ${c.kind}\n  claim: "${c.content}"`;
 }
 
 /**
@@ -117,7 +133,7 @@ export async function adjudicate(
   claim: "${incoming.content}"
 
 CLAIMS ALREADY HELD (semantically nearest - they may or may not actually collide):
-${candidates.map(describe).join('\n')}
+${candidates.map((c, i) => describe(c, i)).join('\n')}
 
 Rule on each. Return one ruling per id above.`;
 
@@ -140,11 +156,15 @@ Rule on each. Return one ruling per id above.`;
   // one observed LATER. The prompt says so, but prompts are requests, not
   // guarantees - and a memory that can travel backwards in time is worse than one
   // that never forgets at all.
-  const byId = new Map(candidates.map((c) => [c.id, c]));
-  return parsed.data.rulings.filter((r) => {
-    const target = byId.get(r.id);
-    if (!target) return false;
-    if (r.relation === 'supersedes' && incoming.observedAt < target.observedAt) return false;
-    return true;
+  // Ordinals go OUT to the model; real claim ids come BACK to the caller. The
+  // ordinal is a wire format, not something the rest of the system should ever see.
+  const byOrdinal = new Map(candidates.map((c, i) => [String(i + 1), c]));
+
+  return parsed.data.rulings.flatMap((r) => {
+    const target = byOrdinal.get(r.id.trim());
+    // A ruling on an ordinal we never offered is a hallucination. Drop it.
+    if (!target) return [];
+    if (r.relation === 'supersedes' && incoming.observedAt < target.observedAt) return [];
+    return [{ ...r, id: target.id }];
   });
 }

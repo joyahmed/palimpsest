@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The deployment target changed from Vercel to Fly.io; both cannot be the current deployment platform simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The deployment target is Fly.io.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-04-14\n- kind: decision\n- claim: \"The deployment platform is Vercel.\"\n\nAnalysis:\nThe new claim states the deployment target is Fly.io, observed on 2026-05-28.\nThe existing claim states the deployment platform is Vercel, observed on 2026-04-14.\nBoth claims are about the deployment target/platform.\nThey contradict each other (Fly.io vs Vercel).\nThe new claim is newer (May 28 vs April 14).\nTherefore, the new claim supersedes the old claim. The deployment target changed from Vercel to Fly.io.\n\nRelation: supersedes\nReason: The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true. (Yes, it can't be both Vercel and Fly.io at the same time, and the newer one reflects the current state).\n- duplicate: No.\n- refines: No.\n- unrelated: No.\n\nWait, is it possible they are both true? \"The deployment target is Fly.io\" and \"The deployment platform is Vercel\". No, they are mutually exclusive for the current state. The new claim is newer, so it supersedes the old one.\n\nReason formulation: \"The deployment target was updated to Fly.io in May, replacing the previous Vercel decision from April.\" or \"The deployment platform changed to Fly.io in May, superseding the April decision to use Vercel.\"\n\nLet's write a concise reason.\n\"The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\"\nor\n\"The deployment platform was updated to Fly.io in May, superseding the April decision to use Vercel.\"\n\nI'll use: \"The deployment target was updated to Fly.io in May, replacing the previous Vercel decision from April.\"\nWait, \"The deployment platform changed to Fly.io in May, superseding the April decision to use Vercel.\" is also good.\n\nLet's just use: \"The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\"\nActually, \"The deployment platform was updated to Fly.io in May, replacing the previous Vercel decision from April.\"\n\nLet's refine: \"The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\"\nMatches the style of the examples.\nExample: \"The port moved to 4000 on 2 Jul; 3000 was abandoned.\"\nMy reason: \"The deployment target moved to Fly.io in May; Vercel was abandoned.\" or \"The deployment platform changed to Fly.io in May, replacing the Vercel decision from April.\"\n\nLet's go with: \"The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\"\nWait, \"The deployment platform changed to Fly.io in May; Vercel was abandoned.\" is punchier.\n\nLet's use: \"The deployment target was updated to Fly.io in May, replacing the previous Vercel decision from April.\"\nActually, \"The deployment platform changed to Fly.io in May, replacing the previous Vercel decision from April.\"\n\nI'll output:\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832284,
+  "id": "chatcmpl-aa735a9a-822b-9de3-a4af-2f0c8c9550dd",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 914,
+    "completion_tokens_details": {
+      "reasoning_tokens": 865,
+      "text_tokens": 914
+    },
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 685
+    },
+    "total_tokens": 1599
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"grade\": \"wrong\", \"why\": \"The system explicitly returned UNKNOWN instead of the correct location.\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830560,
+  "id": "chatcmpl-d2a1b0c1-86a1-9162-9952-df3da0da6649",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 22,
+    "prompt_tokens": 281,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 281
+    },
+    "total_tokens": 303
+  }
+}

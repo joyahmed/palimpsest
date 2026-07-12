@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The primary colour changed from blue (#1E4D8C) to teal (#0F766E); the old value is no longer valid.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The typeface (Inter) is a separate concern from the primary colour and both can be true simultaneously.\"}]}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- kind: config\n- claim: \"The primary colour is teal (#0F766E).\"\n\nCLAIM 1:\n- observed: 2026-04-14\n- kind: config\n- claim: \"The primary brand color for Halcyon is blue with hex code #1E4D8C.\"\n\nThe new claim says the primary colour is teal (#0F766E). The old claim says the primary brand color is blue (#1E4D8C). These are about the same thing (primary color) but give different values. The new claim is observed LATER (2026-06-15 vs 2026-04-14), so it can supersede the old one. They cannot both be true - the primary color cannot be both blue and teal. This is a supersedes.\n\nCLAIM 2:\n- observed: 2026-04-14\n- kind: config\n- claim: \"The typeface used is Inter.\"\n\nThe new claim is about the primary colour. Claim 2 is about the typeface. These are completely different topics. They are unrelated.\n\nLet me write the rulings:\n\nClaim 1: supersedes - The primary color changed from blue (#1E4D8C) to teal (#0F766E) between April and June 2026.\nClaim 2: unrelated - The typeface (Inter) and primary color (teal) are independent configuration details that can both be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832466,
+  "id": "chatcmpl-3209dfb2-a127-96f2-82f9-a39565b1db08",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 463,
+    "completion_tokens_details": {
+      "reasoning_tokens": 364,
+      "text_tokens": 463
+    },
+    "prompt_tokens": 742,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 742
+    },
+    "total_tokens": 1205
+  }
+}

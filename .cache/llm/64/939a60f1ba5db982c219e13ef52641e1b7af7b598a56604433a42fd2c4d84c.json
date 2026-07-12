@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The new claim describes the structure of a shipment, while the existing claim describes who is building the tracking module; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW CLAIM against a list of ALREADY HELD CLAIMS.\n\nNEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nALREADY HELD CLAIMS:\n- id: 1\n  - observed: 2026-04-21\n  - kind: state\n  - claim: \"Joy is building out the shipment tracking module.\"\n\nI need to determine the relationship between the new claim and each existing claim.\nPossible relations: supersedes, duplicate, refines, unrelated.\n\nAnalysis:\nNew claim: \"Each shipment has a manifest, a route, and a set of customs docs.\" (Describes the structure/contents of a shipment in the system).\nExisting claim 1: \"Joy is building out the shipment tracking module.\" (Describes what a person is working on).\n\nThese two claims are about the same general domain (shipments/tracking), but they state completely different facts. One is about the data model of a shipment, the other is about a developer's current task. They can both be true at the same time.\n\nTherefore, the relationship is \"unrelated\".\n\nReasoning for ruling:\n- id: 1 -> unrelated. The new claim describes the data structure of a shipment, while the existing claim describes a developer's current task; both can be true simultaneously.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim describes the data structure of a shipment, while the existing claim describes a developer's current task; both can be true simultaneously.\"\n    }\n  ]\n}\n```\nDouble check constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n- Past events cannot become false.\n- Time travel check (not applicable here, same date).\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831104,
+  "id": "chatcmpl-9d609c9e-5a72-9f42-9347-693bd5c20988",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 533,
+    "completion_tokens_details": {
+      "reasoning_tokens": 478,
+      "text_tokens": 533
+    },
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 695
+    },
+    "total_tokens": 1228
+  }
+}

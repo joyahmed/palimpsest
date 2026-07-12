@@ -1,0 +1,25 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"grade\": \"correct\",\n  \"why\": \"The answer '24' matches the true answer 'Node 24'.\"\n}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830574,
+  "id": "chatcmpl-2be77e9f-ca6c-9dec-a0da-e164080e5ea8",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 34,
+    "prompt_tokens": 288,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 288
+    },
+    "total_tokens": 322
+  }
+}

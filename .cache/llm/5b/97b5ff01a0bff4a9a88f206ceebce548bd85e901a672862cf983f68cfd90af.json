@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The runtime was upgraded from Node 20 to Node 24; the old version is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The runtime environment is Node 24.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-04-14\n- kind: config\n- claim: \"The Node runtime version is 20.\"\n\nRELATIONS:\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- duplicate: The same fact, restated.\n- refines: Adds detail. Does NOT contradict.\n- unrelated: Same topic, but both can be true at once.\n\nAnalysis:\nThe new claim states the runtime environment is Node 24, observed on 2026-05-28.\nThe old claim states the Node runtime version is 20, observed on 2026-04-14.\nSince the new claim is newer (May 28 vs April 14) and specifies a different Node version (24 vs 20), it supersedes the old claim. The runtime environment cannot be both Node 20 and Node 24 at the same time, and the newer observation reflects the current state.\n\nWait, is it possible they are unrelated? \"The runtime environment is Node 24\" vs \"The Node runtime version is 20\". They refer to the same thing (the Node runtime version). The new one updates it. So it supersedes.\n\nLet's write the JSON.\nid: 1\nrelation: supersedes\nreason: The runtime environment was updated to Node 24 in May, replacing the previous Node 20 version.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832315,
+  "id": "chatcmpl-17cc1d42-f034-95e1-b6a1-4f1a42527315",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 457,
+    "completion_tokens_details": {
+      "reasoning_tokens": 405,
+      "text_tokens": 457
+    },
+    "prompt_tokens": 688,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 688
+    },
+    "total_tokens": 1145
+  }
+}

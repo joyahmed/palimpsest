@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"The new claim adds a judgment about sufficiency of Postgres full-text search for current data volume, complementing the existing fact that search uses it.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The new claim is about the adequacy of Postgres full-text search, while the existing claim is simply that Postgres is the database; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against two EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-11\n- kind: preference\n- claim: \"Postgres full-text search is considered sufficient for the current data volume.\"\n\nEXISTING CLAIMS:\n1. id: 1\n   - observed: 2026-05-11\n   - kind: config\n   - claim: \"Search functionality uses Postgres full-text search.\"\n2. id: 2\n   - observed: 2026-04-06\n   - kind: config\n   - claim: \"The database used for the Meridian project is Postgres.\"\n\nLet's evaluate the relationship between the NEW CLAIM and each EXISTING CLAIM.\n\nNEW CLAIM vs EXISTING CLAIM 1:\n- New: \"Postgres full-text search is considered sufficient for the current data volume.\"\n- Old 1: \"Search functionality uses Postgres full-text search.\"\n- Analysis: The new claim adds the context/reasoning that it is considered *sufficient for the current data volume*. It doesn't contradict the fact that search uses Postgres full-text search. It refines it by adding the \"why\" or the condition under which it's used.\n- Relation: refines\n- Reason: The new claim adds the context that Postgres full-text search is deemed sufficient for the current data volume, refining the fact that it is used for search.\n\nNEW CLAIM vs EXISTING CLAIM 2:\n- New: \"Postgres full-text search is considered sufficient for the current data volume.\"\n- Old 2: \"The database used for the Meridian project is Postgres.\"\n- Analysis: The new claim is about the sufficiency of Postgres full-text search for the current data volume. The old claim is about the database being Postgres. Both can be true at the same time. They are related to Postgres, but one is about the database choice, the other is about the search feature's sufficiency.\n- Relation: unrelated\n- Reason: The new claim discusses the sufficiency of Postgres full-text search for current data volumes, while the old claim simply states that Postgres is the database used; both facts can coexist.\n\nLet's double check the rules.\n- supersedes: CANNOT both be true. (Not applicable here)\n- duplicate: same fact, restated. (Not applicable, new claim adds \"sufficient for current data volume\")\n- refines: adds detail, does not contradict. (Applies to id 1)\n- unrelated: same topic, both can be true. (Applies to id 2)\n\nWait, is id 1 really a refinement?\nOld 1: \"Search functionality uses Postgres full-text search.\"\nNew: \"Postgres full-text search is considered sufficient for the current data volume.\"\nYes, it adds the detail of *why* it's used or the condition of its use (sufficiency for current data volume).\n\nLet's write the reasons clearly.\nid 1: refines. \"The new claim adds the context that Postgres full-text search is deemed sufficient for the current data volume, refining the fact that it is used for search.\" -> \"The new claim adds the context that Postgres full-text search is sufficient for the current data volume, refining the fact that it is used for search.\"\nid 2: unrelated. \"The new claim discusses the sufficiency of Postgres full-text search for current data volumes, while the old claim simply states that Postgres is the database used; both facts can coexist.\" -> \"The new claim evaluates the sufficiency of Postgres full-text search for current data volumes, while the old claim simply states Postgres is the project's database; both facts can coexist.\"\n\nFormat:\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"refines\",\n      \"reason\": \"The new claim adds the context that Postgres full-text search is sufficient for the current data volume, refining the fact that it is used for search.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The new claim evaluates the sufficiency of Postgres full-text search for current data volumes, while the old claim simply states Postgres is the project's database; both facts can coexist.\"\n    }\n  ]\n}\n\nCheck constraints:\n- \"reason\" is one plain sentence a human will read in an audit log.\n- Return JSON.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831514,
+  "id": "chatcmpl-95edbda9-de61-91c7-880a-b2f8f4297f31",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1112,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1003,
+      "text_tokens": 1112
+    },
+    "prompt_tokens": 736,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 736
+    },
+    "total_tokens": 1848
+  }
+}

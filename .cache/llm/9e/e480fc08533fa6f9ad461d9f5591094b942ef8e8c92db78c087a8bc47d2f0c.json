@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"3211c18b-9ea6-47b5-8f1b-c87ec8957b54\", \"relation\": \"supersedes\", \"reason\": \"The deployment target changed from Vercel to Fly.io; the old platform is no longer in use.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"The deployment target is Fly.io.\"\n\nEXISTING CLAIM:\n- id: 3211c18b-9ea6-47b5-8f1b-c87ec8957b54\n- observed: 2026-04-14\n- kind: decision\n- claim: \"The deployment platform is Vercel.\"\n\nAnalysis:\nThe new claim states the deployment target is Fly.io, observed on 2026-05-28.\nThe old claim states the deployment platform is Vercel, observed on 2026-04-14.\nBoth are about the deployment target/platform.\nThey cannot both be true at the same time (assuming a single deployment target/platform for the project, or at least they represent a change in the deployment target).\nSince the new claim is newer (May 28 vs April 14), it supersedes the old claim. The deployment target changed from Vercel to Fly.io.\n\nRelation: supersedes\nReason: The deployment target was changed to Fly.io in May, replacing the previous Vercel decision from April.\n\nLet's double check the rules.\n- supersedes: The new claim makes the old one FALSE. They CANNOT both be true.\n- Time check: New claim (May 28) is newer than old claim (April 14). So it's valid for the new claim to supersede the old one.\n\nReason formulation: \"The deployment target was updated to Fly.io in May, replacing the previous Vercel decision from April.\" or \"The deployment platform changed to Fly.io in May, superseding the April decision to use Vercel.\"\nLet's use a clear, human-readable sentence.\n\"The deployment target was changed to Fly.io in May, replacing the previous decision to use Vercel.\"\nWait, \"The deployment platform changed to Fly.io in May, superseding the April decision to use Vercel.\"\nLet's go with: \"The deployment target was updated to Fly.io in May, replacing the previous decision to use Vercel.\"\nOr simply: \"The deployment platform was changed to Fly.io in May, replacing the previous Vercel decision from April.\"\nI'll write: \"The deployment target was changed to Fly.io in May, replacing the previous decision to use Vercel.\"\nActually, \"The deployment platform changed to Fly.io in May, replacing the previous Vercel decision from April.\" is good.\nLet's refine: \"The deployment target was updated to Fly.io in May, replacing the previous decision to use Vercel.\"\nJust one sentence.\n\"The deployment target was changed to Fly.io in May, replacing the previous decision to use Vercel.\"\nDone.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783829975,
+  "id": "chatcmpl-dca6d57d-c403-954a-b321-b58df1bdda3d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 719,
+    "completion_tokens_details": {
+      "reasoning_tokens": 638,
+      "text_tokens": 719
+    },
+    "prompt_tokens": 717,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 717
+    },
+    "total_tokens": 1436
+  }
+}

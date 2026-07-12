@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"httpOnly and sameSite are independent cookie attributes; both can be true simultaneously.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The storage backend (Redis) is orthogonal to the sameSite attribute of the cookie.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Using session cookies for authentication is a separate fact from the sameSite setting on those cookies.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims.\nThe NEW claim is: \"The session cookies are set with sameSite strict.\" (observed: 2026-05-11)\n\nEXISTING CLAIMS:\n1. \"The session cookies are set with the httpOnly flag.\" (observed: 2026-05-11)\n2. \"The session cookie storage backend is Redis.\" (observed: 2026-05-11)\n3. \"Authentication is implemented using session cookies.\" (observed: 2026-05-11)\n\nLet's evaluate each:\n\nClaim 1: \"The session cookies are set with the httpOnly flag.\"\nNew claim: \"The session cookies are set with sameSite strict.\"\nRelation: unrelated. Both can be true at the same time. A cookie can have both httpOnly and sameSite=strict. They are different attributes of the session cookie.\n\nClaim 2: \"The session cookie storage backend is Redis.\"\nNew claim: \"The session cookies are set with sameSite strict.\"\nRelation: unrelated. One is about the storage backend, the other is about a cookie attribute. Both can be true.\n\nClaim 3: \"Authentication is implemented using session cookies.\"\nNew claim: \"The session cookies are set with sameSite strict.\"\nRelation: unrelated. One is about the purpose of the cookies (authentication), the other is about an attribute of the cookies (sameSite=strict). Both can be true.\n\nWait, are any of them duplicates or refines?\nNo, they are all different aspects of session cookies.\n1: httpOnly flag\n2: storage backend\n3: authentication purpose\nNew: sameSite strict\n\nAll are unrelated.\n\nLet's double check.\nCan a cookie have httpOnly and sameSite strict? Yes.\nCan it be stored in Redis and have sameSite strict? Yes.\nCan it be used for authentication and have sameSite strict? Yes.\n\nSo all are \"unrelated\".\n\nReasoning for 1: \"The httpOnly flag and sameSite attribute are distinct cookie properties that can both be applied simultaneously.\"\nReasoning for 2: \"The storage backend and the sameSite attribute are independent configuration details that can both be true.\"\nReasoning for 3: \"The purpose of the cookies for authentication and their sameSite attribute are independent facts that can coexist.\"\n\nLet's refine the reasons to be plain sentences for a human audit log.\n1: \"The httpOnly flag and sameSite attribute are distinct cookie properties that can both be applied simultaneously.\"\n2: \"The storage backend and the sameSite attribute are independent configuration details that can both be true.\"\n3: \"The use of cookies for authentication and their sameSite attribute are independent facts that can coexist.\"\n\nFormat:\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"...\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"...\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"...\"}]}\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if they CANNOT BOTH BE TRUE.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831462,
+  "id": "chatcmpl-92d80ae7-20d8-9090-bf65-2f92c0fc57a0",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 840,
+    "completion_tokens_details": {
+      "reasoning_tokens": 726,
+      "text_tokens": 840
+    },
+    "prompt_tokens": 768,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 768
+    },
+    "total_tokens": 1608
+  }
+}

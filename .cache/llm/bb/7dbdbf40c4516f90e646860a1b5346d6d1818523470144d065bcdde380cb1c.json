@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The format of the documents (PDF) and their storage location (object storage) are independent facts that can both be true simultaneously.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The composition of a shipment's documents and where customs documents are stored are separate facts that do not conflict.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims and determine their relationship based on specific rules.\n\nNEW CLAIM:\n- observed: 2026-04-21\n- kind: config\n- claim: \"Customs documents are stored in object storage.\"\n\nEXISTING CLAIMS:\n1. id: 1\n   observed: 2026-04-21\n   kind: config\n   claim: \"Customs documents are in PDF format.\"\n2. id: 2\n   observed: 2026-04-21\n   kind: config\n   claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nRELATIONS:\n- supersedes: Makes the old one FALSE. Cannot both be true.\n- duplicate: Same fact, restated. Both true. No new info.\n- refines: Adds detail. Does NOT contradict. Both remain true.\n- unrelated: Same topic, but both can be true at once. Leave old claim alone.\n\nLet's evaluate id 1:\nNew: \"Customs documents are stored in object storage.\"\nOld: \"Customs documents are in PDF format.\"\nCan both be true? Yes. They can be PDFs stored in object storage.\nRelation: unrelated (or refines? No, it's just a different attribute. Storage location vs file format. They are unrelated facts about customs documents). Let's use 'unrelated' as they are different attributes (storage vs format) that can both be true. Wait, could it be 'refines'? \"Adds detail. Does NOT contradict.\" Usually refines is for the same attribute. Let's stick to 'unrelated' because storage location and file format are distinct facts. Actually, the prompt says \"Same topic, but both can be true at once. Leave the old claim alone.\" -> unrelated.\n\nLet's evaluate id 2:\nNew: \"Customs documents are stored in object storage.\"\nOld: \"Each shipment has a manifest, a route, and a set of customs docs.\"\nCan both be true? Yes. One is about the structure of a shipment, the other is about where customs docs are stored.\nRelation: unrelated.\n\nLet's double check.\nNew claim: \"Customs documents are stored in object storage.\"\nId 1: \"Customs documents are in PDF format.\" -> Both can be true. Unrelated.\nId 2: \"Each shipment has a manifest, a route, and a set of customs docs.\" -> Both can be true. Unrelated.\n\nWait, is there any chance they are 'refines'?\nRefines: \"Adds detail. Does NOT contradict. Both remain true. e.g. old 'we dropped Docker' + new 'we dropped Docker because of build times'\"\nHere, the new claim doesn't add detail to the old claim, it just states a different fact about the same entity (customs documents). So 'unrelated' is the best fit.\n\nLet's write the JSON.\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The storage location and file format are distinct attributes that can both be true simultaneously.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The storage location of customs documents is a separate fact from the components that make up a shipment.\"\n    }\n  ]\n}\nCheck constraints:\n- 'reason' is one plain sentence a human will read in an audit log.\n- Return JSON.\n\nReason 1: \"The storage location and file format are distinct attributes that can both be true simultaneously.\" -> 1 sentence.\nReason 2: \"The storage location of customs documents is a separate fact from the components that make up a shipment.\" -> 1 sentence.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831220,
+  "id": "chatcmpl-a0907a49-7814-95f8-a7ee-88f73d98f51f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 952,
+    "completion_tokens_details": {
+      "reasoning_tokens": 860,
+      "text_tokens": 952
+    },
+    "prompt_tokens": 734,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 734
+    },
+    "total_tokens": 1686
+  }
+}

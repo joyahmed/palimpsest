@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"duplicate\",\n      \"reason\": \"Both claims state the same fact: the font in use is Inter, just phrased slightly differently.\"\n    }\n  ]\n}",
+        "reasoning_content": "Let me analyze this case.\n\nNEW CLAIM:\n- observed: 2026-06-15\n- claim: \"The font type remains Inter.\"\n\nOLD CLAIM:\n- id: 1\n- observed: 2026-04-14\n- claim: \"The typeface used is Inter.\"\n\nAnalysis:\n- The new claim says the font type \"remains\" Inter, observed on 2026-06-15.\n- The old claim says the typeface used is Inter, observed on 2026-04-14.\n\nBoth claims state that Inter is the font/typeface being used. The new claim uses the word \"remains\" which implies continuity - it's confirming that the font is still Inter as of the later date.\n\nThese are essentially the same fact - the font is Inter. The new claim doesn't contradict the old one; it confirms it's still the same. This is a duplicate - the same fact restated.\n\nCould it be \"refines\"? The word \"remains\" adds a tiny bit of temporal context (it was Inter before and still is), but the core fact is the same. I think \"duplicate\" is more appropriate here since the fundamental information (font = Inter) is the same.\n\nActually, let me reconsider. \"Remains\" does add the detail that it hasn't changed since the earlier observation. But the core fact is identical. I'll go with \"duplicate\" since both claims convey the same essential information: the font is Inter.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832491,
+  "id": "chatcmpl-035ea34b-63f5-97c3-add3-d72cd010f023",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 396,
+    "completion_tokens_details": {
+      "reasoning_tokens": 330,
+      "text_tokens": 396
+    },
+    "prompt_tokens": 683,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 683
+    },
+    "total_tokens": 1079
+  }
+}

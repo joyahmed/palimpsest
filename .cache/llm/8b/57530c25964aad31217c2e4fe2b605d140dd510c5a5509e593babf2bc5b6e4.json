@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Keeping a process warm for websocket functionality is a separate concern from setting session cookies with the httpOnly flag; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate how a NEW CLAIM relates to an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: preference\n- claim: \"The process is kept warm for websocket functionality.\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-05-11\n- kind: config\n- claim: \"The session cookies are set with the httpOnly flag.\"\n\nAnalysis:\nThe new claim is about keeping a process warm for websocket functionality.\nThe existing claim is about session cookies being set with the httpOnly flag.\nThese two claims are about completely different aspects of the system (process warming/websockets vs. session cookie security flags).\nThey can both be true at the same time. They are unrelated.\n\nRelation: unrelated\nReason: The new claim discusses process warming for websockets, while the existing claim is about session cookie security flags; both can be true simultaneously.\n\nLet's format the output as requested.\n{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The new claim discusses process warming for websockets, while the existing claim is about session cookie security flags; both can be true simultaneously.\"}]}\nWait, the reason should be one plain sentence.\n\"The new claim discusses process warming for websockets, while the existing claim is about session cookie security flags; both can be true simultaneously.\" -> 1 sentence.\nOr: \"The new claim is about keeping a process warm for websockets, which is unrelated to the existing claim about session cookie security flags.\"\n\nLet's refine the reason: \"The new claim concerns process warming for websockets, which is entirely unrelated to the existing claim about session cookie security flags.\"\n\nCheck constraints:\n- Return JSON.\n- \"rulings\" array.\n- Each ruling has \"id\", \"relation\", \"reason\".\n- \"reason\" is one plain sentence.\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783832325,
+  "id": "chatcmpl-30f756be-693f-9290-89bd-8ee54498167f",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 488,
+    "completion_tokens_details": {
+      "reasoning_tokens": 434,
+      "text_tokens": 488
+    },
+    "prompt_tokens": 690,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 690
+    },
+    "total_tokens": 1178
+  }
+}

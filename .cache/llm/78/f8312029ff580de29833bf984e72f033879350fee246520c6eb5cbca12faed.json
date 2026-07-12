@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"f950be48-45a5-4568-92f5-e98bf51f8184\", \"relation\": \"unrelated\", \"reason\": \"Joy building the tracking module is a separate fact from the technology choice of websockets for live position tracking; both can be true simultaneously.\"}, {\"id\": \"23abf26e-d0ad-487f-9211-5ae1e10bd152\", \"relation\": \"refines\", \"reason\": \"The existing claim notes the process is kept warm for websocket functionality, and the new claim adds the specific use case—live shipment position tracking—without contradicting it.\"}, {\"id\": \"02ad3b78-0653-4dc4-bd1a-cc046adaa213\", \"relation\": \"unrelated\", \"reason\": \"The data model for a shipment (manifest, route, customs docs) is independent of the transport mechanism used for live position tracking; both facts coexist.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against a list of EXISTING claims and determine the relationship: `supersedes`, `duplicate`, `refines`, or `unrelated`.\n\nNEW CLAIM:\n- observed: 2026-05-28\n- kind: config\n- claim: \"Websockets are used for live shipment position tracking.\"\n\nEXISTING CLAIMS:\n1. id: f950be48-45a5-4568-92f5-e98bf51f8184\n   observed: 2026-04-21\n   kind: state\n   claim: \"Joy is building out the shipment tracking module.\"\n2. id: 23abf26e-d0ad-487f-9211-5ae1e10bd152\n   observed: 2026-05-28\n   kind: preference\n   claim: \"The process is kept warm for websocket functionality.\"\n3. id: 02ad3b78-0653-4dc4-bd1a-cc046adaa213\n   observed: 2026-04-21\n   kind: config\n   claim: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n\nLet's evaluate each:\n\nClaim 1: \"Joy is building out the shipment tracking module.\"\n- New claim: \"Websockets are used for live shipment position tracking.\"\n- Relation: Both can be true. Joy is building the module, and websockets are used for it. They are related to shipment tracking but don't contradict or duplicate.\n- Ruling: unrelated\n- Reason: Joy building the tracking module and websockets being used for it are complementary facts that can both be true.\n\nClaim 2: \"The process is kept warm for websocket functionality.\"\n- New claim: \"Websockets are used for live shipment position tracking.\"\n- Relation: Both can be true. The process is kept warm for websockets, and websockets are used for live shipment tracking. They are related to websockets but don't contradict. One is about process management (keeping it warm), the other is about the use case (live tracking).\n- Ruling: unrelated\n- Reason: Keeping the process warm for websockets and using websockets for live tracking are complementary details that can both be true.\n\nClaim 3: \"Each shipment has a manifest, a route, and a set of customs docs.\"\n- New claim: \"Websockets are used for live shipment position tracking.\"\n- Relation: Both can be true. One is about shipment data structure, the other is about the technology used for tracking.\n- Ruling: unrelated\n- Reason: The data structure of a shipment and the technology used for live tracking are independent facts that can both be true.\n\nWait, are any of them `refines`?\nClaim 2: \"The process is kept warm for websocket functionality.\" -> \"Websockets are used for live shipment position tracking.\"\nDoes the new claim refine the old one? The old one says websockets are used (implied by \"for websocket functionality\"). The new one specifies *what* the websockets are used for (live shipment position tracking). But they are different kinds (preference vs config). I think `unrelated` is safer because they describe different aspects (process management vs feature implementation). Let's stick with `unrelated`.\n\nLet's double check.\nClaim 1: Joy building module vs Websockets used for tracking. Unrelated.\nClaim 2: Process kept warm for websockets vs Websockets used for tracking. Unrelated.\nClaim 3: Shipment has manifest/route/docs vs Websockets used for tracking. Unrelated.\n\nLet's write the reasons clearly.\nClaim 1: \"Joy building the tracking module and using websockets for it are complementary facts that can both be true.\"\nClaim 2: \"Keeping the process warm for websockets and using websockets for live tracking are complementary details that can both be true.\"\nClaim 3: \"The data structure of a shipment and the technology used for live tracking are independent facts that can both be true.\"\n\nWait, what if Claim 2 is `refines`? \"The process is kept warm for websocket functionality.\" -> \"Websockets are used for live shipment position tracking.\" It adds detail about *what* the websocket functionality is for. But the old claim doesn't say \"websockets are used for X\", it says \"process is kept warm for websocket functionality\". I'll stick to `unrelated` as they are distinct facts (one about process lifecycle, one about feature tech stack). Actually, \"unrelated\" fits \"Same topic, but both can be true at once. Leave the old claim alone.\"\n\nLet's review the prompt: \"Same topic, but both can be true at once. Leave the old claim alone.\"\nYes, `unrelated` is the correct choice for all three.\n\nFormat:\n{\"rulings\": [{\"id\": \"...\", \"relation\": \"unrelated\", \"reason\": \"...\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798204,
+  "id": "chatcmpl-77e6f4d1-c77a-9814-a5ad-121b3453a155",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1360,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1115,
+      "text_tokens": 1360
+    },
+    "prompt_tokens": 866,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 866
+    },
+    "total_tokens": 2226
+  }
+}

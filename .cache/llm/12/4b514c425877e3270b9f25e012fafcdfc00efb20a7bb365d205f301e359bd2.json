@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The migration running on the 3rd is a fixed past event; the schema being settled is a current state that can coexist with that event.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The audit log configuration is a separate concern from whether the database schema is settled; both can be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate a NEW claim against two EXISTING claims.\n\nNEW CLAIM:\n- observed: 2026-05-19\n- kind: state\n- claim: \"The database schema is settled.\"\n\nEXISTING CLAIM 1:\n- id: 1\n- observed: 2026-05-19\n- kind: event\n- claim: \"The database migration ran on the 3rd.\"\n\nEXISTING CLAIM 2:\n- id: 2\n- observed: 2026-05-11\n- kind: config\n- claim: \"Every mutation writes an audit log row containing actor, action, and timestamp.\"\n\nLet's evaluate Claim 1:\nNew: \"The database schema is settled.\" (2026-05-19)\nOld: \"The database migration ran on the 3rd.\" (2026-05-19)\nCan both be true? Yes. A migration ran on the 3rd, and now the schema is settled. They are related to the database schema/migrations, but one is an event in the past and the other is a current state. They do not contradict.\nRelation: unrelated (or refines? No, unrelated is better because one is an event and one is a state, both can be true. Actually, \"unrelated\" in the prompt means \"Same topic, but both can be true at once. Leave the old claim alone.\") Let's use unrelated.\n\nLet's evaluate Claim 2:\nNew: \"The database schema is settled.\" (2026-05-19)\nOld: \"Every mutation writes an audit log row containing actor, action, and timestamp.\" (2026-05-11)\nCan both be true? Yes. The schema being settled doesn't contradict the audit log configuration. They are somewhat related to the database, but completely different facts.\nRelation: unrelated.\n\nWait, are there any contradictions?\n\"The database schema is settled.\" vs \"The database migration ran on the 3rd.\" -> Both true.\n\"The database schema is settled.\" vs \"Every mutation writes an audit log row...\" -> Both true.\n\nLet's double check the definitions.\n- supersedes: CANNOT both be true.\n- duplicate: same fact.\n- refines: adds detail, does not contradict.\n- unrelated: same topic, both can be true at once.\n\nFor id 1: \"The database migration ran on the 3rd.\" is an event. The new claim is a state. Both can be true. Unrelated.\nFor id 2: \"Every mutation writes an audit log...\" is a config. The new claim is a state. Both can be true. Unrelated.\n\nLet's write the reasons.\nid 1: \"The migration running on the 3rd is a past event that does not contradict the current state of the schema being settled.\"\nid 2: \"The audit log configuration is a separate detail from the overall state of the database schema being settled, and both can be true simultaneously.\"\n\nWait, could id 1 be considered \"refines\"? \"The database schema is settled\" doesn't really add detail to \"The database migration ran on the 3rd\". It's just a related state. Unrelated is the best fit.\n\nLet's review the prompt's examples for unrelated:\n\"port 3000 collided with another project\" + \"dev server on port 4000\" -> one explains WHY, the other states the new value.\nHere, \"migration ran on the 3rd\" and \"schema is settled\". Both are about the DB schema/migrations. Both can be true.\n\nJSON format:\n{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The past event of a migration running on the 3rd does not contradict the current state of the schema being settled.\"\n    },\n    {\n      \"id\": \"2\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"The audit logging configuration is a separate fact from the database schema being settled, and both can be true at the same time.\"\n    }\n  ]\n}\n\nCheck constraints:\n- Return JSON.\n- 'reason' is one plain sentence.\n- Only rule 'supersedes' if CANNOT BOTH BE TRUE.\n- BE CAREFUL WITH EVENTS. \"The migration ran on the 3rd\" is never superseded.\n\nLooks solid.\nI will construct the JSON now.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783831661,
+  "id": "chatcmpl-4508bbbd-7dd1-9c09-aac2-7dab5bab79c0",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1106,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1009,
+      "text_tokens": 1106
+    },
+    "prompt_tokens": 732,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 732
+    },
+    "total_tokens": 1838
+  }
+}

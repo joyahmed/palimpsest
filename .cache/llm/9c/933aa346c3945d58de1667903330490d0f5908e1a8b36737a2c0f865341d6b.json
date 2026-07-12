@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"ffc408b3-ae22-4c8a-80ff-904d65ed7a99\", \"relation\": \"unrelated\", \"reason\": \"The new claim states the number of tests in the suite, while the old claim identifies the testing framework used; both facts can coexist without contradiction.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate the relationship between a NEW CLAIM and an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: state\n- claim: \"There are about 400 tests in the test suite.\"\n\nEXISTING CLAIM:\n- id: ffc408b3-ae22-4c8a-80ff-904d65ed7a99\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nAnalysis:\nThe new claim is about the *number* of tests in the test suite (about 400).\nThe existing claim is about the *tool* used for unit testing (Vitest).\nThese two facts can easily be true at the same time. They are related to testing, but they don't contradict, duplicate, or refine each other. They are just different facts about the test suite.\n\nRelation: unrelated\nReason: The new claim states the number of tests, while the existing claim states the testing framework used; both facts can be true simultaneously.\n\nLet's format the output as requested.\n```json\n{\"rulings\": [{\"id\": \"ffc408b3-ae22-4c8a-80ff-904d65ed7a99\", \"relation\": \"unrelated\", \"reason\": \"The new claim states the number of tests, while the existing claim states the testing framework used; both facts can be true simultaneously.\"}]}\n```\nDouble check the rules.\n- supersedes: cannot both be true. (False here)\n- duplicate: same fact. (False here)\n- refines: adds detail, doesn't contradict. (False here, they are about different aspects)\n- unrelated: same topic, both can be true. (True here, both about testing, but different facts).\n\nLooks good.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783830112,
+  "id": "chatcmpl-b2ae3426-da57-9af0-a856-05bed8919485",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 531,
+    "completion_tokens_details": {
+      "reasoning_tokens": 444,
+      "text_tokens": 531
+    },
+    "prompt_tokens": 721,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 721
+    },
+    "total_tokens": 1252
+  }
+}

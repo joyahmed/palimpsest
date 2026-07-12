@@ -4,6 +4,12 @@ node_modules/
 dist/
 *.tsbuildinfo
 
+# Deploy artifacts: compiled JS, the staged Function Compute package, and the
+# vendored Node runtime that ships inside it. All rebuilt by `pnpm package:fc`.
+build/
+deploy/
+runtime/
+
 # NOTE: .cache/llm is deliberately NOT ignored - the model-call cache is committed
 # so anyone can replay the benchmark and reproduce our numbers without a key
 # and without spending anything. That reproducibility is part of the submission.

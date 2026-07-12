@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"cb081a97-383e-41f3-b918-7e771180bd3f\", \"relation\": \"unrelated\", \"reason\": \"Vitest for unit testing and Playwright for end-to-end testing are complementary tools that can both be true simultaneously.\"}]}",
+        "reasoning_content": "The user wants me to act as an adjudicator for a memory system.\nI need to evaluate the relationship between a NEW CLAIM and an EXISTING CLAIM.\n\nNEW CLAIM:\n- observed: 2026-06-04\n- kind: config\n- claim: \"Vitest is used for unit testing.\"\n\nEXISTING CLAIM:\n- id: cb081a97-383e-41f3-b918-7e771180bd3f\n- observed: 2026-06-04\n- kind: config\n- claim: \"Playwright is used for end-to-end testing.\"\n\nAnalysis:\nThe new claim is about unit testing (Vitest).\nThe existing claim is about end-to-end testing (Playwright).\nThese are two different types of testing and can both be true at the same time. They do not contradict each other.\nTherefore, the relationship is \"unrelated\".\n\nReasoning to write:\nVitest is for unit testing while Playwright is for end-to-end testing, so both can be true simultaneously.\n\nLet's format the output as JSON.\n```json\n{\n  \"rulings\": [\n    {\n      \"id\": \"cb081a97-383e-41f3-b918-7e771180bd3f\",\n      \"relation\": \"unrelated\",\n      \"reason\": \"Vitest is used for unit testing while Playwright is used for end-to-end testing, so both can be true at the same time.\"\n    }\n  ]\n}\n```\nDouble check the rules:\n- supersedes: makes old false. (No)\n- duplicate: same fact. (No)\n- refines: adds detail, doesn't contradict. (No, they are about different testing types)\n- unrelated: same topic, both can be true. (Yes, both are about testing tools, but different types).\n\nWait, the prompt says \"Same topic, but both can be true at once. Leave the old claim alone.\"\nYes, testing tools is the topic.\n\nReason: \"Vitest is for unit testing and Playwright is for end-to-end testing, so both can be true simultaneously.\"\nPerfect.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783798285,
+  "id": "chatcmpl-5587a74f-60e1-9a7a-822d-efec613af00d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 579,
+    "completion_tokens_details": {
+      "reasoning_tokens": 497,
+      "text_tokens": 579
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 719
+    },
+    "total_tokens": 1298
+  }
+}

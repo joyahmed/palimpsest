@@ -15,7 +15,9 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node build/server.js",
     "package:fc": "tsx src/scripts/package-fc.ts",
+    "cert": "tsx --env-file=.env src/scripts/issue-cert.ts",
     "deploy": "pnpm build && pnpm package:fc && s deploy -y",
+    "deploy:tls": "PALIMPSEST_TLS_CERT=\"$(cat certs/fullchain.pem)\" PALIMPSEST_TLS_KEY=\"$(cat certs/privkey.pem)\" pnpm deploy",
     "ingest": "tsx --env-file=.env src/scripts/ingest.ts",
     "bench": "tsx --env-file=.env src/bench/run.ts",
     "render": "tsx --env-file=.env src/scripts/render.ts",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.5",
+    "acme-client": "^5.4.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

@@ -72,3 +72,38 @@ resources:
               - GET
               - POST
               - OPTIONS
+
+  # ---------------------------------------------------------------- custom domain
+  #
+  # WHY THIS IS NOT OPTIONAL. Alibaba forcibly adds `Content-Disposition: attachment`
+  # to any text/html served from a DEFAULT domain - *.fcapp.run and *.aliyuncs.com
+  # alike, OSS static hosting included, in every region. It is an anti-abuse policy,
+  # not a setting: you cannot turn it off. A browser pointed at the default URL
+  # DOWNLOADS the audit view instead of rendering it.
+  #
+  # A custom domain is the only supported way to serve a web page from Alibaba. The
+  # expensive part - ICP filing - applies only to mainland-China regions. We are in
+  # Singapore, so it does not apply to us.
+  domain:
+    component: fc3-domain
+    props:
+      region: ${vars.region}
+      domainName: palimpsest.zettabyteincorp.com
+      protocol: HTTP,HTTPS
+      # Let's Encrypt, issued by `pnpm cert` (DNS-01). The PEMs live in certs/, which is
+      # gitignored - the private key must never enter the repo. `pnpm deploy:tls` exports
+      # them into the environment for this substitution. Deploying without them set will
+      # fail loudly rather than silently downgrade to plain HTTP.
+      certConfig:
+        certName: palimpsest
+        certificate: ${env('PALIMPSEST_TLS_CERT')}
+        privateKey: ${env('PALIMPSEST_TLS_KEY')}
+      routeConfig:
+        routes:
+          - functionName: palimpsest
+            path: /*
+            qualifier: LATEST
+            methods:
+              - GET
+              - POST
+              - OPTIONS

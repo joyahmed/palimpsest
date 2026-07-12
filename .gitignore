@@ -10,6 +10,10 @@ build/
 deploy/
 runtime/
 
+# TLS material for the custom domain. The private key must never enter the repo -
+# re-issue with `pnpm cert` instead of ever committing this.
+certs/
+
 # NOTE: .cache/llm is deliberately NOT ignored - the model-call cache is committed
 # so anyone can replay the benchmark and reproduce our numbers without a key
 # and without spending anything. That reproducibility is part of the submission.

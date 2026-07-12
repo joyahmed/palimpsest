@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The launch was delayed to November.\",\n      \"kind\": \"event\",\n      \"subject\": \"launch date\",\n      \"quote\": \"The launch slipped to November.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 621,
+    "completion_tokens": 69,
+    "total_tokens": 690,
+    "completion_tokens_details": {
+      "text_tokens": 69
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 621
+    }
+  },
+  "created": 1783839127,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-299c433a-a714-9b52-a7b6-b1de9c606e51"
+}

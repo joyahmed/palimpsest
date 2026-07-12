@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\n  \"rulings\": [\n    {\n      \"id\": \"1\",\n      \"relation\": \"supersedes\",\n      \"reason\": \"The project abandoned SQLite on 12 Jul; the 20 Jun decision to use it is no longer in effect.\"\n    }\n  ]\n}",
+        "reasoning_content": "Let me analyze this carefully.\n\nNEW CLAIM:\n- observed: 2026-07-12\n- claim: \"Meridian no longer uses SQLite\"\n\nOLD CLAIM:\n- id: 1\n- observed: 2026-06-20\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nLet me think about the relationship:\n\nThe old claim says the project uses SQLite (observed 2026-06-20).\nThe new claim says Meridian no longer uses SQLite (observed 2026-07-12).\n\nThe new claim is LATER than the old claim (July 12 vs June 20). So time ordering is fine for supersession.\n\nCan both be true at the same time? \n- Old: \"The project uses SQLite instead of Postgres\" (as of June 20)\n- New: \"Meridian no longer uses SQLite\" (as of July 12)\n\nThese CANNOT both be true at the same time. If the project no longer uses SQLite, then it's not true that the project uses SQLite. The new claim directly contradicts the old claim.\n\nWait, but I need to be careful. The old claim says \"The project uses SQLite\" - this is a present-tense statement. If observed on June 20, it means as of June 20, the project uses SQLite. The new claim says as of July 12, Meridian no longer uses SQLite.\n\nThese are about the same subject (whether the project uses SQLite). The new claim makes the old one FALSE - if they no longer use SQLite, then the statement \"the project uses SQLite\" is no longer true.\n\nThis is a clear case of supersedes. The new claim (July 12) says they no longer use SQLite, which directly contradicts the old claim (June 20) that they use SQLite. The old claim dies because the situation changed.\n\nActually, wait. Let me reconsider. Is this like \"dev server on port 3000\" + \"dev server on port 4000\"? Yes, that's exactly the example given for supersedes. The state changed from using SQLite to not using SQLite.\n\nSo the ruling should be: supersedes.\n\nReason: \"As of July 12, Meridian no longer uses SQLite, so the June 20 decision to use SQLite is no longer in effect.\"",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783839106,
+  "id": "chatcmpl-f1902612-8a71-983e-8a67-669a3ddc907d",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 601,
+    "completion_tokens_details": {
+      "reasoning_tokens": 529,
+      "text_tokens": 601
+    },
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 686
+    },
+    "total_tokens": 1287
+  }
+}

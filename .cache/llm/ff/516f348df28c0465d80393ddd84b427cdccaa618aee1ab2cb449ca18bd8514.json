@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Both claims can be true simultaneously: Meridian dropped SQLite and now runs on DuckDB.\"}]}",
+        "reasoning_content": "The user wants me to adjudicate a new claim against an existing claim in a memory system.\n\nNEW CLAIM:\n- observed: 2026-07-12\n- kind: config\n- claim: \"Meridian runs on DuckDB\"\n\nEXISTING CLAIM:\n- id: 1\n- observed: 2026-07-12\n- kind: decision\n- claim: \"Meridian no longer uses SQLite\"\n\nAnalysis:\nThe new claim states that Meridian runs on DuckDB.\nThe existing claim states that Meridian no longer uses SQLite.\nCan both be true at the same time? Yes. Meridian can run on DuckDB and no longer use SQLite. In fact, they are highly complementary. The new claim doesn't make the old claim false. It doesn't just restate it (so not duplicate). It adds the specific detail of what it *does* use, whereas the old claim just says what it *doesn't* use. Wait, does it refine it? \"Refines: Adds detail. Does NOT contradict. Both remain true.\"\nOr is it unrelated? \"Same topic, but both can be true at once. Leave the old claim alone.\"\nActually, saying \"we use DuckDB\" and \"we no longer use SQLite\" are two sides of the same coin, but they are distinct facts. One is the new state, the other is the cessation of the old state.\nLet's look at the definitions:\n- refines: Adds detail. Does NOT contradict. Both remain true. e.g. old \"we dropped Docker\" + new \"we dropped Docker because of build times\"\n- unrelated: Same topic, but both can be true at once. Leave the old claim alone. e.g. old \"port 3000 collided...\" + new \"dev server on port 4000\"\n\nIs \"Meridian runs on DuckDB\" refining \"Meridian no longer uses SQLite\"? Not exactly. It's stating the new database.\nWait, if old is \"we dropped Docker\" and new is \"we use Kubernetes\", is that refines or unrelated?\nActually, if the old claim is \"no longer uses SQLite\", and the new claim is \"runs on DuckDB\", they are just two facts about the database. They don't contradict.\nLet's consider \"unrelated\" vs \"refines\".\nIf I say \"we no longer use SQLite\", and then \"we use DuckDB\", the second adds the detail of what the new database is. But \"refines\" usually means adding detail to the *same* fact.\nLet's just use \"unrelated\" because they are distinct facts (one is about dropping SQLite, one is about adopting DuckDB) that happen to be related to the database choice, and both can be true at once.\nWait, could it be \"refines\"? \"Adds detail. Does NOT contradict.\"\nLet's look at the example for unrelated: \"port 3000 collided with another project\" + \"dev server on port 4000\". One explains why, the other states the new value.\nHere: \"no longer uses SQLite\" (states the old value is gone) + \"runs on DuckDB\" (states the new value). This perfectly matches the unrelated example!\nOld: \"Meridian no longer uses SQLite\" (states the old value is gone / dropped)\nNew: \"Meridian runs on DuckDB\" (states the new value)\nBoth can be true at once.\n\nLet's double check.\nOld: \"Meridian no longer uses SQLite\"\nNew: \"Meridian runs on DuckDB\"\nRelation: unrelated.\nReason: The new claim states the new database in use, while the old claim states the previous database was dropped; both facts can be true simultaneously.\n\nWait, is there any reason to think it's \"refines\"?\nIf old was \"Meridian uses a new database\" and new was \"Meridian runs on DuckDB\", that would be refines.\nBut old is \"no longer uses SQLite\".\nSo \"unrelated\" is the best fit.\n\nLet's write the reason clearly.\n\"The new claim states the current database, while the old claim notes the previous one was dropped; both facts can be true at the same time.\"\nOr: \"The new claim identifies the new database, while the old claim notes the abandonment of the old one; both can be true simultaneously.\"\n\nLet's review the prompt's examples.\nunrelated: \"port 3000 collided with another project\" + \"dev server on port 4000\" (one explains WHY, the other states the new value - both true)\nHere: \"no longer uses SQLite\" (states the old value is gone) + \"runs on DuckDB\" (states the new value).\nYes, this is very similar.\n\nI will rule 'unrelated'.\nReason: The new claim states the new database in use, while the old claim notes the previous database was dropped; both facts can be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783839118,
+  "id": "chatcmpl-f49dcde2-64ac-9814-8e82-984cacfa5c99",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1112,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1067,
+      "text_tokens": 1112
+    },
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 684
+    },
+    "total_tokens": 1796
+  }
+}

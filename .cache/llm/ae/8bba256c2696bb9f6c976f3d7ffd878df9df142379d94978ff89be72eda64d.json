@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\n  \"claims\": [\n    {\n      \"content\": \"The system is using Postgres.\",\n      \"kind\": \"state\",\n      \"subject\": \"database choice\",\n      \"quote\": \"We're back on Postgres.\",\n      \"confidence\": 1.0\n    }\n  ]\n}",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 622,
+    "completion_tokens": 70,
+    "total_tokens": 692,
+    "completion_tokens_details": {
+      "text_tokens": 70
+    },
+    "prompt_tokens_details": {
+      "text_tokens": 622
+    }
+  },
+  "created": 1783839137,
+  "system_fingerprint": null,
+  "model": "qwen3.6-flash",
+  "id": "chatcmpl-131bc23d-8447-9d40-b90d-1d7775f36cc5"
+}

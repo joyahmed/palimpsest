@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The system switched back to Postgres as of 12 Jul; the earlier decision to use SQLite is no longer in effect.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Docker usage and database choice are independent concerns; both claims can be true simultaneously.\"}]}",
+        "reasoning_content": "Let me analyze each claim against the new claim.\n\nNEW CLAIM:\n- observed: 2026-07-12\n- kind: state\n- claim: \"The system is using Postgres.\"\n\nCLAIM 1:\n- id: 1\n- observed: 2026-06-20\n- kind: decision\n- claim: \"The project uses SQLite instead of Postgres.\"\n\nThe new claim says the system is using Postgres (observed 2026-07-12). The old claim says the project uses SQLite instead of Postgres (observed 2026-06-20). These two claims CANNOT both be true at the same time. The new claim is newer (July 12 vs June 20), so the new claim supersedes the old one. The system switched from SQLite to Postgres, or the decision was reversed.\n\nWait, let me re-read the rules. \"Only rule 'supersedes' if the two claims CANNOT BOTH BE TRUE.\" Can both be true? \"The project uses SQLite instead of Postgres\" and \"The system is using Postgres\" - these are contradictory. They cannot both be true. The new claim is newer, so it supersedes the old one.\n\nRelation: supersedes\nReason: The system switched to Postgres by July 12, overturning the June 20 decision to use SQLite.\n\nCLAIM 2:\n- id: 2\n- observed: 2026-07-10\n- kind: config\n- claim: \"Docker is not being used in the project.\"\n\nThe new claim is about Postgres. The old claim is about Docker. These are about different topics. They can both be true at the same time. The system can use Postgres and not use Docker simultaneously.\n\nRelation: unrelated\nReason: Docker usage and database choice are independent concerns; both claims can be true simultaneously.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1783839137,
+  "id": "chatcmpl-f73a26b7-5a47-9655-9657-c0c76ffe0118",
+  "model": "qwen3.7-plus",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 512,
+    "completion_tokens_details": {
+      "reasoning_tokens": 423,
+      "text_tokens": 512
+    },
+    "prompt_tokens": 727,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 727
+    },
+    "total_tokens": 1239
+  }
+}

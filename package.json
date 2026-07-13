@@ -26,6 +26,7 @@
     "diagram": "tsx src/scripts/diagram.ts",
     "shots": "tsx --env-file=.env src/scripts/shots.ts",
     "shot:bench": "tsx --env-file=.env src/scripts/shot-bench.ts",
+    "thumb": "tsx src/scripts/thumb.ts",
     "proof": "tsx src/scripts/proof.ts"
   },
   "dependencies": {

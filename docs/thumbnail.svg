@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#0b1120"/>
+
+  <!-- a teal spine, so the card has an edge even as a 320px thumbnail -->
+  <rect x="0" y="0" width="9" height="720" fill="#5eead4"/>
+
+  <text x="84" y="104" font-family="DejaVu Sans, sans-serif" font-size="25" font-weight="700"
+        fill="#5eead4" letter-spacing="7">PALIMPSEST</text>
+
+  <text x="84" y="222" font-family="DejaVu Sans, sans-serif" font-size="86" font-weight="700" fill="#f1f5f9">Agent memory</text>
+  <text x="84" y="316" font-family="DejaVu Sans, sans-serif" font-size="86" font-weight="700" fill="#5eead4">that forgets.</text>
+
+  <!-- the dead belief: struck through, kept, dated -->
+  <text x="84" y="438" font-family="DejaVu Sans Mono, monospace" font-size="31" fill="#7c8ba1"
+        xml:space="preserve">The dev server is on port 3000</text>
+  <line x1="80" y1="428" x2="647.86" y2="428"
+        stroke="#fb7185" stroke-width="2.5"/>
+  <text x="673.86" y="438" font-family="DejaVu Sans Mono, monospace" font-size="19"
+        fill="#fb7185">† died 2026-07-02</text>
+
+  <!-- the live one -->
+  <text x="84" y="492" font-family="DejaVu Sans Mono, monospace" font-size="31" fill="#5eead4"
+        xml:space="preserve">The dev server is on port 4000</text>
+
+  <line x1="84" y1="566" x2="1196" y2="566" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- the number that earns the claim -->
+  <text x="84" y="612" font-family="DejaVu Sans Mono, monospace" font-size="20" fill="#7c8ba1">naive RAG</text>
+  <text x="84" y="672" font-family="DejaVu Sans, sans-serif" font-size="54" font-weight="700" fill="#7c8ba1">36%</text>
+
+  <text x="294" y="612" font-family="DejaVu Sans Mono, monospace" font-size="20" fill="#5eead4">palimpsest</text>
+  <text x="294" y="672" font-family="DejaVu Sans, sans-serif" font-size="54" font-weight="700" fill="#5eead4">73%</text>
+
+  <text x="1196" y="640" font-family="DejaVu Sans Mono, monospace" font-size="21" fill="#7c8ba1" text-anchor="end"
+        xml:space="preserve">on facts that changed</text>
+  <text x="1196" y="672" font-family="DejaVu Sans Mono, monospace" font-size="21" fill="#7c8ba1" text-anchor="end"
+        xml:space="preserve">it served 0 dead facts. RAG served 3.</text>
+</svg>

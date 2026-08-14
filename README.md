@@ -69,15 +69,25 @@ Each claim carries:
 - **History** - when a claim dies, we keep the body, the killer, the date, and the
   reason.
 
-And four mechanisms:
+And three mechanisms:
 
 1. **Extraction** - a transcript is not a memory. Qwen distills it into atomic claims.
 2. **Adjudication** - a new claim doesn't just get appended. We find what it might
    collide with and ask Qwen to *rule*: update, contradiction, refinement, or new.
    Cosine finds the candidates; only reasoning can decide which one is **dead**.
-3. **Decay** - confidence erodes at a rate set by what kind of fact it is.
-4. **Verification** - claims that assert something checkable get re-checked, and
-   demoted when the world moves on.
+3. **Decay** - confidence erodes at a rate set by what kind of fact it is. Below the
+   trust threshold a claim is surfaced as **doubted** - to be re-verified rather than
+   repeated.
+
+**Not built yet: verification.** Decay can tell you a claim is *old*. It cannot tell
+you it is *wrong*, and those are different things. A live example from 2026-08-14:
+two claims had both decayed to ~0.48 - one recording a Node version, one recording
+that a database port was open to the internet. The Node claim was still exactly true.
+The port claim had been false for weeks. Same confidence, opposite truth, because
+confidence measures age.
+
+Closing that gap means letting a claim carry a command that checks it against the
+world, and running those checks as confidence falls. See *What's next*.
 
 Nothing is overwritten. You can always ask: *what did you used to believe, and when
 did you stop?*

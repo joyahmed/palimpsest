@@ -75,9 +75,9 @@ And three mechanisms:
 2. **Adjudication** - a new claim doesn't just get appended. We find what it might
    collide with and ask Qwen to *rule*: update, contradiction, refinement, or new.
    Cosine finds the candidates; only reasoning can decide which one is **dead**.
-3. **Decay** - confidence erodes at a rate set by what kind of fact it is. Below the
-   trust threshold a claim is surfaced as **doubted** - to be re-verified rather than
-   repeated.
+3. **Decay** - confidence erodes at a rate set by what kind of fact it is, so what
+   the memory trusts most sorts to the top. Decay *ranks*; it does not withhold. An
+   old claim still comes back, carrying a number that says how much to lean on it.
 
 **Not built yet: verification.** Decay can tell you a claim is *old*. It cannot tell
 you it is *wrong*, and those are different things. A live example from 2026-08-14:

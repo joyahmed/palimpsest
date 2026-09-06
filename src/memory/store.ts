@@ -174,8 +174,13 @@ export class ClaimStore {
 
   /**
    * What the system currently believes, ranked by how much it still trusts it.
-   * Claims whose confidence has decayed below `minConfidence` are not served as
-   * fact - they are candidates for re-verification, not answers.
+   *
+   * `minConfidence` defaults to a trust threshold, but every caller in this repo
+   * passes `0` on purpose: a decayed claim is still the best answer we have, and
+   * withholding it would trade a weak answer for no answer. So the ranking is the
+   * product here - the confidence rides along and the reader decides how far to
+   * lean on it. The threshold is kept because gating is the obvious next step
+   * once verification exists to re-check what falls below it.
    */
   believed(now = Date.now(), minConfidence = 0.35): Array<Claim & { confidence: number }> {
     return this.active()

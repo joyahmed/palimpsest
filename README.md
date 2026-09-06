@@ -7,6 +7,12 @@
 
 Built for the **Global AI Hackathon Series with Qwen Cloud** · Track: **MemoryAgent**
 
+> **The judged version is tagged [`qwen-submission`](../../tree/qwen-submission), exactly as
+> submitted.** `main` has moved on since, and the differences are
+> corrections rather than features - most of them things the submission claimed and this
+> code did not do. If you are checking this against the Devpost entry, that tag is the
+> one it describes.
+
 ---
 
 ![Architecture](docs/architecture.png)

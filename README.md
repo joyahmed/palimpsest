@@ -7,6 +7,12 @@
 
 Built for the **Global AI Hackathon Series with Qwen Cloud** · Track: **MemoryAgent**
 
+**Status: a research prototype under evaluation, not production software.** It is used daily on
+one developer's machine and kept or dropped on measured results - the benchmark below is n=19 on
+a single synthetic fixture, which is enough to show a design difference and not enough to
+generalise. Read the numbers as an indication, and replay them yourself: the cache is committed,
+so `PALIMPSEST_CACHE_ONLY=1 pnpm bench` reproduces every figure here with no API key and no spend.
+
 > **The judged version is tagged [`qwen-submission`](../../tree/qwen-submission), exactly as
 > submitted.** `main` has moved on since, and the differences are
 > corrections rather than features - most of them things the submission claimed and this

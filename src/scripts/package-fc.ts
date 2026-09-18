@@ -28,10 +28,12 @@
  */
 
 import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import {
   chmodSync,
   copyFileSync,
+  readdirSync,
   cpSync,
   existsSync,
   mkdirSync,
@@ -51,6 +53,15 @@ const SEED_CACHE = '.cache/llm'; // the committed replay cache, shipped read-onl
 const OUT = 'deploy';
 
 const mb = (bytes: number): string => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+
+function dirSize(dir: string): number {
+  let n = 0;
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = `${dir}/${e.name}`;
+    n += e.isDirectory() ? dirSize(p) : statSync(p).size;
+  }
+  return n;
+}
 
 // ---------------------------------------------------------------- vendor node
 
@@ -149,6 +160,25 @@ if (!existsSync(SEED_CACHE)) {
   );
 }
 cpSync(SEED_CACHE, `${OUT}/llm-cache`, { recursive: true });
+
+/**
+ * The local embedding model travels with the function too. Without it the first
+ * request on a cold instance would download 34 MB from Hugging Face inside the
+ * request - against the timeout, on every recycle, and only if the instance has
+ * egress to huggingface.co at all. `pnpm explain` (or any embed call) populates
+ * `.cache/models` on the build machine; the package ships it read-only and s.yaml
+ * points PALIMPSEST_MODEL_DIR at it. onnxruntime-node's native binary is a prod
+ * dependency and comes along with node_modules above.
+ */
+const MODEL_CACHE = process.env.PALIMPSEST_MODEL_DIR ?? '.cache/models';
+if (!existsSync(MODEL_CACHE)) {
+  throw new Error(
+    `${MODEL_CACHE} is missing - run \`pnpm explain\` once to download the embedding model,\n` +
+      'or the deployed function would fetch 34 MB inside its first request.',
+  );
+}
+cpSync(MODEL_CACHE, `${OUT}/models`, { recursive: true });
+console.log(`  models/            ${mb(dirSize(`${OUT}/models`))}  (local embedding model, read-only)`);
 const entries = execFileSync('find', [`${OUT}/llm-cache`, '-name', '*.json']).toString().trim();
 console.log(`  llm-cache/         ${entries.split('\n').length} entries  (replayed, not re-paid)`);
 
@@ -161,6 +191,41 @@ execFileSync('npm', ['install', '--omit=dev', '--no-package-lock', '--silent'], 
   cwd: OUT,
   stdio: 'inherit',
 });
+
+/**
+ * Prune what the function can never execute. onnxruntime-node ships binaries for
+ * every platform and every execution provider: Windows and macOS builds, an arm64
+ * Linux build, and the CUDA and TensorRT providers for Linux x64 - 500 MB that a
+ * CPU-only x64 function cannot load and Singapore's 500 MB package limit cannot
+ * hold. What stays is the x64 CPU runtime (libonnxruntime.so.1 + the binding).
+ * onnxruntime-web's WASM bundles go the same way: transformers.js picks the node
+ * backend under Node, and the module resolves without its dist/ payload.
+ */
+const ORT = `${OUT}/node_modules/onnxruntime-node/bin/napi-v6`;
+for (const dead of ['win32', 'darwin', 'linux/arm64']) rmSync(`${ORT}/${dead}`, { recursive: true, force: true });
+for (const provider of ['libonnxruntime_providers_cuda.so', 'libonnxruntime_providers_tensorrt.so']) {
+  rmSync(`${ORT}/linux/x64/${provider}`, { force: true });
+}
+for (const f of readdirSync(`${OUT}/node_modules/onnxruntime-web/dist`)) {
+  if (/\.(wasm|mjs\.map|js\.map)$/.test(f) || /jsep|asyncify|jspi/.test(f)) {
+    rmSync(`${OUT}/node_modules/onnxruntime-web/dist/${f}`, { force: true });
+  }
+}
+console.log(`  node_modules/      ${mb(dirSize(`${OUT}/node_modules`))}  (pruned: no CUDA/TensorRT, no win32/darwin/arm64, no WASM)`);
+
+// Prove the pruned tree still embeds, with the runtime the function will use.
+execFileSync(
+  resolve(`${OUT}/runtime/bin/node`),
+  [
+    '--input-type=module',
+    '-e',
+    "const t = await import('@huggingface/transformers'); t.env.cacheDir = process.env.PALIMPSEST_MODEL_DIR; t.env.allowRemoteModels = false; " +
+      "const p = await t.pipeline('feature-extraction', 'Xenova/bge-small-en-v1.5', { dtype: 'q8' }); " +
+      "const o = await p(['smoke'], { pooling: 'mean', normalize: true }); const v = o.tolist()[0]; " +
+      "if (v.length !== 384) throw new Error('bad dim ' + v.length); console.log('  embed smoke        ok  (384-dim, offline, pruned onnxruntime)');",
+  ],
+  { cwd: OUT, stdio: 'inherit', env: { ...process.env, PALIMPSEST_MODEL_DIR: resolve(`${OUT}/models`) } },
+);
 
 // The staged package.json's scripts reference tsx and other dev-only tooling that is
 // not in the package. Nothing runs them there - bootstrap execs node directly - but a

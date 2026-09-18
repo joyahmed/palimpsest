@@ -62,10 +62,16 @@ resources:
       # UNCACHED path merely slow instead of broken - a question nobody has asked
       # before now waits, and then answers, rather than 502ing.
       timeout: 600
-      # Required: the function calls Qwen Cloud over the public internet.
+      # Required: the function calls the model API over the public internet.
       internetAccess: true
 
       environmentVariables:
+        # Chat runs on Claude; retrieval embeddings run in-process from the shipped
+        # model below. The Qwen settings stay so PALIMPSEST_PROVIDER=qwen still works
+        # and the committed replay cache keeps answering the seeded questions.
+        ANTHROPIC_API_KEY: ${env('ANTHROPIC_API_KEY')}
+        PALIMPSEST_PROVIDER: anthropic
+        PALIMPSEST_MODEL_DIR: /code/models
         DASHSCOPE_API_KEY: ${env('DASHSCOPE_API_KEY')}
         QWEN_BASE_URL: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
         # FC mounts the code read-only. server.ts copies the seed to /tmp and writes
@@ -86,6 +92,7 @@ resources:
             methods:
               - GET
               - POST
+              - DELETE   # MCP over Streamable HTTP ends a session with DELETE
               - OPTIONS
 
   # ---------------------------------------------------------------- custom domain
@@ -121,4 +128,5 @@ resources:
             methods:
               - GET
               - POST
+              - DELETE   # MCP over Streamable HTTP ends a session with DELETE
               - OPTIONS

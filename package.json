@@ -30,6 +30,8 @@
     "proof": "tsx src/scripts/proof.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
+    "@huggingface/transformers": "^4.3.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "openai": "^4.77.0",
     "zod": "^3.24.1"

@@ -1,5 +1,11 @@
 /**
- * Qwen Cloud client, with a durable on-disk cache in front of it.
+ * Model client, with a durable on-disk cache in front of it.
+ *
+ * Two providers behind one contract (see provider.ts): Qwen Cloud - the roster the
+ * committed replay cache was recorded with - and Claude plus a local embedding
+ * model, which is what runs now that the Qwen quota is gone. Call sites never
+ * see the difference; the cache key carries the model name, so the two never
+ * share an entry.
  *
  * WHY THE CACHE IS LOAD-BEARING (not an optimisation):
  *
@@ -19,6 +25,9 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import OpenAI from 'openai';
+import { provider } from './provider.js';
+import { anthropicBody, anthropicChat, type AnthropicChatResult } from './anthropic.js';
+import { isLocalModel, localEmbed } from './local-embed.js';
 
 const BASE_URL =
   process.env.QWEN_BASE_URL ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
@@ -174,6 +183,7 @@ export interface ChatOptions {
 }
 
 export async function chat(opts: ChatOptions): Promise<string> {
+  if (provider() === 'anthropic') return chatAnthropic(opts);
   const messages = [
     ...(opts.system ? [{ role: 'system' as const, content: opts.system }] : []),
     { role: 'user' as const, content: opts.user },
@@ -197,6 +207,25 @@ export async function chat(opts: ChatOptions): Promise<string> {
   const content = res.choices[0]?.message?.content;
   if (content == null) throw new Error(`Qwen returned no content (model ${opts.model})`);
   return content;
+}
+
+async function chatAnthropic(opts: ChatOptions): Promise<string> {
+  const req = {
+    model: opts.model,
+    system: opts.system,
+    user: opts.user,
+    thinking: opts.thinking,
+    json: opts.json,
+    maxTokens: opts.maxTokens,
+  };
+  // Same cache discipline as the Qwen path: the key is the exact request body
+  // (provider-tagged so a Claude entry can never be mistaken for a Qwen one).
+  const res = await cached<AnthropicChatResult>(
+    ['chat', 'anthropic', anthropicBody(req), opts.cacheSalt ?? null],
+    () => anthropicChat(req),
+  );
+  if (!res.text) throw new Error(`Claude returned no text (model ${opts.model}, stop ${res.stop_reason})`);
+  return res.text;
 }
 
 // ---------------------------------------------------------------- embeddings
@@ -238,11 +267,13 @@ export async function embed(model: string, input: string[]): Promise<Float32Arra
     const idx = missing.slice(i, i + EMBED_BATCH_MAX);
     const batch = idx.map((j) => input[j]!);
 
-    const r = await client().embeddings.create({ model, input: batch });
+    const vectors = isLocalModel(model)
+      ? await localEmbed(model, batch)
+      : (await client().embeddings.create({ model, input: batch })).data.map((d) => d.embedding);
 
     for (const [n, j] of idx.entries()) {
-      const vec = r.data[n]?.embedding;
-      if (!vec) throw new Error(`Qwen returned no embedding for input ${j}`);
+      const vec = vectors[n];
+      if (!vec) throw new Error(`No embedding returned for input ${j} (model ${model})`);
       cacheStats.misses++;
       writeFileSync(cachePath(cacheKey(['embed1', model, input[j]!])), JSON.stringify(vec));
       out[j] = vec;

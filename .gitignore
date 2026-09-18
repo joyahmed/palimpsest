@@ -40,3 +40,8 @@ dist/
 DEVPOST.md
 X-THREAD.md
 X-POSTS.txt
+
+# Local embedding model files (bge-small q8, ~34 MB): downloaded by transformers.js on
+# first use, re-downloadable, never committed. The model-call cache above is different:
+# it holds ANSWERS, which cannot be regenerated without spend.
+.cache/models/

@@ -28,6 +28,7 @@ import OpenAI from 'openai';
 import { provider } from './provider.js';
 import { anthropicBody, anthropicChat, type AnthropicChatResult } from './anthropic.js';
 import { isLocalModel, localEmbed } from './local-embed.js';
+import { claudeCodeBody, claudeCodeChat, type ClaudeCodeResult } from './claude-code.js';
 
 const BASE_URL =
   process.env.QWEN_BASE_URL ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
@@ -54,6 +55,13 @@ const SEED_DIR = process.env.PALIMPSEST_CACHE_SEED;
 let _client: OpenAI | undefined;
 function client(): OpenAI {
   if (_client) return _client;
+  if (provider() === 'openai') {
+    const baseURL = process.env.PALIMPSEST_BASE_URL ?? process.env.OPENAI_BASE_URL;
+    const apiKey = process.env.PALIMPSEST_API_KEY ?? process.env.OPENAI_API_KEY ?? 'none';
+    if (!baseURL) throw new Error('provider openai needs PALIMPSEST_BASE_URL (an OpenAI-compatible endpoint: Groq, Gemini, OpenRouter, Ollama)');
+    _client = new OpenAI({ apiKey, baseURL });
+    return _client;
+  }
   const apiKey = process.env.DASHSCOPE_API_KEY;
   if (!apiKey) {
     throw new Error(
@@ -183,7 +191,9 @@ export interface ChatOptions {
 }
 
 export async function chat(opts: ChatOptions): Promise<string> {
-  if (provider() === 'anthropic') return chatAnthropic(opts);
+  const p = provider();
+  if (p === 'anthropic') return chatAnthropic(opts);
+  if (p === 'claude-code') return chatClaudeCode(opts);
   const messages = [
     ...(opts.system ? [{ role: 'system' as const, content: opts.system }] : []),
     { role: 'user' as const, content: opts.user },
@@ -195,8 +205,9 @@ export async function chat(opts: ChatOptions): Promise<string> {
     temperature: opts.temperature ?? 0,
     ...(opts.maxTokens ? { max_tokens: opts.maxTokens } : {}),
     ...(opts.json ? { response_format: { type: 'json_object' as const } } : {}),
-    // DashScope reads this from the request body in OpenAI-compatible mode.
-    ...(opts.thinking === false ? { enable_thinking: false } : {}),
+    // DashScope reads this from the request body in OpenAI-compatible mode; other
+    // OpenAI-compatible endpoints reject unknown fields, so only Qwen gets it.
+    ...(opts.thinking === false && p === 'qwen' ? { enable_thinking: false } : {}),
   };
 
   const res = await cached(['chat', body, opts.cacheSalt ?? null], async () => {
@@ -205,8 +216,18 @@ export async function chat(opts: ChatOptions): Promise<string> {
   });
 
   const content = res.choices[0]?.message?.content;
-  if (content == null) throw new Error(`Qwen returned no content (model ${opts.model})`);
+  if (content == null) throw new Error(`${p} returned no content (model ${opts.model})`);
   return content;
+}
+
+async function chatClaudeCode(opts: ChatOptions): Promise<string> {
+  const req = { model: opts.model, system: opts.system, user: opts.user, thinking: opts.thinking, json: opts.json };
+  const res = await cached<ClaudeCodeResult>(
+    ['chat', 'claude-code', claudeCodeBody(req), opts.cacheSalt ?? null],
+    () => claudeCodeChat(req),
+  );
+  if (!res.text) throw new Error(`claude -p returned no text (model ${opts.model})`);
+  return res.text;
 }
 
 async function chatAnthropic(opts: ChatOptions): Promise<string> {

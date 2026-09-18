@@ -52,6 +52,33 @@ const ANTHROPIC: Roster = {
   embed: 'local:Xenova/bge-small-en-v1.5:q8',
 };
 
-export const MODELS: Roster = provider() === 'qwen' ? QWEN : ANTHROPIC;
+/** Claude Code headless: the same Claude, addressed by the CLI's model names. */
+const CLAUDE_CODE: Roster = {
+  adjudicate: 'claude-opus-5',
+  extract: 'claude-opus-5',
+  embed: 'local:Xenova/bge-small-en-v1.5:q8',
+};
+
+/**
+ * Any OpenAI-compatible endpoint. The chat model is whatever the endpoint serves
+ * (PALIMPSEST_CHAT_MODEL); the default is Groq's Llama 3.3 70B, which handles the
+ * JSON extraction and adjudication prompts and has a free tier that renews daily.
+ * Gemini: base URL https://generativelanguage.googleapis.com/v1beta/openai/ and
+ * a model such as gemini-2.5-flash.
+ */
+const OPENAI: Roster = {
+  adjudicate: process.env.PALIMPSEST_CHAT_MODEL ?? 'llama-3.3-70b-versatile',
+  extract: process.env.PALIMPSEST_EXTRACT_MODEL ?? process.env.PALIMPSEST_CHAT_MODEL ?? 'llama-3.3-70b-versatile',
+  embed: 'local:Xenova/bge-small-en-v1.5:q8',
+};
+
+const ROSTERS: Record<ReturnType<typeof provider>, Roster> = {
+  anthropic: ANTHROPIC,
+  'claude-code': CLAUDE_CODE,
+  openai: OPENAI,
+  qwen: QWEN,
+};
+
+export const MODELS: Roster = ROSTERS[provider()];
 
 export type ModelRole = keyof Roster;

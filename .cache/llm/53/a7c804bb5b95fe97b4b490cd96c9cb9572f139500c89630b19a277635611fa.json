@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The wifi password changed to bluefish99 on 18 Sep; the old mango2024 password no longer works, though the network name Ahmed-5G is not contradicted.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The smart lock code is a separate credential from the wifi password; both can be true at once.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2193,
+    "cache_read_input_tokens": 31358,
+    "output_tokens": 138,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2193,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 138,
+        "cache_read_input_tokens": 31358,
+        "cache_creation_input_tokens": 2193,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2193
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

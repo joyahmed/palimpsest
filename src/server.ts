@@ -19,6 +19,7 @@
  */
 
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { handleMcp } from './mcp/http.js';
 import { copyFileSync, existsSync } from 'node:fs';
 import { ClaimStore } from './memory/store.js';
 import { remember } from './memory/remember.js';
@@ -74,6 +75,13 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
 
   try {
     // ---- the audit view
+    // MCP over Streamable HTTP: POST for requests, GET for the SSE stream, DELETE
+    // for session end. The transport answers all three; we only route.
+    if (url.pathname === '/mcp') {
+      await handleMcp(req, res, store);
+      return;
+    }
+
     if (req.method === 'GET' && url.pathname === '/') {
       const { renderMemory } = await import('./render/html.js');
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
@@ -157,7 +165,7 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
       );
     }
 
-    json(res, 404, { error: 'not found', routes: ['/', '/api/believe?q=', '/api/remember', '/api/claims'] });
+    json(res, 404, { error: 'not found', routes: ['/', '/api/believe?q=', '/api/remember', '/api/claims', '/mcp'] });
   } catch (err) {
     json(res, 500, { error: err instanceof Error ? err.message : String(err) });
   }

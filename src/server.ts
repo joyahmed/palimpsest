@@ -82,6 +82,14 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
       return;
     }
 
+    // The simulated Alexa+ experience over the same store.
+    if (req.method === 'GET' && url.pathname === '/alexa') {
+      const { renderAlexa } = await import('./render/alexa.js');
+      res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+      res.end(renderAlexa());
+      return;
+    }
+
     if (req.method === 'GET' && url.pathname === '/') {
       const { renderMemory } = await import('./render/html.js');
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
@@ -165,7 +173,7 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
       );
     }
 
-    json(res, 404, { error: 'not found', routes: ['/', '/api/believe?q=', '/api/remember', '/api/claims', '/mcp'] });
+    json(res, 404, { error: 'not found', routes: ['/', '/alexa', '/api/believe?q=', '/api/remember', '/api/claims', '/mcp'] });
   } catch (err) {
     json(res, 500, { error: err instanceof Error ? err.message : String(err) });
   }

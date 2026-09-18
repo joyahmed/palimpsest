@@ -27,7 +27,8 @@
     "shots": "tsx --env-file=.env src/scripts/shots.ts",
     "shot:bench": "tsx --env-file=.env src/scripts/shot-bench.ts",
     "thumb": "tsx src/scripts/thumb.ts",
-    "proof": "tsx src/scripts/proof.ts"
+    "proof": "tsx src/scripts/proof.ts",
+    "seed:household": "tsx --env-file=.env src/scripts/seed-household.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.127.0",

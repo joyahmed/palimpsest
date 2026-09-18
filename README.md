@@ -35,20 +35,24 @@ is most **similar** to your question. So watch what that does to two claims that
 flatly contradict each other:
 
 ```
-"We decided to use Postgres."    vs   "We decided NOT to use Postgres."      0.93
-"The API listens on port 3000."  vs   "Port 3000 is where the API listens."  0.91
+                                                                    Qwen    bge-small
+"We decided to use Postgres."    vs   "We decided NOT to use Postgres."   0.93    0.78
+"The API listens on port 3000."  vs   "Port 3000 is where the API listens."  0.91    0.98
 ```
 
-*(Real numbers. Run `pnpm explain` yourself.)*
+*(Real numbers, two embedders. Run `pnpm explain` yourself - it prints whichever
+one you are running.)*
 
-**The contradiction scores higher than the paraphrase.** To a vector store,
-"we decided to use Postgres" and "we decided *not* to use Postgres" are more alike
-than two ways of saying the same true thing - because embeddings capture *topic*,
-not *truth*. The single word that reverses the entire meaning barely moves the
-number.
+With Qwen's embedder **the contradiction scores higher than the paraphrase**; with
+bge-small it scores lower, at 0.78 - and 0.78 is still "closely related", well
+inside what any retriever returns. Either way the point holds: to a vector store,
+"we decided to use Postgres" and "we decided *not* to use Postgres" are close,
+because embeddings capture *topic*, not *truth*. The single word that reverses the
+entire meaning moves the number a little, or not at all, depending on the model.
 
-You cannot fix this with a threshold. Any cutoff that keeps the paraphrase keeps
-the contradiction. **The signal is not in the number.**
+You cannot fix this with a threshold. A cutoff tight enough to drop the
+contradiction drops real paraphrases with it - the numbers overlap from one
+embedder to the next. **The signal is not in the number.**
 
 So the retriever hands the model both the live fact and the dead one, ranked side
 by side, with no way to tell them apart. The model picks whichever won the cosine
@@ -154,15 +158,23 @@ tried this, it threw. See v3 in the results file.)
 
 ```bash
 pnpm install
-cp .env.example .env      # add your Qwen Cloud key
-pnpm smoke                # verify Qwen: chat, adjudicate, embed
-pnpm explain              # see the bug for yourself
+cp .env.example .env      # add ANTHROPIC_API_KEY (or run `ant auth login`)
+pnpm explain              # see the bug for yourself - no key needed, the embedder is local
+pnpm smoke                # verify the chat path: extract, adjudicate, embed
+pnpm seed:household       # ten household facts, for the Alexa+ demo
+pnpm serve                # http://localhost:3000  - audit view, /alexa, /mcp
 ```
 
-> **Note:** Qwen Cloud keys live on the **international (Singapore)** DashScope
-> endpoint. Pointing them at the mainland-China endpoint returns `401
-> invalid_api_key` even though the key is perfectly valid. This will cost you an
-> hour if you let it.
+Chat runs on **Claude** (`claude-opus-5`, adaptive thinking; `effort: low` for bulk
+extraction, `high` for adjudication) and retrieval embeddings run **locally**
+(`bge-small-en-v1.5`, q8, 34 MB, downloaded once into `.cache/models`). No
+embedding vendor, no second key, no second quota.
+
+The Qwen Cloud path is still here - `PALIMPSEST_PROVIDER=qwen` with a
+`DASHSCOPE_API_KEY` - because the committed replay cache was recorded with it;
+`PALIMPSEST_CACHE_ONLY=1 pnpm bench` always uses Qwen's cache and needs no key.
+(Qwen keys live on the **international** DashScope endpoint; the mainland one
+returns `401 invalid_api_key` for a perfectly valid key.)
 
 ## It's live
 
@@ -170,8 +182,39 @@ pnpm explain              # see the bug for yourself
 Alibaba Cloud Function Compute (Singapore).
 
 Tell it something that contradicts what it believes, and watch the old belief die: struck
-through, with the reason it was killed, and the claim that replaced it underneath. Real calls
-to Qwen. Nothing staged.
+through, with the reason it was killed, and the claim that replaced it underneath. Real model
+calls. Nothing staged.
+
+The same memory is served three ways from one deployment:
+
+| Path | What it is |
+|---|---|
+| `/` | the audit view - every claim, live and dead, with confidence and provenance |
+| `/alexa` | a simulated Alexa+ household assistant over it (see below) |
+| `/mcp` | the MCP server over **Streamable HTTP, spec 2025-11-25** - `remember`, `believe`, `history`, `forget` |
+
+## Alexa+ - a memory that forgets, for the home
+
+Built for the **Amazon Developer Hackathon, Alexa+ track** ("a self-hosted MCP server
+implementing MCP spec 2025-11-25 over Streamable HTTP", and optionally "a simulated Alexa+
+experience in a web app"). A household is where this design earns its keep: the wifi
+password changes, the school-pickup rota changes, and an assistant that answers from
+similarity keeps saying the old one, confidently.
+
+- **MCP endpoint:** `POST /mcp` (Streamable HTTP, stateless, protocol `2025-11-25`), the
+  same four tools an Agent Skill or any MCP client calls. Locally: `pnpm serve` then
+  point a client at `http://localhost:3000/mcp`; over stdio: `pnpm mcp`.
+- **Simulated Alexa+:** `/alexa` - a voice-style transcript. A question is `believe`
+  (retrieval over *live* claims only); a statement is `remember` (extract, collide,
+  adjudicate). What the memory stopped believing is shown struck through under the reply,
+  with the reason and the date it had been believed since. Six guided prompts walk the loop.
+- **State across sessions:** claims carry a kind and a half-life - the thermostat setting
+  (`state`, 7 days) is doubted by next week on its own; the family's names (`identity`,
+  10 years) are not. Nothing is ever deleted: `history` answers *what did you believe before,
+  and when did you change your mind?*
+
+Try it: `pnpm seed:household && pnpm serve`, open `/alexa`, ask *"What's the wifi
+password?"*, say *"The wifi password changed to bluefish99."*, ask again.
 
 ### Proof of deployment
 
@@ -206,8 +249,10 @@ implying durability we do not have.
 
 ## Stack
 
-TypeScript · Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`, `text-embedding-v4`) ·
-SQLite (`node:sqlite`, no native deps) · deployed on Alibaba Cloud Function Compute
+TypeScript · Claude (`claude-opus-5`) for extraction and adjudication · bge-small-en-v1.5
+(q8) in-process for embeddings · MCP over stdio and Streamable HTTP · SQLite (`node:sqlite`) ·
+deployed on Alibaba Cloud Function Compute. Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`,
+`text-embedding-v4`) remains as the provider the benchmark cache was recorded with.
 
 No vector database. At a few thousand claims, brute-force cosine is microseconds -
 and the hard problem here was never retrieval speed. It was deciding which

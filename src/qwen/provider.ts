@@ -10,25 +10,26 @@
  * Code when there is a subscription and no key.
  */
 
-export type Provider = 'anthropic' | 'claude-code' | 'openai' | 'qwen';
+export type Provider = 'anthropic' | 'claude-code' | 'qwen';
 
-const PROVIDERS: Provider[] = ['anthropic', 'claude-code', 'openai', 'qwen'];
+const PROVIDERS: Provider[] = ['anthropic', 'claude-code', 'qwen'];
 
 /**
  *   claude-code  Claude through the `claude` CLI in headless mode (`claude -p`) - the
  *                model a Claude Max subscription already pays for, no API key. For the
  *                machine you are logged in on: local runs, the demo, the video. Not for
  *                a server that serves other people.
- *   openai       Any OpenAI-compatible endpoint - Groq, Gemini's OpenAI surface,
- *                OpenRouter, a local Ollama - via PALIMPSEST_BASE_URL + PALIMPSEST_API_KEY
- *                and PALIMPSEST_CHAT_MODEL. This is what a deployed function runs on when
- *                the only affordable key is a free tier that renews.
+ *   anthropic    Claude through the SDK, for anyone with an API key.
+ *   qwen         Only for the committed replay cache: the benchmark's numbers were
+ *                recorded with Qwen and replay from disk. Not a live path any more.
+ *
+ * This is a Claude-based tool. There is deliberately no generic "any endpoint"
+ * provider: one model family, one behaviour to reason about.
  *
  * Resolution, first match wins:
  *   PALIMPSEST_PROVIDER                  explicit
  *   PALIMPSEST_CACHE_ONLY=1              qwen (the committed cache is Qwen's)
  *   ANTHROPIC_API_KEY set                anthropic
- *   PALIMPSEST_BASE_URL set              openai
  *   DASHSCOPE_API_KEY set                qwen
  *   otherwise                            claude-code (it fails loudly if `claude` is
  *                                        not installed or not logged in)
@@ -41,7 +42,6 @@ export function provider(): Provider {
   }
   if (process.env.PALIMPSEST_CACHE_ONLY === '1') return 'qwen';
   if (process.env.ANTHROPIC_API_KEY) return 'anthropic';
-  if (process.env.PALIMPSEST_BASE_URL) return 'openai';
   if (process.env.DASHSCOPE_API_KEY) return 'qwen';
   return 'claude-code';
 }

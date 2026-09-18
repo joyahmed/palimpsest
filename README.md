@@ -165,10 +165,13 @@ pnpm seed:household       # ten household facts, for the Alexa+ demo
 pnpm serve                # http://localhost:3000  - audit view, /alexa, /mcp
 ```
 
-Chat runs on **Claude** (`claude-opus-5`, adaptive thinking; `effort: low` for bulk
-extraction, `high` for adjudication) and retrieval embeddings run **locally**
+Chat runs on **Claude** - through your Claude Code login (`claude -p`, no key: the
+default when `claude` is installed and logged in) or through the SDK with an
+`ANTHROPIC_API_KEY` - `claude-opus-5`, adaptive thinking, `effort: low` for bulk
+extraction and `high` for adjudication. Retrieval embeddings run **locally**
 (`bge-small-en-v1.5`, q8, 34 MB, downloaded once into `.cache/models`). No
-embedding vendor, no second key, no second quota.
+embedding vendor, no second key, no second quota. It is a Claude-based tool on
+purpose: one model family, one behaviour to reason about.
 
 The Qwen Cloud path is still here - `PALIMPSEST_PROVIDER=qwen` with a
 `DASHSCOPE_API_KEY` - because the committed replay cache was recorded with it;

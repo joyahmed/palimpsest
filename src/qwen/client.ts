@@ -55,13 +55,6 @@ const SEED_DIR = process.env.PALIMPSEST_CACHE_SEED;
 let _client: OpenAI | undefined;
 function client(): OpenAI {
   if (_client) return _client;
-  if (provider() === 'openai') {
-    const baseURL = process.env.PALIMPSEST_BASE_URL ?? process.env.OPENAI_BASE_URL;
-    const apiKey = process.env.PALIMPSEST_API_KEY ?? process.env.OPENAI_API_KEY ?? 'none';
-    if (!baseURL) throw new Error('provider openai needs PALIMPSEST_BASE_URL (an OpenAI-compatible endpoint: Groq, Gemini, OpenRouter, Ollama)');
-    _client = new OpenAI({ apiKey, baseURL });
-    return _client;
-  }
   const apiKey = process.env.DASHSCOPE_API_KEY;
   if (!apiKey) {
     throw new Error(
@@ -205,9 +198,8 @@ export async function chat(opts: ChatOptions): Promise<string> {
     temperature: opts.temperature ?? 0,
     ...(opts.maxTokens ? { max_tokens: opts.maxTokens } : {}),
     ...(opts.json ? { response_format: { type: 'json_object' as const } } : {}),
-    // DashScope reads this from the request body in OpenAI-compatible mode; other
-    // OpenAI-compatible endpoints reject unknown fields, so only Qwen gets it.
-    ...(opts.thinking === false && p === 'qwen' ? { enable_thinking: false } : {}),
+    // DashScope reads this from the request body in OpenAI-compatible mode.
+    ...(opts.thinking === false ? { enable_thinking: false } : {}),
   };
 
   const res = await cached(['chat', body, opts.cacheSalt ?? null], async () => {

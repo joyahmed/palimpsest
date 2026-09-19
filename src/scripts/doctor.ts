@@ -196,6 +196,41 @@ await step('scope       another project\'s claim is withheld here, shown there',
   expect(there.includes(WIFI_NEW), 'the global claim was not shown in other-app');
 });
 
+await step('verify      a probe confirms, contradicts, or admits it could not tell', async () => {
+  const s = new ClaimStore(DB);
+  try {
+    const base = { kind: 'config' as const, sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1 };
+    const good = s.add({ ...base, content: 'The doctor port is 4242.', subject: 'doctor port', probe: 'echo PORT=4242', expect: '4242' });
+    const bad = s.add({ ...base, content: 'The doctor host is alpha.', subject: 'doctor host', probe: 'echo HOST=beta', expect: 'alpha' });
+    const blind = s.add({ ...base, content: 'The doctor tunnel is closed.', subject: 'doctor tunnel', probe: 'echo PALIMPSEST_UNKNOWN; echo CLOSED', expect: 'CLOSED' });
+    const results = s.verifyAll(now);
+    const by = (id: string) => results.find((r) => r.claim.id === id)?.result;
+    expect(by(good.id) === 'passed', `passing probe gave ${by(good.id)}`);
+    expect(by(bad.id) === 'failed', `failing probe gave ${by(bad.id)}`);
+    expect(by(blind.id) === 'unknown', `sentinel probe gave ${by(blind.id)} - the sentinel must beat a matching expect`);
+    const conf = new Map(s.believed(now, 0).map((c) => [c.id, c.confidence]));
+    expect(conf.get(good.id) === 1, 'a confirmed claim is not at full trust');
+    expect(conf.get(bad.id) === 0, 'a contradicted claim is not at zero');
+    expect((conf.get(blind.id) ?? 0) > 0.9, 'an uncheckable claim did not fall back to decay');
+    expect(s.get(bad.id)!.verifyOutput?.includes('HOST=beta'), 'the evidence was not kept');
+    // Re-probing after the world changes: attach in place, no new id.
+    expect(s.addProbe(bad.id, 'echo HOST=alpha', 'alpha'), 'addProbe did not update');
+    expect(s.verify(bad.id, now)?.result === 'passed', 'a corrected probe did not pass');
+    s.refute(good.id, 'doctor cleanup', now); s.refute(bad.id, 'doctor cleanup', now); s.refute(blind.id, 'doctor cleanup', now);
+  } finally {
+    s.close();
+  }
+  // The hook must tell the two apart: VERIFIED is a header, CONTRADICTED is a header.
+  const s2 = new ClaimStore(DB);
+  const v = s2.add({ kind: 'config', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, content: 'The doctor version is 7.', subject: 'doctor version', probe: 'echo v7', expect: 'v7' });
+  const x = s2.add({ kind: 'config', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, content: 'The doctor flag is on.', subject: 'doctor flag', probe: 'echo off', expect: 'on ' });
+  s2.verifyAll(now); s2.close();
+  const ctx = recall('this-app');
+  expect(/VERIFIED[\s\S]*doctor version is 7/.test(ctx) , 'recall did not list the confirmed claim under VERIFIED');
+  expect(/CONTRADICTED[\s\S]*doctor flag is on/.test(ctx), 'recall did not list the contradicted claim under CONTRADICTED');
+  const s3 = new ClaimStore(DB); s3.refute(v.id, 'doctor cleanup', now); s3.refute(x.id, 'doctor cleanup', now); s3.close();
+});
+
 await step('migrate     a first-release database gains the new columns, keeps its rows', async () => {
   const old = join(scratch, 'old.db');
   const raw = new DatabaseSync(old);
@@ -219,9 +254,9 @@ await step('migrate     a first-release database gains the new columns, keeps it
 // The two transports the memory is served over. Same DB: the stdio server must
 // see the kill that happened above.
 const childEnv = { ...getDefaultEnvironment(), PALIMPSEST_DB: DB, PALIMPSEST_PROVIDER: provider(), PALIMPSEST_CACHE_DIR: process.env.PALIMPSEST_CACHE_DIR! };
-const TOOLS = ['remember', 'believe', 'history', 'forget', 'assert', 'reaffirm'];
+const TOOLS = ['remember', 'believe', 'history', 'forget', 'assert', 'reaffirm', 'verify'];
 
-await step('mcp/stdio   6 tools; assert supersedes by id prefix, reaffirm resets the clock', async () => {
+await step('mcp/stdio   7 tools; assert supersedes by id prefix, reaffirm resets the clock', async () => {
   const client = new Client({ name: 'doctor', version: '0.1.0' });
   const transport = new StdioClientTransport({
     command: join(process.cwd(), 'node_modules/.bin/tsx'),
@@ -262,7 +297,7 @@ await step('mcp/stdio   6 tools; assert supersedes by id prefix, reaffirm resets
   }
 });
 
-await step('mcp/http    Streamable HTTP handshake, 6 tools', async () => {
+await step('mcp/http    Streamable HTTP handshake, 7 tools', async () => {
   const http = createServer((req, res) => {
     const s = new ClaimStore(DB);
     handleMcp(req, res, s).catch((e) => { res.statusCode = 500; res.end(String(e)); }).finally(() => s.close());

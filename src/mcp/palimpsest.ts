@@ -12,7 +12,7 @@
  * them currently have: it can notice that something it believes has stopped being
  * true, and revise itself.
  *
- * Four tools:
+ * Seven tools - four on the model, three direct:
  *
  *   remember   Feed it a conversation. It extracts atomic claims, finds what they
  *              collide with, and RULES on what died. Returns the revisions.
@@ -21,6 +21,9 @@
  *   history    Ask what it USED to believe, and when it changed its mind. No other
  *              memory system can answer this, because no other one keeps the body.
  *   forget     Refute a claim directly. Human override, with a reason recorded.
+ *   assert     One atomic fact, written as given. No model call. Kills what it supersedes.
+ *   reaffirm   A doubted belief is still true; its clock restarts.
+ *   verify     Run the probes: check beliefs against the world, on demand only.
  *
  * Run:  pnpm mcp
  * Wire into Claude Code:  claude mcp add palimpsest -- pnpm --dir <repo> mcp
@@ -223,9 +226,15 @@ server.registerTool(
       supersedes: z.array(z.string()).optional().describe('Ids (or the 8-char prefixes recall shows) of beliefs this one makes FALSE.'),
       reason: z.string().optional().describe('Why the superseded beliefs are false now. Goes in their history.'),
       date: z.string().optional().describe('ISO date the fact became true (YYYY-MM-DD). Defaults to today.'),
+      probe: z.string().optional().describe(
+        'A read-only shell command that reads this fact out of the world, for facts that have ' +
+        'one (a port in an env file, a version, a branch): `grep -n "^PORT=" apps/api/.env`. ' +
+        'It runs ONLY when verify is called, never at session start. Keep it cheap and safe; ' +
+        'it is executed as given.'),
+      expect: z.string().optional().describe('The substring the probe\'s output must contain for the claim to still hold.'),
     },
   },
-  async ({ content, kind, subject, projects, supersedes, reason, date }) => {
+  async ({ content, kind, subject, projects, supersedes, reason, date, probe, expect }) => {
     const observedAt = date ? new Date(date).getTime() : Date.now();
     // Resolve before writing: an ambiguous prefix must fail the whole call, not half of it.
     const victims = (supersedes ?? []).map((id) => store.resolve(id));
@@ -233,13 +242,14 @@ server.registerTool(
     const claim = store.add({
       content, kind, subject, projects,
       sourceSession: 'assert', sourceQuote: content, observedAt, confidence: 1, embedding,
+      probe, expect,
     });
     for (const v of victims) {
       if (v.status === 'active') store.supersede(v.id, claim.id, reason ?? `superseded by assert: ${content}`, observedAt);
     }
     return {
       content: [{ type: 'text', text: JSON.stringify({
-        asserted: { id: claim.id.slice(0, 8), claim: claim.content, kind: claim.kind, projects: claim.projects ?? 'global' },
+        asserted: { id: claim.id.slice(0, 8), claim: claim.content, kind: claim.kind, projects: claim.projects ?? 'global', checkable: Boolean(probe) },
         killed: victims.map((v) => ({ id: v.id.slice(0, 8), wasBelieved: v.content })),
       }, null, 2) }],
     };
@@ -270,6 +280,49 @@ server.registerTool(
     for (const c of claims) store.reaffirm(c.id, now);
     return {
       content: [{ type: 'text', text: JSON.stringify({ reaffirmed: claims.map((c) => ({ id: c.id.slice(0, 8), claim: c.content })) }, null, 2) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------- verify
+
+server.registerTool(
+  'verify',
+  {
+    title: 'Check beliefs against the world',
+    description:
+      'Run the probes: every belief that carries one (or just the ids given) is checked ' +
+      'against the world right now. A pass is full trust for a day - use the claim without ' +
+      'spending a lookup. A fail is zero: the claim is WRONG, not old, which decay could never ' +
+      'say; supersede it with what the probe found. Unknown means the probe could not run and ' +
+      'nothing was learned. This EXECUTES stored commands - which is why it is a call you make ' +
+      'on stakes (before a deploy, before trusting a port or a host), not something that runs ' +
+      'on its own. Attach a probe with assert, or with `probe`+`expect` here on an existing id.',
+    inputSchema: {
+      ids: z.array(z.string()).optional().describe('Only these (ids or 8-char prefixes). Omit for every checkable belief.'),
+      probe: z.string().optional().describe('With exactly one id: attach this probe to it first, then run it.'),
+      expect: z.string().optional().describe('With `probe`: the substring its output must contain.'),
+    },
+  },
+  async ({ ids, probe, expect }) => {
+    const now = Date.now();
+    if (probe !== undefined) {
+      if (!ids || ids.length !== 1) return { content: [{ type: 'text', text: 'Attaching a probe needs exactly one id.' }] };
+      const c = store.resolve(ids[0]!);
+      if (!store.addProbe(c.id, probe, expect ?? '')) return { content: [{ type: 'text', text: `${c.id.slice(0, 8)} is not active; a dead belief is not checked.` }] };
+    }
+    const results = ids
+      ? ids.map((id) => store.resolve(id)).flatMap((c) => { const v = store.verify(c.id, now); return v ? [v] : []; })
+      : store.verifyAll(now);
+    if (results.length === 0) {
+      return { content: [{ type: 'text', text: ids ? 'None of those beliefs carries a probe.' : 'No belief carries a probe yet. Attach one with assert (probe + expect) for a fact the world can be asked about.' }] };
+    }
+    return {
+      content: [{ type: 'text', text: JSON.stringify({
+        contradicted: results.filter((r) => r.result === 'failed').map((r) => ({ id: r.claim.id.slice(0, 8), claim: r.claim.content, expected: r.claim.expect, probeSaid: r.output.replace(/\s+/g, ' ').slice(0, 200) })),
+        confirmed: results.filter((r) => r.result === 'passed').map((r) => ({ id: r.claim.id.slice(0, 8), claim: r.claim.content })),
+        uncheckable: results.filter((r) => r.result === 'unknown').map((r) => ({ id: r.claim.id.slice(0, 8), claim: r.claim.content, probeSaid: r.output.replace(/\s+/g, ' ').slice(0, 200) })),
+      }, null, 2) }],
     };
   },
 );

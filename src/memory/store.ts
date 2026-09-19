@@ -9,12 +9,13 @@
  */
 
 import { DatabaseSync } from 'node:sqlite';
+import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DEFAULT_DB } from '../paths.js';
 import { cosine } from '../qwen/client.js';
-import { decayedConfidence, TRUST_THRESHOLD, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
+import { PROBE_UNKNOWN, trustedConfidence, TRUST_THRESHOLD, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS claims (
@@ -49,6 +50,12 @@ const ADDED_COLUMNS: Record<string, string> = {
   // hundreds of claims - a second table for a list that is usually one item is
   // complexity bought with nothing. The split happens in toClaim.
   projects: 'TEXT',
+  // Verification. Nullable throughout: most claims have no oracle and never will.
+  probe: 'TEXT',
+  expect: 'TEXT',
+  verified_at: 'INTEGER',
+  verify_result: 'TEXT',
+  verify_output: 'TEXT',
 };
 
 type Row = {
@@ -66,6 +73,11 @@ type Row = {
   death_reason: string | null;
   embedding: Uint8Array | null;
   projects: string | null;
+  probe: string | null;
+  expect: string | null;
+  verified_at: number | null;
+  verify_result: string | null;
+  verify_output: string | null;
 };
 
 function toClaim(r: Row): Claim {
@@ -83,6 +95,11 @@ function toClaim(r: Row): Claim {
     supersededAt: r.superseded_at ?? undefined,
     deathReason: r.death_reason ?? undefined,
     projects: r.projects ? r.projects.trim().split(/\s+/) : undefined,
+    probe: r.probe ?? undefined,
+    expect: r.expect ?? undefined,
+    verifiedAt: r.verified_at ?? undefined,
+    verifyResult: (r.verify_result as Claim['verifyResult']) ?? undefined,
+    verifyOutput: r.verify_output ?? undefined,
     embedding: r.embedding
       ? new Float32Array(
           r.embedding.buffer.slice(
@@ -94,8 +111,33 @@ function toClaim(r: Row): Claim {
   };
 }
 
-/** A claim with its decayed confidence substituted in. What callers actually want. */
+/** A claim with the confidence the memory actually trusts substituted in. What callers want. */
 export type Believed = Claim & { confidence: number };
+
+export type ProbeRunner = (probe: string) => { ok: boolean; output: string };
+
+/**
+ * The default runner: a shell, with a short leash. Timeout because a probe that hangs
+ * would hang the pass; stderr folded in because a probe's complaint is usually the most
+ * informative thing about it.
+ */
+export const shellProbe: ProbeRunner = (probe) => {
+  try {
+    const output = execSync(probe, { encoding: 'utf8', timeout: 10_000, stdio: ['ignore', 'pipe', 'pipe'] });
+    return { ok: true, output };
+  } catch (err) {
+    const e = err as { stdout?: string; stderr?: string; status?: number | null };
+    // A grep that matches nothing exits non-zero with empty stdout, and that IS a result -
+    // the fact is not there. Only a probe that never ran at all (no exit status) is unknown.
+    return { ok: e.status !== null && e.status !== undefined, output: `${e.stdout ?? ''}${e.stderr ?? ''}` };
+  }
+};
+
+export interface Verification {
+  claim: Claim;
+  result: 'passed' | 'failed' | 'unknown';
+  output: string;
+}
 
 export class ClaimStore {
   private db: DatabaseSync;
@@ -120,8 +162,8 @@ export class ClaimStore {
       .prepare(
         `INSERT INTO claims
            (id, content, kind, subject, source_session, source_quote, observed_at,
-            status, confidence, embedding, projects)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            status, confidence, embedding, projects, probe, expect)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
       .run(
         full.id,
@@ -135,6 +177,8 @@ export class ClaimStore {
         full.confidence,
         full.embedding ? Buffer.from(full.embedding.buffer) : null,
         full.projects && full.projects.length ? full.projects.join(' ') : null,
+        full.probe ?? null,
+        full.expect ?? null,
       );
 
     return full;
@@ -243,7 +287,7 @@ export class ClaimStore {
    */
   believed(now = Date.now(), minConfidence = TRUST_THRESHOLD): Believed[] {
     return this.active()
-      .map((c) => ({ ...c, confidence: decayedConfidence(c, now) }))
+      .map((c) => ({ ...c, confidence: trustedConfidence(c, now) }))
       .filter((c) => c.confidence >= minConfidence)
       .sort((a, b) => b.confidence - a.confidence);
   }
@@ -256,9 +300,56 @@ export class ClaimStore {
    */
   doubted(now = Date.now()): Believed[] {
     return this.active()
-      .map((c) => ({ ...c, confidence: decayedConfidence(c, now) }))
+      .map((c) => ({ ...c, confidence: trustedConfidence(c, now) }))
       .filter((c) => c.confidence < TRUST_THRESHOLD)
       .sort((a, b) => b.confidence - a.confidence);
+  }
+
+  /**
+   * Ask the world about one claim. Executes its probe - only ever from an explicit call.
+   * A probe that could not run tells us nothing: saying "failed" there is how a laptop with
+   * no network refutes a shelf of true beliefs. The sentinel is checked BEFORE `expect`, or
+   * a probe whose expected text appeared alongside it would still pass.
+   */
+  verify(id: string, now = Date.now(), runner: ProbeRunner = shellProbe): Verification | undefined {
+    const claim = this.get(id);
+    if (!claim?.probe) return undefined;
+    const { ok, output } = runner(claim.probe);
+    const result: Verification['result'] = !ok
+      ? 'unknown'
+      : output.includes(PROBE_UNKNOWN)
+        ? 'unknown'
+        : (claim.expect ?? '') === '' || output.includes(claim.expect!)
+          ? 'passed'
+          : 'failed';
+    this.db
+      .prepare(`UPDATE claims SET verified_at = ?, verify_result = ?, verify_output = ? WHERE id = ?`)
+      // Truncated: evidence for a human reading an audit line, not a log.
+      .run(now, result, output.slice(0, 2000), id);
+    return { claim, result, output };
+  }
+
+  /** Every active claim carrying a probe - the checkable column. */
+  checkable(): Claim[] {
+    return this.active().filter((c) => c.probe);
+  }
+
+  verifyAll(now = Date.now(), runner: ProbeRunner = shellProbe): Verification[] {
+    return this.checkable().flatMap((c) => {
+      const v = this.verify(c.id, now, runner);
+      return v ? [v] : [];
+    });
+  }
+
+  /**
+   * Attach a probe to a claim asserted without one. In place: rewriting the claim would
+   * mint a new id and break every reference to it. The belief is the same belief - it has
+   * simply acquired a way to be checked.
+   */
+  addProbe(id: string, probe: string, expect: string): boolean {
+    return this.db
+      .prepare(`UPDATE claims SET probe = ?, expect = ?, verified_at = NULL, verify_result = NULL, verify_output = NULL WHERE id = ? AND status = 'active'`)
+      .run(probe, expect, id).changes > 0;
   }
 
   close(): void {

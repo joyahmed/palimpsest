@@ -117,6 +117,66 @@ export interface Claim {
    * hidden everywhere: over-showing costs tokens, under-showing causes wrong work.
    */
   projects?: string[];
+
+  // --- verification: the oracle, for claims that have one
+  /**
+   * A command that reads this fact out of the world, right now.
+   *
+   * Every claim has a CLOCK. Decay measures age, and age is a proxy for truth only for a
+   * belief that started true - a claim that a database port was open to the internet once
+   * sat at 0.49, above the trust threshold, having been false for weeks. An oracle is
+   * different in kind: it is the fact, read out of the world.
+   *
+   * A probe is CODE THIS MEMORY WILL EXECUTE. Asserting one grants execution, which is a
+   * real trust boundary - so probes run only when `verify` is called explicitly, never at
+   * recall time. A session start that shell-executed whatever was in the database would
+   * be a far worse bug than the one this fixes. Keep it read-only and cheap:
+   * `grep -n PORT apps/api/.env`, `node -v`, `git branch --show-current`.
+   */
+  probe?: string;
+  /** What the probe's output must contain for the claim to hold. A substring, not a regex. */
+  expect?: string;
+  /** When the probe last ran. Absent means never checked. */
+  verifiedAt?: number;
+  /**
+   * What the world said last time. Three states: `unknown` is a probe that could not run
+   * at all - the repo is not checked out, the host is down. Collapsing that into `failed`
+   * would let a laptop on a plane refute a shelf of perfectly true beliefs.
+   */
+  verifyResult?: 'passed' | 'failed' | 'unknown';
+  /** The probe's actual output, kept as the evidence for whatever it decided. */
+  verifyOutput?: string;
+}
+
+/**
+ * How long a passing check stays good for. A verification is a measurement, not a
+ * permanent property: the port was open when we looked. A day is shorter than the shortest
+ * thing worth verifying (`state` halves in 7 days), so a check keeps re-earning trust faster
+ * than anything can drift.
+ */
+export const VERIFICATION_TTL_MS = 86_400_000;
+
+/**
+ * A probe prints this to say "I could not tell". A claim asserting ABSENCE - a port is
+ * firewalled - is checked by a command whose failure IS the expected output, so on a
+ * machine with no network it would pass at full confidence having proved nothing. Only the
+ * probe knows it was looking at a failure, so it is given a way to say so: check a control
+ * that must hold if the world is reachable, and print this when the control fails.
+ */
+export const PROBE_UNKNOWN = 'PALIMPSEST_UNKNOWN';
+
+/**
+ * What the memory should actually trust, given both the clock and the oracle.
+ *
+ *   passed   read out of the world within the TTL - full confidence, decay ignored.
+ *   failed   the world contradicts it - zero. Not old: WRONG, which decay can never say.
+ *   unknown  the probe could not run - fall through to decay, as a claim with no oracle does.
+ */
+export function trustedConfidence(claim: Claim, now: number): number {
+  const fresh = claim.verifiedAt !== undefined && now - claim.verifiedAt <= VERIFICATION_TTL_MS;
+  if (fresh && claim.verifyResult === 'passed') return 1;
+  if (fresh && claim.verifyResult === 'failed') return 0;
+  return decayedConfidence(claim, now);
 }
 
 /**

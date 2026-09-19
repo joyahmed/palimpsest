@@ -97,16 +97,20 @@ And three mechanisms:
    the memory trusts most sorts to the top. Decay *ranks*; it does not withhold. An
    old claim still comes back, carrying a number that says how much to lean on it.
 
-**Not built yet: verification.** Decay can tell you a claim is *old*. It cannot tell
+**Verification.** Decay can tell you a claim is *old*. It cannot tell
 you it is *wrong*, and those are different things. A live example from 2026-08-14:
 two claims had both decayed to ~0.48 - one recording a Node version, one recording
 that a database port was open to the internet. The Node claim was still exactly true.
 The port claim had been false for weeks. Same confidence, opposite truth, because
 confidence measures age.
 
-Closing that gap means letting a claim carry a command that checks it against the
-world, and running those checks on demand. It exists in a private predecessor of this repo
-and is the next thing to bring over.
+So a claim can carry a **probe** - a read-only command that reads the fact out of the
+world - and the substring its output must contain. `verify` runs them on demand. Confirmed,
+the claim is served at full trust for a day and the agent is told not to spend a lookup on
+it; contradicted, it is zero, and shown under its own CONTRADICTED header rather than buried
+among the merely old. Nineteen of thirty-five real claims turned out to have no oracle at all -
+"Joy prefers X" has none anywhere in the world - and for those, age remains the least-bad
+signal there is.
 
 Nothing is overwritten. You can always ask: *what did you used to believe, and when
 did you stop?*
@@ -232,9 +236,13 @@ keeping it true. `pnpm recall` prints the same text for a human. If the database
 read, the hook says so loudly in the context window rather than letting the agent mistake
 an unreadable memory for an empty one.
 
-Six tools. `assert` (one atomic fact, instant, no model call; `supersedes: [id]` kills what it
-replaces) and `reaffirm` (a DOUBTED belief is still true - its clock restarts) are the fast
-path the recall ids exist for. `remember` (a note or transcript in, atomic claims out, contradictions killed),
+Seven tools. `assert` (one atomic fact, instant, no model call; `supersedes: [id]` kills what
+it replaces; `probe` + `expect` give it an oracle), `reaffirm` (a DOUBTED belief is still true -
+its clock restarts) and `verify` (run the probes: a pass is full trust for a day, a fail is
+zero - *wrong*, not old - and a probe that could not run says so instead of lying either way)
+are the direct path the recall ids exist for. Probes are commands the memory executes, so they
+run only when `verify` is called - on stakes, before a deploy or before trusting a port - and
+never at session start. `remember` (a note or transcript in, atomic claims out, contradictions killed),
 `believe` (what is true *now*; the dead are absent, not down-ranked), `history` (what it
 used to believe, and when and why it stopped), `forget` (refute a claim directly, with a
 reason on record). Over stdio for Claude Code; over Streamable HTTP at `/mcp` under

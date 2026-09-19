@@ -45,6 +45,7 @@ const PROTOCOL = `PROTOCOL - this memory is writable, and keeping it true is you
   Unsure what is current      -> \`believe\` answers from what is held NOW; the dead are absent.
   A DOUBTED belief is still true -> \`reaffirm\` its id. Do not assert it again.
   A belief above is FALSE and nothing replaces it -> \`forget\` it with the reason.
+  About to act on a config/state belief in a way that is costly to undo -> \`verify\` first.
   Nothing is ever deleted. \`history\` says what died, when, and why.`;
 
 /**
@@ -128,23 +129,52 @@ function render(believed: Believed[], doubted: Believed[], withheld: Withheld): 
 
   if (believed.length) {
     const width = claimWidth(believed.length);
-    const clipped = believed.filter((c) => c.content.length > width).length;
-    out.push(
-      clipped
-        ? `BELIEVED - ${believed.length} claims, ${clipped} shown trimmed. Ask \`believe\` for any in full.`
-        : 'BELIEVED',
-      ...rows(believed, width),
-      '',
-    );
+    // Split so the agent can see, without arithmetic, which claims were CHECKED and which are
+    // merely young. A verified claim can be used without spending a lookup; saying so in a
+    // header is what turns the mechanism into saved tokens.
+    const verified = believed.filter((c) => c.verifyResult === 'passed' && c.confidence === 1);
+    const held = believed.filter((c) => !verified.includes(c));
+    if (verified.length) {
+      out.push(
+        'VERIFIED - a probe read these out of the world within the last day.',
+        'Use them. Do not spend a lookup re-deriving what has just been checked.',
+        ...rows(verified, width),
+        '',
+      );
+    }
+    if (held.length) {
+      const clipped = held.filter((c) => c.content.length > width).length;
+      out.push(
+        clipped
+          ? `BELIEVED - ${held.length} claims, ${clipped} shown trimmed. Ask \`believe\` for any in full.`
+          : 'BELIEVED',
+        ...rows(held, width),
+        '',
+      );
+    }
   }
 
   if (doubted.length) {
-    out.push(
-      `DOUBTED - decayed below ${TRUST_THRESHOLD}. NOT false, just too old to be load-bearing.`,
-      'Do not repeat these as fact. Check whether each is still true, then `remember` or `forget`.',
-      ...rows(doubted),
-      '',
-    );
+    // A claim the world has actively contradicted is not merely old, and burying it in a
+    // block headed "NOT false" would be the single most misleading line in this payload.
+    const contradicted = doubted.filter((c) => c.confidence === 0 && c.verifyResult === 'failed');
+    const stale = doubted.filter((c) => !contradicted.includes(c));
+    if (contradicted.length) {
+      out.push(
+        'CONTRADICTED - a probe checked these against the world and the world disagreed.',
+        'These are WRONG, not old. Do not repeat them. Supersede each with what you find.',
+        ...rows(contradicted),
+        '',
+      );
+    }
+    if (stale.length) {
+      out.push(
+        `DOUBTED - decayed below ${TRUST_THRESHOLD}. NOT false, just too old to be load-bearing.`,
+        'Do not repeat these as fact. Check whether each is still true, then `reaffirm` or `forget`.',
+        ...rows(stale),
+        '',
+      );
+    }
   }
 
   // Say what is missing and why. A memory that quietly serves a fraction of what it holds

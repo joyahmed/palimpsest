@@ -23,6 +23,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
+import { execFileSync } from 'node:child_process';
 
 // ---------------------------------------------------------------- environment
 // provider.ts, models.ts and client.ts read these at import time, so they are
@@ -152,7 +153,31 @@ await step('store       the dead claim is kept, linked, dated', async () => {
   expect(store.believed(now, 0).some((c) => c.id === second.id), 'the new claim is not believed');
 });
 
+await step('remember    a restatement refreshes, not duplicates', async () => {
+  expect(second, 'earlier step failed');
+  const before = store.get(second.id)!.observedAt;
+  const today = new Date().toISOString().slice(0, 10);
+  const r = await remember(store, { id: 'doctor-3', date: today, transcript: `Joy: yes, the wifi password is still ${WIFI_NEW}.` });
+  expect(r.added.length === 0, `stored ${r.added.length} new claim(s) for a restatement: ${r.added.map((c) => c.content).join(' | ')}`);
+  expect(r.revisions.some((v) => v.duplicateOf.some((d) => d.id === second.id)), 'not recognised as a duplicate of the held claim');
+  expect(store.get(second.id)!.observedAt > before, 'the held claim was not reaffirmed (observedAt unchanged)');
+  expect(store.active().length === 1, `active set is ${store.active().length}, expected 1`);
+});
+
 store.close();
+
+await step('recall      the hook shows the live claim, not the dead one', async () => {
+  const text = execFileSync(join(process.cwd(), 'node_modules/.bin/tsx'), ['src/cli/recall.ts'], {
+    env: { ...process.env, PALIMPSEST_DB: DB },
+    encoding: 'utf8',
+  });
+  const out = JSON.parse(text) as { hookSpecificOutput?: { hookEventName?: string; additionalContext?: string } };
+  const ctx = out.hookSpecificOutput?.additionalContext ?? '';
+  expect(out.hookSpecificOutput?.hookEventName === 'SessionStart', 'not a SessionStart envelope');
+  expect(ctx.includes(WIFI_NEW), `recall does not show "${WIFI_NEW}"`);
+  expect(!ctx.includes(WIFI_OLD), `recall still shows the dead "${WIFI_OLD}"`);
+  expect(ctx.includes('PROTOCOL'), 'recall has no protocol block');
+});
 
 // The two transports the memory is served over. Same DB: the stdio server must
 // see the kill that happened above.

@@ -52,6 +52,15 @@ export const HALF_LIFE_DAYS: Record<ClaimKind, number> = {
   event: Infinity,
 };
 
+/**
+ * Below this, a claim stops being served as fact.
+ *
+ * Such a claim is not FALSE - it is just too old to be load-bearing, and it should
+ * be re-checked rather than repeated. That distinction is the entire difference
+ * between a memory that forgets and a memory that lies.
+ */
+export const TRUST_THRESHOLD = 0.35;
+
 export type ClaimStatus =
   /** Believed. Retrievable. */
   | 'active'

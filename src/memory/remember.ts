@@ -70,8 +70,10 @@ export async function remember(
 
     // A duplicate carries no new information. Storing it would inflate the memory
     // with restatements and - worse - make the same fact compete with itself at
-    // retrieval time. Instead we let the existing claim stand.
+    // retrieval time. Instead the existing claim stands - re-confirmed, so its
+    // decay clock restarts from this observation.
     if (duplicates.length > 0) {
+      for (const d of duplicates) store.reaffirm(d.id, observedAt);
       revisions.push({
         incoming: { ...e, id: '(not stored)', status: 'active', sourceSession: session.id, sourceQuote: e.quote, observedAt, embedding } as Claim,
         killed: [],

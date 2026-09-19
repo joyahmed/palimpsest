@@ -14,7 +14,7 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DEFAULT_DB } from '../paths.js';
 import { cosine } from '../qwen/client.js';
-import { decayedConfidence, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
+import { decayedConfidence, TRUST_THRESHOLD, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS claims (
@@ -77,6 +77,9 @@ function toClaim(r: Row): Claim {
   };
 }
 
+/** A claim with its decayed confidence substituted in. What callers actually want. */
+export type Believed = Claim & { confidence: number };
+
 export class ClaimStore {
   private db: DatabaseSync;
 
@@ -128,6 +131,17 @@ export class ClaimStore {
           WHERE id = ?`,
       )
       .run(killerId, at, reason, deadId);
+  }
+
+  /**
+   * A belief restated is a belief re-confirmed: its age resets to `at`, so decay
+   * starts over. The row is not duplicated - a store where the same fact competes
+   * with itself at retrieval time is worse than one that merely forgets.
+   */
+  reaffirm(id: string, at: number): void {
+    this.db
+      .prepare(`UPDATE claims SET observed_at = MAX(observed_at, ?) WHERE id = ? AND status = 'active'`)
+      .run(at, id);
   }
 
   refute(id: string, reason: string, at: number): void {
@@ -187,10 +201,23 @@ export class ClaimStore {
    * lean on it. The threshold is kept because gating is the obvious next step
    * once verification exists to re-check what falls below it.
    */
-  believed(now = Date.now(), minConfidence = 0.35): Array<Claim & { confidence: number }> {
+  believed(now = Date.now(), minConfidence = TRUST_THRESHOLD): Believed[] {
     return this.active()
       .map((c) => ({ ...c, confidence: decayedConfidence(c, now) }))
       .filter((c) => c.confidence >= minConfidence)
+      .sort((a, b) => b.confidence - a.confidence);
+  }
+
+  /**
+   * Still active, but decayed below the trust threshold. The complement of `believed()`.
+   *
+   * Recall shows these in their own block: not as facts, but as questions - "is this
+   * still true?" - so a stale port or branch is re-checked instead of repeated.
+   */
+  doubted(now = Date.now()): Believed[] {
+    return this.active()
+      .map((c) => ({ ...c, confidence: decayedConfidence(c, now) }))
+      .filter((c) => c.confidence < TRUST_THRESHOLD)
       .sort((a, b) => b.confidence - a.confidence);
   }
 

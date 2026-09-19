@@ -29,10 +29,11 @@ import { provider } from './provider.js';
 import { anthropicBody, anthropicChat, type AnthropicChatResult } from './anthropic.js';
 import { isLocalModel, localEmbed } from './local-embed.js';
 import { claudeCodeBody, claudeCodeChat, type ClaudeCodeResult } from './claude-code.js';
+import { DEFAULT_CACHE_DIR } from '../paths.js';
 
 const BASE_URL =
   process.env.QWEN_BASE_URL ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
-const CACHE_DIR = process.env.PALIMPSEST_CACHE_DIR ?? '.cache/llm';
+const CACHE_DIR = process.env.PALIMPSEST_CACHE_DIR ?? DEFAULT_CACHE_DIR;
 const CACHE_ONLY = process.env.PALIMPSEST_CACHE_ONLY === '1';
 
 /**

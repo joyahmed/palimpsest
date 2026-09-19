@@ -13,7 +13,7 @@ import { renderMemory } from '../render/html.js';
 
 const NOW = Number(process.env.PALIMPSEST_NOW ?? new Date('2026-07-11').getTime());
 
-const store = new ClaimStore(process.env.PALIMPSEST_DB ?? './palimpsest.db');
+const store = new ClaimStore();
 const all = store.all();
 
 if (all.length === 0) {

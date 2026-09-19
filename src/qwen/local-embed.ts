@@ -8,12 +8,13 @@
  *
  * The model name in MODELS.embed is `local:<hf-id>:<dtype>`; this module parses it,
  * so a different model is a one-line change in models.ts and a fresh cache prefix.
- * Files land in PALIMPSEST_MODEL_DIR (default .cache/models, gitignored).
+ * Files land in PALIMPSEST_MODEL_DIR (default <repo>/.cache/models, gitignored).
  */
 
 import { env, pipeline, type FeatureExtractionPipeline } from '@huggingface/transformers';
+import { DEFAULT_MODEL_DIR } from '../paths.js';
 
-const MODEL_DIR = process.env.PALIMPSEST_MODEL_DIR ?? '.cache/models';
+const MODEL_DIR = process.env.PALIMPSEST_MODEL_DIR ?? DEFAULT_MODEL_DIR;
 
 let _pipe: Promise<FeatureExtractionPipeline> | undefined;
 let _loadedFor: string | undefined;

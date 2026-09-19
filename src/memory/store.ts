@@ -10,6 +10,9 @@
 
 import { DatabaseSync } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
+import { mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { DEFAULT_DB } from '../paths.js';
 import { cosine } from '../qwen/client.js';
 import { decayedConfidence, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
 
@@ -77,7 +80,9 @@ function toClaim(r: Row): Claim {
 export class ClaimStore {
   private db: DatabaseSync;
 
-  constructor(path = process.env.PALIMPSEST_DB ?? './palimpsest.db') {
+  constructor(path = process.env.PALIMPSEST_DB ?? DEFAULT_DB) {
+    // A first run points at a file whose directory may not exist yet (~/.palimpsest/).
+    mkdirSync(dirname(path), { recursive: true });
     this.db = new DatabaseSync(path);
     this.db.exec(SCHEMA);
   }

@@ -64,7 +64,7 @@ export async function seedHousehold(store: ClaimStore): Promise<number> {
 }
 
 if (process.argv[1] && /seed-household\.(ts|js)$/.test(process.argv[1])) {
-  const store = new ClaimStore(process.env.PALIMPSEST_DB ?? './palimpsest.db');
+  const store = new ClaimStore();
   const n = await seedHousehold(store);
   console.log(`household seed: ${n} claim(s) written, ${store.all().length} in the store`);
   store.close();

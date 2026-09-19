@@ -13,5 +13,5 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ClaimStore } from '../memory/store.js';
 import { createPalimpsestServer } from './palimpsest.js';
 
-const store = new ClaimStore(process.env.PALIMPSEST_DB ?? './palimpsest.db');
+const store = new ClaimStore();
 await createPalimpsestServer(store).connect(new StdioServerTransport());

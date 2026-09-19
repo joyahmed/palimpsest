@@ -36,6 +36,21 @@ CREATE INDEX IF NOT EXISTS idx_claims_status  ON claims(status);
 CREATE INDEX IF NOT EXISTS idx_claims_subject ON claims(subject);
 `;
 
+/**
+ * Columns added after the first release.
+ *
+ * `CREATE TABLE IF NOT EXISTS` is a no-op against a table that already exists, so it
+ * will not add a column to a database somebody has been using for a month - nor should
+ * that database be rebuilt; it is the only copy of what they believe. So: look at what
+ * is there, add what is missing.
+ */
+const ADDED_COLUMNS: Record<string, string> = {
+  // Space-separated project slugs. A join table would be tidier and this store holds
+  // hundreds of claims - a second table for a list that is usually one item is
+  // complexity bought with nothing. The split happens in toClaim.
+  projects: 'TEXT',
+};
+
 type Row = {
   id: string;
   content: string;
@@ -50,6 +65,7 @@ type Row = {
   superseded_at: number | null;
   death_reason: string | null;
   embedding: Uint8Array | null;
+  projects: string | null;
 };
 
 function toClaim(r: Row): Claim {
@@ -66,6 +82,7 @@ function toClaim(r: Row): Claim {
     supersededBy: r.superseded_by ?? undefined,
     supersededAt: r.superseded_at ?? undefined,
     deathReason: r.death_reason ?? undefined,
+    projects: r.projects ? r.projects.trim().split(/\s+/) : undefined,
     embedding: r.embedding
       ? new Float32Array(
           r.embedding.buffer.slice(
@@ -88,6 +105,12 @@ export class ClaimStore {
     mkdirSync(dirname(path), { recursive: true });
     this.db = new DatabaseSync(path);
     this.db.exec(SCHEMA);
+    const present = new Set(
+      (this.db.prepare(`PRAGMA table_info(claims)`).all() as Array<{ name: string }>).map((c) => c.name),
+    );
+    for (const [name, type] of Object.entries(ADDED_COLUMNS)) {
+      if (!present.has(name)) this.db.exec(`ALTER TABLE claims ADD COLUMN ${name} ${type}`);
+    }
   }
 
   add(claim: Omit<Claim, 'id' | 'status'> & { id?: string; status?: ClaimStatus }): Claim {
@@ -97,8 +120,8 @@ export class ClaimStore {
       .prepare(
         `INSERT INTO claims
            (id, content, kind, subject, source_session, source_quote, observed_at,
-            status, confidence, embedding)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            status, confidence, embedding, projects)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
       .run(
         full.id,
@@ -111,6 +134,7 @@ export class ClaimStore {
         full.status,
         full.confidence,
         full.embedding ? Buffer.from(full.embedding.buffer) : null,
+        full.projects && full.projects.length ? full.projects.join(' ') : null,
       );
 
     return full;

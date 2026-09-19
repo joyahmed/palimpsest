@@ -26,8 +26,11 @@
  *     "command": "PALIMPSEST_DB=$HOME/.palimpsest/memory.db /abs/path/to/node /abs/path/to/build/cli/recall.js" } ] } ] }
  */
 
+import { execFileSync } from 'node:child_process';
+import { basename } from 'node:path';
+
 import { ClaimStore, type Believed } from '../memory/store.js';
-import { TRUST_THRESHOLD } from '../memory/types.js';
+import { inScope, TRUST_THRESHOLD } from '../memory/types.js';
 import { DEFAULT_DB } from '../paths.js';
 
 /** Long enough that a collision needs ~50k claims; short enough to read. */
@@ -99,7 +102,9 @@ function rows(claims: Believed[], width: number | null = null): string[] {
   });
 }
 
-function render(believed: Believed[], doubted: Believed[], withheld: number): string {
+type Withheld = { kind: number; scope: number; project?: string };
+
+function render(believed: Believed[], doubted: Believed[], withheld: Withheld): string {
   const out: string[] = [
     'Palimpsest - a memory whose beliefs decay and can die. This is what it currently',
     "holds about your work. Confidence falls with age at a rate set by each claim's kind.",
@@ -141,11 +146,15 @@ function render(believed: Believed[], doubted: Believed[], withheld: number): st
 
   // Say what is missing and why. A memory that quietly serves a fraction of what it holds
   // is lying by omission, and an agent that does not know beliefs were withheld cannot ask.
-  if (withheld > 0) {
+  if (withheld.kind > 0 || withheld.scope > 0) {
+    const parts: string[] = [];
+    if (withheld.scope > 0) parts.push(`${withheld.scope} about other projects (this session is in \`${withheld.project}\`)`);
+    if (withheld.kind > 0) parts.push(`${withheld.kind} of kind \`${[...NOT_INJECTED].join('`, `')}\``);
     out.push(
-      `HELD BUT NOT SHOWN: ${withheld} of kind \`${[...NOT_INJECTED].join('`, `')}\`.`,
+      `HELD BUT NOT SHOWN: ${parts.join(', ')}.`,
       "None of it is gone - `believe` and `history` still answer from them. Events and decisions",
-      "are left out because git and the repo's own docs hold them better. Ask when you need them.",
+      "are left out because git and the repo's own docs hold them better; other projects' facts",
+      'because they cost tokens here and answer nothing. Ask when you need them.',
       '',
     );
   }
@@ -179,10 +188,31 @@ function failure(err: unknown, dbPath: string): string {
   ].join('\n');
 }
 
-function forInjection(claims: Believed[]): { shown: Believed[]; withheld: number } {
-  if (process.env.PALIMPSEST_RECALL_ALL === '1') return { shown: claims, withheld: 0 };
-  const shown = claims.filter((c) => !NOT_INJECTED.has(c.kind));
-  return { shown, withheld: claims.length - shown.length };
+/**
+ * Which project this session is in: the git toplevel's name, so a session opened three
+ * directories deep in a monorepo still resolves to the repo. Undefined outside a repo,
+ * and `inScope` then admits everything.
+ */
+function currentProject(): string | undefined {
+  try {
+    const top = execFileSync('git', ['rev-parse', '--show-toplevel'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    return top ? basename(top) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function forInjection(
+  claims: Believed[],
+  project: string | undefined,
+): { shown: Believed[]; withheldKind: number; withheldScope: number } {
+  if (process.env.PALIMPSEST_RECALL_ALL === '1') return { shown: claims, withheldKind: 0, withheldScope: 0 };
+  const rightKind = claims.filter((c) => !NOT_INJECTED.has(c.kind));
+  const shown = rightKind.filter((c) => inScope(c, project));
+  return { shown, withheldKind: claims.length - rightKind.length, withheldScope: rightKind.length - shown.length };
 }
 
 function main(): void {
@@ -193,9 +223,14 @@ function main(): void {
     const store = new ClaimStore(dbPath);
     try {
       const now = Date.now();
-      const believed = forInjection(store.believed(now));
-      const doubted = forInjection(store.doubted(now));
-      context = render(believed.shown, doubted.shown, believed.withheld + doubted.withheld);
+      const project = process.env.PALIMPSEST_PROJECT || currentProject();
+      const believed = forInjection(store.believed(now), project);
+      const doubted = forInjection(store.doubted(now), project);
+      context = render(believed.shown, doubted.shown, {
+        kind: believed.withheldKind + doubted.withheldKind,
+        scope: believed.withheldScope + doubted.withheldScope,
+        project,
+      });
     } finally {
       store.close();
     }

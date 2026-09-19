@@ -35,7 +35,7 @@ export interface RememberResult {
 
 export async function remember(
   store: ClaimStore,
-  session: { id: string; date: string; transcript: string },
+  session: { id: string; date: string; transcript: string; projects?: string[] },
 ): Promise<RememberResult> {
   const observedAt = new Date(session.date).getTime();
 
@@ -91,6 +91,7 @@ export async function remember(
       observedAt,
       confidence: e.confidence,
       embedding,
+      projects: session.projects,
     });
     added.push(claim);
 

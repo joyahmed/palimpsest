@@ -20,6 +20,7 @@
  */
 
 import { mkdtempSync, rmSync } from 'node:fs';
+import { DatabaseSync } from 'node:sqlite';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
@@ -164,19 +165,55 @@ await step('remember    a restatement refreshes, not duplicates', async () => {
   expect(store.active().length === 1, `active set is ${store.active().length}, expected 1`);
 });
 
+// A claim about another project, written directly - no model call needed to test scope.
+const OTHER = 'The other-app API listens on port 4321.';
+store.add({ content: OTHER, kind: 'config', subject: 'other-app port', sourceSession: 'doctor', sourceQuote: OTHER, observedAt: now, confidence: 1, projects: ['other-app'] });
 store.close();
 
-await step('recall      the hook shows the live claim, not the dead one', async () => {
+function recall(project: string): string {
   const text = execFileSync(join(process.cwd(), 'node_modules/.bin/tsx'), ['src/cli/recall.ts'], {
-    env: { ...process.env, PALIMPSEST_DB: DB },
+    env: { ...process.env, PALIMPSEST_DB: DB, PALIMPSEST_PROJECT: project },
     encoding: 'utf8',
   });
   const out = JSON.parse(text) as { hookSpecificOutput?: { hookEventName?: string; additionalContext?: string } };
-  const ctx = out.hookSpecificOutput?.additionalContext ?? '';
   expect(out.hookSpecificOutput?.hookEventName === 'SessionStart', 'not a SessionStart envelope');
+  return out.hookSpecificOutput?.additionalContext ?? '';
+}
+
+await step('recall      the hook shows the live claim, not the dead one', async () => {
+  const ctx = recall('this-app');
   expect(ctx.includes(WIFI_NEW), `recall does not show "${WIFI_NEW}"`);
   expect(!ctx.includes(WIFI_OLD), `recall still shows the dead "${WIFI_OLD}"`);
   expect(ctx.includes('PROTOCOL'), 'recall has no protocol block');
+});
+
+await step('scope       another project\'s claim is withheld here, shown there', async () => {
+  const here = recall('this-app');
+  expect(!here.includes('4321'), 'other-app\'s port was injected into this-app\'s session');
+  expect(/HELD BUT NOT SHOWN: 1 about other projects/.test(here), 'the withheld claim was not counted');
+  const there = recall('other-app');
+  expect(there.includes('4321'), 'other-app\'s own claim was not shown in other-app');
+  expect(there.includes(WIFI_NEW), 'the global claim was not shown in other-app');
+});
+
+await step('migrate     a first-release database gains the new columns, keeps its rows', async () => {
+  const old = join(scratch, 'old.db');
+  const raw = new DatabaseSync(old);
+  raw.exec(`CREATE TABLE claims (id TEXT PRIMARY KEY, content TEXT NOT NULL, kind TEXT NOT NULL, subject TEXT NOT NULL,
+    source_session TEXT NOT NULL, source_quote TEXT NOT NULL, observed_at INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'active',
+    confidence REAL NOT NULL DEFAULT 1.0, superseded_by TEXT, superseded_at INTEGER, death_reason TEXT, embedding BLOB)`);
+  raw.prepare(`INSERT INTO claims (id, content, kind, subject, source_session, source_quote, observed_at) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+    .run('old-1', 'A claim from before the column existed.', 'config', 'legacy', 'doctor', 'q', now);
+  raw.close();
+  const s = new ClaimStore(old);
+  try {
+    const c = s.get('old-1');
+    expect(c && c.projects === undefined, 'the pre-existing row did not survive, or grew a scope it never had');
+    s.add({ content: 'scoped', kind: 'config', subject: 's', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, projects: ['x', 'y'] });
+    expect(s.active().some((k) => k.projects?.join(',') === 'x,y'), 'a scoped claim did not round-trip through the migrated table');
+  } finally {
+    s.close();
+  }
 });
 
 // The two transports the memory is served over. Same DB: the stdio server must

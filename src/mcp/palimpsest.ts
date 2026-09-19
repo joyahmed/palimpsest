@@ -59,13 +59,23 @@ server.registerTool(
         .optional()
         .describe('ISO date the conversation happened (YYYY-MM-DD). Defaults to today. ' +
           'This matters: a claim cannot supersede one observed AFTER it.'),
+      projects: z
+        .array(z.string())
+        .optional()
+        .describe('Which projects (repo names) these facts are ABOUT. Omit for facts true ' +
+          'everywhere - the user, the machine, the shell, how they work. Recall at session ' +
+          'start shows a project\'s own claims plus the global ones, so scoping is what ' +
+          'keeps other repos\' ports and paths out of a session that cannot use them. Scope ' +
+          'is what the fact is about, not where you learned it: a harness quirk learned in ' +
+          'repo X is global.'),
     },
   },
-  async ({ transcript, date }) => {
+  async ({ transcript, date, projects }) => {
     const result = await remember(store, {
       id: `mcp-${Date.now()}`,
       date: date ?? new Date().toISOString().slice(0, 10),
       transcript,
+      projects,
     });
 
     const killed = result.revisions.flatMap((r) =>
@@ -83,7 +93,7 @@ server.registerTool(
           type: 'text',
           text: JSON.stringify(
             {
-              learned: result.added.map((c) => ({ claim: c.content, kind: c.kind })),
+              learned: result.added.map((c) => ({ claim: c.content, kind: c.kind, projects: c.projects ?? 'global' })),
               revised: killed,
               alreadyKnew: result.revisions.flatMap((r) => r.duplicateOf.map((d) => d.content)),
             },

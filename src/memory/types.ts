@@ -98,6 +98,44 @@ export interface Claim {
   deathReason?: string;
 
   embedding?: Float32Array;
+
+  /**
+   * Which projects this claim is about. Empty means EVERY project.
+   *
+   * Injection is paid every session for every claim, and most claims are irrelevant to
+   * the repo you happen to be in: a nine-hour session in one project was once handed 61
+   * beliefs, most of them another project's, and perhaps 15 were read. Scoping is the
+   * largest relevance win available, and unlike pruning it withholds nothing that matters.
+   *
+   * A SET, because real claims span projects (a port from one repo to another is a fact
+   * about both). Scope is a property of what the claim is ABOUT - never of where it was
+   * learned. Inferring it from cwd records the wrong thing: "the shell's cwd persists
+   * between calls" learned inside repo X is true everywhere, and scoped to X it went
+   * unread in the exact session it would have prevented a failure.
+   *
+   * Empty means global on purpose. An unassigned claim is SHOWN everywhere rather than
+   * hidden everywhere: over-showing costs tokens, under-showing causes wrong work.
+   */
+  projects?: string[];
+}
+
+/**
+ * Is this claim worth injecting into a session working on `project`?
+ *
+ *   1. `identity` and `preference` are always global - who the user is and how they work
+ *      do not stop being true in a different repo, and they are few.
+ *   2. An unscoped claim is global (see `Claim.projects`).
+ *   3. Otherwise: does its project list include this one?
+ *
+ * With no current project (a session outside any repo) everything qualifies. A memory
+ * that went quiet because it could not identify the directory would cost nothing, know
+ * nothing, and say nothing about why.
+ */
+export function inScope(claim: Claim, project: string | undefined): boolean {
+  if (claim.kind === 'identity' || claim.kind === 'preference') return true;
+  if (!claim.projects || claim.projects.length === 0) return true;
+  if (!project) return true;
+  return claim.projects.includes(project);
 }
 
 /**

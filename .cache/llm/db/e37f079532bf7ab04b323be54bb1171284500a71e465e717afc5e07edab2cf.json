@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"httpOnly and sameSite=strict are independent cookie attributes; a cookie can carry both, so both claims stand.\"}, {\"id\": \"2\", \"relation\": \"refines\", \"reason\": \"Auth using session cookies is the broader fact; sameSite=strict adds detail about how those cookies are configured without contradicting it.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Redis backing is about where session data is stored, while sameSite=strict is a browser cookie attribute; both can be true at once.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting has nothing to do with the sameSite setting on session cookies.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The language of the Meridian stack is unaffected by how session cookies are configured.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1499,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 300,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1499,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 300,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1499,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1499
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

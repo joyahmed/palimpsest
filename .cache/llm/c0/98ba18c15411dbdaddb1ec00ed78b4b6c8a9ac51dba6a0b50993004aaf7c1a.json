@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"The new claim explains why the app moved to Fly.io; it adds the motivation without changing the fact that the app is deployed there.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The region being ams and cold starts motivating the move are both true at once; one is a setting, the other is a reason.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy setting up the deployment on the morning of the 19th is a past event and the cold-start motivation does not touch it.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The auth replacement decision is about token revocation, a different subject entirely from the hosting move.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Scoping the customs module for launch has nothing to do with why the app moved to Fly.io.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1537,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 299,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1537,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 299,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1537,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1537
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

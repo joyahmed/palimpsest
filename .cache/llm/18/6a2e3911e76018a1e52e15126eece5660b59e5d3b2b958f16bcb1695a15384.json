@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Marcus's sign-off adds who approved the SQLite choice; it does not change the fact that the database is SQLite.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus approving SQLite and Joy no longer running a separate database server are both true at once; the sign-off says nothing about Joy's server setup.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Approving SQLite as the database engine says nothing about whether the schema is settled; both can hold.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the launch date in May is a separate past event from his signing off on SQLite in July.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Marcus wanting the customs module in scope is a scope preference unaffected by his approval of SQLite.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1502,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 310,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1502,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 310,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1502,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1502
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

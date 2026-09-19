@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Booking the review for August adds the timing to Marcus's wish for a pre-launch security review; both remain true.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Audit logging being in place has nothing to do with when the security review is scheduled; both stand.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Test coverage at 83% and an August security review booking are separate facts that coexist.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Coverage exceeding the threshold is independent of scheduling the security review.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The size of the test suite is not affected by when the security review is booked.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1496,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 262,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1496,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 262,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1496,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1496
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

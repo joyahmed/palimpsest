@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"The migration event explains how the CI system came to be GitHub Actions; the config claim remains true and the event adds when and how it happened.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Whether the shipment tracking repo is open source has nothing to do with a CI pipeline migration; both stand.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy's Fly.io deployment setup and the CI migration are separate events around the same weekend; both happened and neither cancels the other.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The launch date is a separate fact untouched by moving CI to GitHub Actions.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Halcyon's approval of open-sourcing the repo is a past event with no bearing on the CI migration.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1531,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 309,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1531,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 309,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1531,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1531
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Adding audit logging says nothing about where the project deploys; both hold.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Audit logging does not touch what a shipment consists of; both hold.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Whether the repo is open source is untouched by adding audit logging; both hold.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The client identity has nothing to do with audit logging being added; both hold.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Redis-backed session cookies and audit logging are separate features observed the same day; both hold.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1515,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 251,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1515,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 251,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1515,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1515
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

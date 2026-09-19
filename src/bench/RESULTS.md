@@ -9,6 +9,54 @@ Results are reported whether or not they flatter the project. The first one did 
 
 ---
 
+## v4 - 2026-09-19 - **re-recorded on Claude; every fact that changed is answered right**
+
+19 questions · 95 claims (13 dead) · 12 sessions over 3 months · top-5 retrieval ·
+`claude-opus-5` for extraction, adjudication, answering and grading ·
+`bge-small-en-v1.5` (q8, local) for retrieval
+
+|                          | naive RAG    | Palimpsest     |
+|--------------------------|--------------|----------------|
+| Facts that CHANGED       | 45% (5/11)   | **100% (11/11)** |
+| Facts that NEVER changed | 88% (7/8)    | 88% (7/8)      |
+| **Overall**              | 63% (12/19)  | **95% (18/19)** |
+| **Served a DEAD fact**   | **3**        | **0**          |
+
+Same fixture, same questions, same grader design as v3; the provider changed. Naive RAG
+moved from 58% to 63% because the answering model is stronger - and it still served the
+same three dead facts (Postgres, September 1st, #1E4D8C), because no model can un-retrieve
+a claim the store never killed. Palimpsest's remaining miss is the one v3 had: the shipping
+origin is never found by either system (a retrieval failure - the claim is alive and simply
+not reached). "ams" for "Fly.io" is answered correctly now.
+
+### What changed between v3 and v4, and why the numbers moved
+
+**1. The provider.** The Qwen Cloud quota the v3 recording ran on is gone; everything now
+runs on Claude through the Claude Code login (no API key) with a local embedder. The v3
+recording is preserved at the `qwen-submission` tag and replays there.
+
+**2. Two prompt fixes found by `pnpm test`, the live end-to-end test that did not exist
+before.** Both are the same defect in two places: **history read as state.**
+
+- *Extraction* sometimes emitted a content-free `event` beside a changed value - "The wifi
+  password was changed." next to "The wifi password is bluefish99." - and the answering
+  model read the event as doubt on the value under it (`UNKNOWN` in 4 runs of 10). Rule 6:
+  a change IS its new value, one claim, no side-event.
+- *Answering* was handed memories without their kind. On the first v4 run it answered
+  "September 1st" for the launch date from the live event *"Sarah Vance gave Joy the
+  September 1st launch date"* - true, it happened - over the live config *"The launch date
+  is October 15th"*. The superseded target claim was dead; the event, correctly, was not.
+  The answer context now shows each memory's kind, and the prompt says an event is what
+  happened, never what is current. That single change took CHANGED from 10/11 to 11/11 and
+  dead-facts-served from 1 to 0.
+
+The naive baseline is untouched by both: it has no kinds and kills nothing, so there is
+nothing for either fix to apply to. It gets the same stronger model and nothing else.
+
+**Replay:** `PALIMPSEST_CACHE_ONLY=1 pnpm bench` - 500 cache hits, 0 misses, no key.
+
+---
+
 ## v3 - 2026-07-12 - **the thesis holds, and the run is now reproducible**
 
 19 questions · 84 claims · 12 sessions over 3 months · top-5 retrieval

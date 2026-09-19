@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Saying the launch is on track for October is consistent with an October 15th date; it adds status without changing the date.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the date is a past event that cannot be undone; the launch being on track now is a separate status update.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The customs module being in scope and the launch being on track for October can both be true at once.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Sarah giving Joy a September 1st date in April is a fixed past event; the target later moved to October, which is already captured elsewhere.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Joy's test-coverage preference and the launch being on track are independent; both can hold at the same time.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1509,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 295,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1509,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 295,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1509,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1509
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

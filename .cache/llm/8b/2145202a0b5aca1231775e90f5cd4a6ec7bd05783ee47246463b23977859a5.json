@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The test count of ~400 and the choice of Vitest as the unit test framework are independent facts that are both true at once.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"How many tests exist says nothing about Playwright being the e2e framework; both hold together.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The test suite size has no bearing on the decision that Postgres full-text search is adequate.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The shipment data model and the number of tests are different subjects entirely.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Search being implemented with Postgres full-text search is unaffected by the test suite having ~400 tests.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1519,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 276,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1519,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 276,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1519,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1519
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

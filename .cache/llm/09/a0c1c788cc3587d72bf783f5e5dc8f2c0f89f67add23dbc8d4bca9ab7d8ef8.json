@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Knowing the middle tier is the anchor adds detail to the three-tier structure without contradicting it.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The middle tier's $29 price and its role as the anchor are both true at once; one is the price, the other is its strategic position.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Halcyon paying for CircleCI has nothing to do with the pricing tier anchor.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1423,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 181,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1423,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 181,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1423,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1423
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

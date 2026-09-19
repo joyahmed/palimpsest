@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Dark mode being finished says nothing about the teal primary colour; both stand.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Paying for CircleCI and finishing dark mode are separate facts that can both be true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The open-source approval is a past event and has nothing to do with dark mode.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Joy's demo cadence preference is untouched by dark mode being done.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Sarah's fortnightly demos are a past event unrelated to dark mode.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1525,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 255,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1525,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 255,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1525,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1525
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Joy setting up the Fly.io deployment on the morning of 19 Sep adds who and when to the standing fact that the app is deployed to Fly.io; both remain true.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Setting up the deployment on 19 Sep says nothing about the 15 Oct launch date; both can be true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy doing the Fly.io setup does not contradict Joy also building the shipment tracking module; both can be true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Sarah handing over the 1 Sep launch date is a past event that cannot be undone by a deployment set up on 19 Sep.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the launch date is a past event unaffected by Joy setting up the deployment; both remain true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1523,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 336,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1523,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 336,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1523,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1523
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Rate limiting being implemented is still true; the new claim adds the specific limit of 100 requests per minute per key.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Paying for CircleCI has nothing to do with the API rate limit; both stand.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy's git email is unaffected by the rate limit configuration.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The dev server port and the rate limit are separate settings; both can be true.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Whether the shipment tracking repo is open source has no bearing on the rate limit.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1517,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 262,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1517,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 262,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1517,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1517
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": 1, \"relation\": \"refines\", \"reason\": \"Knowing the deployment runs on Node 20 adds runtime detail to the Vercel deployment; both are true together.\"}, {\"id\": 2, \"relation\": \"unrelated\", \"reason\": \"The dev server port and the production runtime version are separate facts that coexist.\"}, {\"id\": 3, \"relation\": \"unrelated\", \"reason\": \"TypeScript throughout and a Node 20 runtime are compatible; the language choice is untouched.\"}, {\"id\": 4, \"relation\": \"unrelated\", \"reason\": \"The auth mechanism has nothing to do with the deployment runtime version.\"}, {\"id\": 5, \"relation\": \"unrelated\", \"reason\": \"The database choice and the Node runtime version are independent facts; both stand.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1509,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 265,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1509,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 265,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1509,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1509
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

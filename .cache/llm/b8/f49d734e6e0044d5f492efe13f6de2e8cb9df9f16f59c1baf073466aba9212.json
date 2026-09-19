@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"The launch date is October 15th\", \"kind\": \"config\", \"subject\": \"launch date\", \"quote\": \"Marcus pushed the launch. It's October 15th now.\", \"confidence\": 1.0}, {\"content\": \"Marcus pushed the launch date\", \"kind\": \"event\", \"subject\": \"launch date\", \"quote\": \"Marcus pushed the launch.\", \"confidence\": 1.0}, {\"content\": \"The customs module is in scope for the launch\", \"kind\": \"decision\", \"subject\": \"launch scope\", \"quote\": \"He wants the customs module in scope, which is why.\", \"confidence\": 0.9}, {\"content\": \"Marcus wants the customs module in scope\", \"kind\": \"preference\", \"subject\": \"Marcus's scope preference\", \"quote\": \"He wants the customs module in scope\", \"confidence\": 1.0}, {\"content\": \"The customs module was not in the original brief\", \"kind\": \"event\", \"subject\": \"original brief scope\", \"quote\": \"It wasn't in the original brief.\", \"confidence\": 1.0}, {\"content\": \"The customs module needs an integration with the Dutch tax API\", \"kind\": \"decision\", \"subject\": \"customs module integration\", \"quote\": \"Customs module needs an integration with the Dutch tax API.\", \"confidence\": 1.0}, {\"content\": \"The migration ran on the 3rd\", \"kind\": \"event\", \"subject\": \"database migration\", \"quote\": \"The migration ran on the 3rd, by the way.\", \"confidence\": 1.0}, {\"content\": \"The database schema is settled\", \"kind\": \"state\", \"subject\": \"database schema\", \"quote\": \"Schema's settled.\", \"confidence\": 0.9}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1312,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 535,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1312,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 535,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1312,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1312
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

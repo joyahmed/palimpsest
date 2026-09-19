@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The launch date moved to October 15th as of 19 May; the September 1st target is no longer the plan.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Sarah Vance did give Joy the September 1st date back in April; that event happened and stays true even though the date has since changed.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module has nothing to do with when the launch date is.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Deploying to Vercel and the launch date are independent facts that can both be true.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Joy working on Meridian is still true regardless of the launch date change.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1513,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 274,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1513,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 274,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1513,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1513
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

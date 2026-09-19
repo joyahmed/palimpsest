@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Marcus's preference for including the customs module adds who wanted it to the decision that it is in scope; both stand.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The shipment data model and Marcus's wish for the customs module to be in scope can both be true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the launch date is a past event and says nothing about whether he wants the customs module in scope.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The file format of customs docs has no bearing on Marcus's scope preference.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Marcus being the PM on Halcyon and Marcus wanting the customs module in scope are both true at once.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1520,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 285,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1520,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 285,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1520,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1520
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

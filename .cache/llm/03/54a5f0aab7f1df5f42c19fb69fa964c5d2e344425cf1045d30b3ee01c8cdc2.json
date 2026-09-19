@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"MIT is a specific open-source license, so this adds detail to the claim that the repo is open source without contradicting it.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Who is building the module has nothing to do with the repo's license; both are true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The structure of a shipment record is independent of the repo's license.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The file format of customs docs has no bearing on the repo's license.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Where customs docs are stored is independent of the repo's license.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1519,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 245,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1519,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 245,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1519,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1519
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

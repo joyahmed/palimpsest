@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": 1, \"relation\": \"refines\", \"reason\": \"The new claim spells out what the audit logging actually records (actor, action, timestamp on every mutation); it does not contradict the fact that audit logging was added.\"}, {\"id\": 2, \"relation\": \"unrelated\", \"reason\": \"Shipment structure and audit logging are separate facts that can both be true.\"}, {\"id\": 3, \"relation\": \"unrelated\", \"reason\": \"Whether the repo is open source has nothing to do with what the audit log writes.\"}, {\"id\": 4, \"relation\": \"unrelated\", \"reason\": \"The database being Postgres and audit rows being written on mutations can both be true at once.\"}, {\"id\": 5, \"relation\": \"unrelated\", \"reason\": \"The repo's licence is independent of how audit logging works.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1525,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 265,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1525,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 265,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1525,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1525
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

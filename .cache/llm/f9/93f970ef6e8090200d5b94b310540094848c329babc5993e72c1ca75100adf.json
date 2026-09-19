@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"A rebrand launching in August may well have changed the teal, but the new claim does not say what the new colour is, so the teal claim is not proven false by it.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Approving the open-source repo in April is a past event that a later rebrand cannot undo.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Marcus taking over the account in May already happened; a rebrand does not change that.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"A rebrand of Halcyon's identity says nothing about who the PM on the account is.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Sarah having run fortnightly demos is a fixed past fact unaffected by the rebrand.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1546,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 290,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1546,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 290,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1546,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1546
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

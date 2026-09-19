@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"CI moved from CircleCI to GitHub Actions as of 4 Jun; a project has one CI system so the CircleCI claim no longer holds.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Whether the repo is open source has nothing to do with which CI system runs it; both remain true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Halcyon's approval of open-sourcing the repo is a past event and is untouched by the CI system change.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Joy's git email is independent of the CI system; both can be true.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The Fly.io deployment region is a separate setting from the CI system; both can be true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1508,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 289,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1508,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 289,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1508,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1508
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

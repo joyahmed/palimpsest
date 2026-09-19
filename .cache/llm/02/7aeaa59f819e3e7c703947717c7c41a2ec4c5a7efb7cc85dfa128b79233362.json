@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": 1, \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the date and the date being October 15th were observed the same day and can both be true - October 15th may well be the pushed date, so the value stands.\"}, {\"id\": 2, \"relation\": \"unrelated\", \"reason\": \"Sarah giving Joy the September 1st date back in April is a past event that a later push cannot undo.\"}, {\"id\": 3, \"relation\": \"unrelated\", \"reason\": \"Marcus being the Halcyon PM says nothing about the launch date; both hold.\"}, {\"id\": 4, \"relation\": \"unrelated\", \"reason\": \"Marcus taking over Halcyon is a separate past event that still happened regardless of the date change.\"}, {\"id\": 5, \"relation\": \"unrelated\", \"reason\": \"Wanting weekly demos is unaffected by the launch date moving; both remain true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1543,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 294,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1543,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 294,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1543,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1543
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

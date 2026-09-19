@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"A cap of 50 per month on the free tier and an actual platform volume of about 40 per week describe different things; a pricing limit and observed throughput can both hold at once.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus's team running numbers with three firms is a past event and says nothing about current weekly shipment volume.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy building the tracking module and the platform handling forty shipments a week are independent facts that can both be true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"What a shipment consists of has no bearing on how many shipments flow through per week.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The repo being open source is unaffected by the platform's weekly shipment volume.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1532,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 300,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1532,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 300,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1532,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1532
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Who the client is and what language the stack uses are separate facts about Meridian; both stand.\"}, {\"id\": \"2\", \"relation\": \"refines\", \"reason\": \"Knowing the project is TypeScript throughout adds technical detail to the fact that Joy is working on Meridian, without contradicting it.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Sarah Vance being the client-side PM says nothing about the tech stack; both remain true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"How Joy routes scope questions is independent of the language the project is built in.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1503,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 228,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1503,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 228,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1503,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1503
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

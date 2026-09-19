@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Operating out of Rotterdam and running a single shipping lane can both be true; neither contradicts the other.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Halcyon being the Meridian client says nothing about how many shipping lanes they run; both stand.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Paying for CircleCI and running one shipping lane are separate facts that coexist.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Sarah Vance's PM role is unaffected by the number of shipping lanes Halcyon operates.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The brand colour of the design has no bearing on Halcyon's shipping lane count.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1553,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 284,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1553,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 284,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1553,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1553
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

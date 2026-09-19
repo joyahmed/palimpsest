@@ -20,15 +20,17 @@ const PROVIDERS: Provider[] = ['anthropic', 'claude-code', 'qwen'];
  *                machine you are logged in on: local runs, the demo, the video. Not for
  *                a server that serves other people.
  *   anthropic    Claude through the SDK, for anyone with an API key.
- *   qwen         Only for the committed replay cache: the benchmark's numbers were
- *                recorded with Qwen and replay from disk. Not a live path any more.
+ *   qwen         The roster the first benchmark was recorded with (qwen-submission
+ *                tag). Kept so that recording can still be read; not a live path.
  *
  * This is a Claude-based tool. There is deliberately no generic "any endpoint"
  * provider: one model family, one behaviour to reason about.
  *
  * Resolution, first match wins:
  *   PALIMPSEST_PROVIDER                  explicit
- *   PALIMPSEST_CACHE_ONLY=1              qwen (the committed cache is Qwen's)
+ *   PALIMPSEST_CACHE_ONLY=1              claude-code (the committed replay cache was
+ *                                        re-recorded on Claude on 2026-09-19; the Qwen
+ *                                        recording is at the qwen-submission tag)
  *   ANTHROPIC_API_KEY set                anthropic
  *   DASHSCOPE_API_KEY set                qwen
  *   otherwise                            claude-code (it fails loudly if `claude` is
@@ -40,7 +42,7 @@ export function provider(): Provider {
   if (explicit) {
     throw new Error(`PALIMPSEST_PROVIDER must be one of ${PROVIDERS.join(', ')}, got "${explicit}"`);
   }
-  if (process.env.PALIMPSEST_CACHE_ONLY === '1') return 'qwen';
+  if (process.env.PALIMPSEST_CACHE_ONLY === '1') return 'claude-code';
   if (process.env.ANTHROPIC_API_KEY) return 'anthropic';
   if (process.env.DASHSCOPE_API_KEY) return 'qwen';
   return 'claude-code';

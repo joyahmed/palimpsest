@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Joy's git email and the fact that Joy works on Meridian are both true at once; one does not affect the other.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Joy's git email has no bearing on who handles scope questions on Meridian; both stand.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"A git email address says nothing about Meridian's auth choice; both remain true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"A git email address says nothing about Meridian's database; both remain true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1483,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 214,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1483,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 214,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1483,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1483
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

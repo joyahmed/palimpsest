@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Where Halcyon Freight operates from has nothing to do with which colour the Meridian design uses; both stand.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Halcyon being the client and the design using Halcyon's brand blue are both true at once; the colour choice does not alter who the client is.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1403,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 136,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1403,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 136,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1403,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1403
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

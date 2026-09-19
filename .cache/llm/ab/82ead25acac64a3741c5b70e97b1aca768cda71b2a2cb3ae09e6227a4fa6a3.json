@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Search using Postgres full-text search adds detail to the existing fact that Meridian's database is Postgres; both remain true.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Whether the shipment tracking repo is open source has nothing to do with how search is implemented.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Audit log rows on mutations and Postgres full-text search are separate features that can both be true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The definition of a route as a list of seaports is unaffected by the search implementation.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The typeface choice has no bearing on how search is implemented.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1512,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 269,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1512,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 269,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1512,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1512
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

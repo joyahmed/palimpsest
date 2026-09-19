@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The launch date and the dev server port are separate facts about Meridian; both can be true at once.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The launch date says nothing about the database choice; Postgres remains true alongside a September 1st target.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Joy working on Meridian and Meridian targeting a September 1st launch are compatible facts; one does not affect the other.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Who the client is and when the launch is targeted are independent; Halcyon Freight stays the client.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Sarah Vance's role as PM is untouched by the launch date; both claims hold together.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1530,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 288,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1530,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 288,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1530,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1530
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

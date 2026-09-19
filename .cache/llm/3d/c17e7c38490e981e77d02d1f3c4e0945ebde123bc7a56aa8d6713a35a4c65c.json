@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The middle tier's price changed to $19 a month by 23 Jun; the earlier $29 figure from April is no longer current.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The middle tier being the anchor of the pricing model says nothing about its price; both can hold at once.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The number of tiers and the middle tier's price are independent facts; a $19 middle tier is consistent with three tiers.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Halcyon paying for CircleCI has nothing to do with the middle pricing tier's cost.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting being implemented is unrelated to the pricing tier's cost.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1510,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 297,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1510,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 297,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1510,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1510
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

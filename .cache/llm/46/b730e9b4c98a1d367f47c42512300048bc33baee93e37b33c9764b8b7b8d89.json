@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [\n{\"content\": \"Sarah left Halcyon last week\", \"kind\": \"event\", \"subject\": \"Sarah's employment at Halcyon\", \"quote\": \"Sarah's gone. She left Halcyon last week.\", \"confidence\": 1.0},\n{\"content\": \"Marcus Oyelaran is the PM on the Halcyon account\", \"kind\": \"identity\", \"subject\": \"Halcyon account PM\", \"quote\": \"Marcus Oyelaran. Took over the account on Monday.\", \"confidence\": 1.0},\n{\"content\": \"Marcus Oyelaran took over the Halcyon account on Monday\", \"kind\": \"event\", \"subject\": \"Halcyon account PM handover\", \"quote\": \"Took over the account on Monday.\", \"confidence\": 1.0},\n{\"content\": \"Marcus Oyelaran wants weekly demos for the Halcyon account\", \"kind\": \"preference\", \"subject\": \"Halcyon demo cadence\", \"quote\": \"He wants weekly demos instead of the fortnightly thing Sarah had.\", \"confidence\": 1.0},\n{\"content\": \"Sarah had fortnightly demos for the Halcyon account\", \"kind\": \"event\", \"subject\": \"Halcyon demo cadence under Sarah\", \"quote\": \"the fortnightly thing Sarah had\", \"confidence\": 0.9},\n{\"content\": \"Joy is fine with weekly demos for the Halcyon account\", \"kind\": \"preference\", \"subject\": \"Joy's view on Halcyon demo cadence\", \"quote\": \"Fine by me.\", \"confidence\": 0.9},\n{\"content\": \"Rate limiting is implemented\", \"kind\": \"state\", \"subject\": \"rate limiting implementation\", \"quote\": \"Rate limiting is in\", \"confidence\": 1.0},\n{\"content\": \"The rate limit is 100 requests per minute per key\", \"kind\": \"config\", \"subject\": \"rate limit value\", \"quote\": \"100 requests a minute per key\", \"confidence\": 1.0}\n]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1311,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 645,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1311,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 645,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1311,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1311
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

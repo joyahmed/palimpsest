@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The app moved to Fly.io on 28 May; the Vercel deployment noted on 14 Apr is no longer where it runs, and it cannot deploy to both as its platform.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The Node 20 runtime can still be in use on Fly.io; the hosting platform changing says nothing about the runtime version.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Whether the shipment tracking repo is open source has nothing to do with where the app is hosted.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The local dev server port is independent of the production hosting platform; both can be true.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The customs module being in scope for launch is a product decision unaffected by the deployment target.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1505,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 307,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1505,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 307,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1505,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1505
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

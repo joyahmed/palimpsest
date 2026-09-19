@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\":[{\"content\":\"Joy is building out the shipment tracking module\",\"kind\":\"state\",\"subject\":\"Joy's current task\",\"quote\":\"Building out the shipment tracking module.\",\"confidence\":1.0},{\"content\":\"Each shipment has a manifest, a route, and a set of customs docs\",\"kind\":\"decision\",\"subject\":\"shipment data model\",\"quote\":\"Each shipment has a manifest, a route, and a set of customs docs.\",\"confidence\":1.0},{\"content\":\"A route is an ordered list of seaports\",\"kind\":\"decision\",\"subject\":\"route data model\",\"quote\":\"A route is an ordered list of ports. Not network ports - actual seaports.\",\"confidence\":1.0},{\"content\":\"Rotterdam is always the origin port for routes for now\",\"kind\":\"config\",\"subject\":\"route origin port\",\"quote\":\"Rotterdam is always the origin for now.\",\"confidence\":0.9},{\"content\":\"Halcyon only run one shipping lane\",\"kind\":\"state\",\"subject\":\"Halcyon shipping lanes\",\"quote\":\"They only run one lane.\",\"confidence\":0.9},{\"content\":\"Customs docs are PDFs\",\"kind\":\"config\",\"subject\":\"customs doc format\",\"quote\":\"The customs docs are PDFs.\",\"confidence\":1.0},{\"content\":\"Customs docs are stored in object storage, not the database\",\"kind\":\"decision\",\"subject\":\"customs doc storage\",\"quote\":\"We store them in object storage, not the database.\",\"confidence\":1.0},{\"content\":\"The shipment tracking repo is open source\",\"kind\":\"decision\",\"subject\":\"repo open source status\",\"quote\":\"Repo is open source, MIT licensed.\",\"confidence\":1.0},{\"content\":\"The shipment tracking repo is MIT licensed\",\"kind\":\"config\",\"subject\":\"repo license\",\"quote\":\"Repo is open source, MIT licensed.\",\"confidence\":1.0},{\"content\":\"Halcyon approved the repo being open source\",\"kind\":\"event\",\"subject\":\"Halcyon open source approval\",\"quote\":\"Halcyon were fine with it, it's not their secret sauce.\",\"confidence\":0.9}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1365,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 668,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1365,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 668,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1365,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1365
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

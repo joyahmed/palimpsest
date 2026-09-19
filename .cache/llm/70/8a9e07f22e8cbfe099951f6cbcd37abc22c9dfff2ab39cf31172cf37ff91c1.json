@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Who the client is has nothing to do with where the project is deployed; both stand.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The local dev server port and the production hosting platform are separate facts; deploying to Vercel does not change port 3000.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"A TypeScript stack and a Vercel deployment target are independent choices that coexist.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The client's Rotterdam logistics business is unaffected by the deployment platform.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Joy still works on Meridian; the deployment target adds nothing to or against that.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1523,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 270,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1523,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 270,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1523,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1523
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

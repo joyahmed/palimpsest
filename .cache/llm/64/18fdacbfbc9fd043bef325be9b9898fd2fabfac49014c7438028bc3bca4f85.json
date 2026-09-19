@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module and shipments having a manifest, route, and customs docs are both true at once; one is work in progress, the other is the data model.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The shipment data model says nothing about the database engine; Postgres remains the belief.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Who the client is and what a shipment consists of do not collide.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Deployment target and shipment structure are independent facts.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Halcyon operating out of Rotterdam is unaffected by how a shipment is modelled.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1526,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 272,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1526,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 272,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1526,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1526
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

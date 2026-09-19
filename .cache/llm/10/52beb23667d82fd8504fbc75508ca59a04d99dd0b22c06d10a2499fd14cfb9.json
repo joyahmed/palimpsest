@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Working on the shipment tracking module and wanting the process kept warm for websockets are both true at once; neither contradicts the other.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Joy's involvement in the Meridian project is unaffected by a preference about keeping the process warm for websockets.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Setting up the Fly.io deployment is an event that already happened; a preference about process warmth cannot make it false.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Session cookies being httpOnly is a separate configuration fact that remains true regardless of the websocket warmth preference.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Cold starts motivating the Fly.io move and Joy wanting the process kept warm for websockets are compatible; one explains a past decision, the other states a current preference.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1530,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 333,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1530,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 333,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1530,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1530
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

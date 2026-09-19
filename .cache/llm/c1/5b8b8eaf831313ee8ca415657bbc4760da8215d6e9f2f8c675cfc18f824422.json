@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Customs docs being PDFs and being stored in object storage are both true at once; format and storage location are different facts.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"A shipment having customs docs and those docs living in object storage are both true; one describes the data model, the other where the files are kept.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The Meridian database can still be Postgres while customs docs are kept outside it in object storage; the new claim only says the files are not in the database, not that there is no database.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Deploying to Vercel says nothing about where customs docs are stored; both hold.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"A TypeScript stack and object storage for customs docs are independent facts that coexist.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1517,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 306,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1517,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 306,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1517,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1517
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

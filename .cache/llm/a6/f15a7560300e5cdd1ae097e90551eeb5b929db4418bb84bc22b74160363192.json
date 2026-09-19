@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Auth still uses session cookies; the new claim adds that those cookies are set httpOnly.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Redis-backed storage and the httpOnly flag are independent properties of the same cookies; both hold.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting has nothing to do with the cookie httpOnly flag; both remain true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The 100 req/min rate limit is untouched by a cookie flag setting.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Where customs docs are stored is unrelated to session cookie flags.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1502,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 268,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1502,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 268,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1502,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1502
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

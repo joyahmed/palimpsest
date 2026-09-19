@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Halcyon already paying for CircleCI adds context to the CI choice without contradicting that CI is CircleCI.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Who the client is and whether they pay for CircleCI are separate facts that both hold.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The brand colour has nothing to do with Halcyon's CircleCI subscription.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Halcyon's logistics business in Rotterdam is untouched by their CircleCI subscription.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Sarah Vance's PM role and Halcyon's CircleCI subscription are independent facts.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1548,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 284,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1548,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 284,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1548,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1548
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"Joy is working on a project called Meridian\", \"kind\": \"state\", \"subject\": \"current project\", \"quote\": \"New project kicking off. It's called Meridian\", \"confidence\": 1.0}, {\"content\": \"The client for the Meridian project is Halcyon Freight\", \"kind\": \"identity\", \"subject\": \"Meridian client\", \"quote\": \"client is Halcyon Freight\", \"confidence\": 1.0}, {\"content\": \"Halcyon Freight does logistics out of Rotterdam\", \"kind\": \"identity\", \"subject\": \"Halcyon Freight business\", \"quote\": \"they do logistics out of Rotterdam\", \"confidence\": 1.0}, {\"content\": \"Sarah Vance is the PM for the Meridian project on the Halcyon Freight side\", \"kind\": \"identity\", \"subject\": \"Meridian client PM\", \"quote\": \"Sarah Vance is the PM\", \"confidence\": 1.0}, {\"content\": \"Joy goes through Sarah Vance for anything scope-related on the Meridian project\", \"kind\": \"preference\", \"subject\": \"Meridian scope contact\", \"quote\": \"She's the one I go through for anything scope-related\", \"confidence\": 1.0}, {\"content\": \"The Meridian project stack is TypeScript throughout\", \"kind\": \"decision\", \"subject\": \"Meridian language\", \"quote\": \"Stack is TypeScript throughout\", \"confidence\": 1.0}, {\"content\": \"The Meridian dev server runs on port 3000\", \"kind\": \"config\", \"subject\": \"dev server port\", \"quote\": \"Dev server runs on port 3000\", \"confidence\": 1.0}, {\"content\": \"The Meridian database is Postgres\", \"kind\": \"decision\", \"subject\": \"database choice\", \"quote\": \"Database is Postgres\", \"confidence\": 1.0}, {\"content\": \"Meridian auth will use JWT\", \"kind\": \"decision\", \"subject\": \"auth approach\", \"quote\": \"Auth will be JWT - stateless, keeps the API clean\", \"confidence\": 1.0}, {\"content\": \"Joy's git email is joy_ahmed_007@yahoo.com\", \"kind\": \"config\", \"subject\": \"Joy's git email\", \"quote\": \"My git email is joy_ahmed_007@yahoo.com\", \"confidence\": 1.0}, {\"content\": \"The Meridian launch target date is September 1st\", \"kind\": \"decision\", \"subject\": \"Meridian launch date\", \"quote\": \"We're targeting September 1st for launch\", \"confidence\": 1.0}, {\"content\": \"Sarah Vance gave Joy the September 1st launch date for Meridian\", \"kind\": \"event\", \"subject\": \"Meridian launch date source\", \"quote\": \"That's the date Sarah gave me\", \"confidence\": 1.0}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1412,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 895,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1412,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 895,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1412,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1412
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

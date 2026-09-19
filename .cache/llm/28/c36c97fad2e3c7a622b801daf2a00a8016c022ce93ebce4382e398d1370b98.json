@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"The customs integration is complete.\", \"kind\": \"state\", \"subject\": \"customs integration status\", \"quote\": \"Customs integration is done.\", \"confidence\": 1.0}, {\"content\": \"The Dutch tax API integration took three weeks instead of the planned one week.\", \"kind\": \"event\", \"subject\": \"Dutch tax API integration duration\", \"quote\": \"Dutch tax API took three weeks instead of one.\", \"confidence\": 1.0}, {\"content\": \"Test coverage is 83%.\", \"kind\": \"state\", \"subject\": \"test coverage\", \"quote\": \"Coverage is 83% now.\", \"confidence\": 1.0}, {\"content\": \"Test coverage of 83% is above the required threshold.\", \"kind\": \"state\", \"subject\": \"test coverage threshold status\", \"quote\": \"Coverage is 83% now. Above the line.\", \"confidence\": 0.9}, {\"content\": \"Marcus wants a security review before launch.\", \"kind\": \"preference\", \"subject\": \"Marcus's security review requirement\", \"quote\": \"Marcus wants a security review before launch.\", \"confidence\": 1.0}, {\"content\": \"The security review is being booked for August.\", \"kind\": \"decision\", \"subject\": \"security review timing\", \"quote\": \"Booking that for August.\", \"confidence\": 0.9}, {\"content\": \"The launch is on track for October.\", \"kind\": \"state\", \"subject\": \"launch date\", \"quote\": \"Still on track for October.\", \"confidence\": 0.9}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1284,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 477,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1284,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 477,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1284,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1284
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

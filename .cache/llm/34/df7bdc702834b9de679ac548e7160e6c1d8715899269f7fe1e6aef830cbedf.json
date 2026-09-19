@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the launch date is a past event; wanting a security review before launch does not undo it and both stand.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus can want the customs module in scope and also want a security review before launch; these are separate wishes.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The customs module being in scope and a security review being wanted before launch are independent; both can hold.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Joy's test-coverage condition and Marcus's security-review condition are separate pre-launch requirements from different people; both can be true.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Marcus asking about SOC 2 on 4 Jun is a fixed past event; his later wish for a security review may be related but cannot make it false.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1509,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 313,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1509,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 313,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1509,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1509
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Coverage sitting at 71% and Joy wanting it above 80% before launch are both true at once; one is the current state, the other is the target.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Setting up the Fly.io deployment is a past event and has nothing to do with the coverage target.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The October 15th launch date and the pre-launch coverage goal can both hold; the new claim doesn't change when launch is.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Wanting the process kept warm for websockets is a separate preference that coexists with the coverage target.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Joy building the shipment tracking module says nothing about test coverage goals; both can be true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1519,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 304,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1519,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 304,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1519,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1519
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

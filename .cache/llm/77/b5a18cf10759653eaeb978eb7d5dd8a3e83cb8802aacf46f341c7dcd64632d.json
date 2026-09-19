@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"The dev server is on port 4000\", \"kind\": \"config\", \"subject\": \"dev server port\", \"quote\": \"The dev server is on port 4000.\", \"confidence\": 1.0}, {\"content\": \"The database is SQLite\", \"kind\": \"config\", \"subject\": \"database choice\", \"quote\": \"Also the database is SQLite.\", \"confidence\": 1.0}, {\"content\": \"The logistics platform's volume is about forty shipments a week\", \"kind\": \"state\", \"subject\": \"shipment volume\", \"quote\": \"Their volume is tiny. Forty shipments a week.\", \"confidence\": 0.9}, {\"content\": \"Joy no longer runs a separate database server because the database is SQLite\", \"kind\": \"config\", \"subject\": \"database server\", \"quote\": \"I stopped having to run a database server\", \"confidence\": 0.9}, {\"content\": \"Marcus signed off on using SQLite as the database\", \"kind\": \"event\", \"subject\": \"database choice approval\", \"quote\": \"Marcus signed off.\", \"confidence\": 1.0}, {\"content\": \"Full-text search uses SQLite FTS5\", \"kind\": \"config\", \"subject\": \"full-text search\", \"quote\": \"Full-text search moved to SQLite FTS5.\", \"confidence\": 1.0}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1330,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 409,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1330,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 409,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1330,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1330
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

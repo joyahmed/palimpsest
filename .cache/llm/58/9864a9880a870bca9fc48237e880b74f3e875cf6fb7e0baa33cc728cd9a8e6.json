@@ -1,0 +1,36 @@
+{
+  "text": "The memories conflict: one says Halcyon's brand blue #1E4D8C, another says teal #0F766E.\n\nUNKNOWN",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1302,
+    "cache_read_input_tokens": 31445,
+    "output_tokens": 47,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1302,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 47,
+        "cache_read_input_tokens": 31445,
+        "cache_creation_input_tokens": 1302,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1302
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

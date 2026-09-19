@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Naming Sarah Vance as Halcyon Freight's PM adds a contact on the client side; Halcyon Freight is still the client.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Joy working on Meridian and Sarah Vance being the client-side PM are both true at once; one says nothing about the other.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Where Halcyon Freight operates from has nothing to do with who their PM on Meridian is; both stand.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1447,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 199,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1447,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 199,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1447,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1447
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

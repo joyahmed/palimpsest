@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"The decision that the customs module needed the Dutch tax API integration still stands; the new claim adds that the integration was done and overran from one week to three.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The auth approach replacement has nothing to do with how long the Dutch tax API integration took; both are true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The migration running on the 3rd is a separate past event and is untouched by the tax API integration's duration.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The customs module being absent from the original brief and the tax API integration taking three weeks are both true and independent facts.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The pricing model's tier count has no bearing on the Dutch tax API integration timeline.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1526,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 301,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1526,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 301,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1526,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1526
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

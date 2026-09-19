@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"The primary colour of the design is blue, Halcyon's brand blue, #1E4D8C\", \"kind\": \"config\", \"subject\": \"primary colour\", \"quote\": \"Primary colour is blue - Halcyon's brand blue, #1E4D8C.\", \"confidence\": 1.0}, {\"content\": \"The typeface is Inter\", \"kind\": \"decision\", \"subject\": \"typeface\", \"quote\": \"Typeface is Inter. I don't want to argue about this one.\", \"confidence\": 1.0}, {\"content\": \"The project is deploying to Vercel\", \"kind\": \"config\", \"subject\": \"deployment platform\", \"quote\": \"We're deploying to Vercel.\", \"confidence\": 1.0}, {\"content\": \"The deployment uses the Node 20 runtime\", \"kind\": \"config\", \"subject\": \"Node runtime version\", \"quote\": \"Node 20 runtime.\", \"confidence\": 1.0}, {\"content\": \"CI is CircleCI\", \"kind\": \"config\", \"subject\": \"CI provider\", \"quote\": \"CI is CircleCI.\", \"confidence\": 1.0}, {\"content\": \"Halcyon already pays for CircleCI\", \"kind\": \"state\", \"subject\": \"CircleCI billing\", \"quote\": \"It's what Halcyon already pay for so we're stuck with it.\", \"confidence\": 0.9}, {\"content\": \"The pricing model has three tiers\", \"kind\": \"decision\", \"subject\": \"pricing model\", \"quote\": \"Pricing model: three tiers\", \"confidence\": 1.0}, {\"content\": \"The middle pricing tier is $29 a month\", \"kind\": \"config\", \"subject\": \"middle tier price\", \"quote\": \"the middle one is $29 a month\", \"confidence\": 1.0}, {\"content\": \"The middle pricing tier is the anchor of the pricing model\", \"kind\": \"decision\", \"subject\": \"pricing anchor\", \"quote\": \"That's the anchor.\", \"confidence\": 0.9}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1355,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 634,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1355,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 634,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1355,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1355
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

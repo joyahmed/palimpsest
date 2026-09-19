@@ -125,14 +125,14 @@ The baseline is naive RAG - chunk, embed, top-k retrieve - given the *same*
 extraction, the *same* embeddings and the *same* answering model. The only
 difference between the two systems is that one of them can kill a claim.
 
-|                          | naive RAG    | Palimpsest     |
-|--------------------------|--------------|----------------|
-| Facts that **changed**   | 36% (4/11)   | **73% (8/11)** |
-| Facts that never changed | 88% (7/8)    | 88% (7/8)      |
-| **Overall**              | 58% (11/19)  | **79% (15/19)**|
-| **Served a DEAD fact**   | **3**        | **0**          |
+|                          | naive RAG    | Palimpsest       |
+|--------------------------|--------------|------------------|
+| Facts that **changed**   | 45% (5/11)   | **100% (11/11)** |
+| Facts that never changed | 88% (7/8)    | 88% (7/8)        |
+| **Overall**              | 63% (12/19)  | **95% (18/19)**  |
+| **Served a DEAD fact**   | **3**        | **0**            |
 
-Twice as accurate on facts that moved - and, just as importantly, **no worse on the
+Every fact that moved, answered right - and, just as importantly, **no worse on the
 facts that didn't**. A memory eager enough to forget that it destroys stable facts
 would be worse than append-only, not better. That column is the one that could have
 killed this project, and it's printed as loudly as the one that flatters it.
@@ -140,18 +140,18 @@ killed this project, and it's printed as loudly as the one that flatters it.
 Naive RAG served three dead facts - "Postgres", "September 1st", "#1E4D8C" - with
 total confidence, weeks after each one died. Palimpsest served none.
 
-**Where it still fails**, because that belongs in the README too: it answers `"ams"`
-(a region) instead of `"Fly.io"` for where the app is deployed, and it never finds
-the PM handover at all. Both are *retrieval* failures - the right claim was alive in
-the store and simply wasn't reached. Full breakdown, including every question both
-systems got wrong: [`src/bench/RESULTS.md`](src/bench/RESULTS.md).
+**Where it still fails**, because that belongs in the README too: neither system ever
+finds the shipping origin. That is a *retrieval* failure - the right claim is alive in
+the store and simply isn't reached by top-5 cosine. Full breakdown, every version,
+including the one that found a dead fact being served and what fixed it:
+[`src/bench/RESULTS.md`](src/bench/RESULTS.md).
 
 ### Check it yourself
 
 Every model call is cached to disk and committed to this repo.
 
 ```bash
-PALIMPSEST_CACHE_ONLY=1 pnpm bench     # 448 cache hits, 0 misses, no API key, no spend
+PALIMPSEST_CACHE_ONLY=1 pnpm bench     # 500 cache hits, 0 misses, no API key, no spend
 ```
 
 **Clone it, replay the benchmark, and get bit-identical numbers.**
@@ -161,11 +161,10 @@ so a replay cannot silently drift from what we published.
 We'd rather you checked than trusted us. (We checked, too - and the first time we
 tried this, it threw. See v3 in the results file.)
 
-> **The replay is pinned to the prompts it was recorded with.** The extraction prompt
-> changed on 2026-09-19 (a change of value is one claim, not a value plus an event -
-> found by `pnpm test`, which failed 4 runs in 10 without it), so a replay against the
-> committed cache now misses on extraction and throws, as designed. The numbers above are
-> the Qwen-era numbers; a re-recording on Claude is queued and will replace them.
+> The numbers above were recorded on Claude on 2026-09-19 (v4 in the results file). The
+> first recording, on Qwen Cloud for the hackathon, is preserved at the
+> [`qwen-submission`](../../tree/qwen-submission) tag and replays there: 79% vs 58%,
+> with the older prompts.
 
 ## Running it
 
@@ -191,8 +190,8 @@ Chat runs on **Claude** - through your Claude Code login (`claude -p`; the defau
 34 MB, downloaded once into `.cache/models`). No embedding vendor, no second key. It is a
 Claude-based tool on purpose: one model family, one behaviour to reason about.
 
-The Qwen Cloud roster remains only as the provider the replay cache was recorded with
-(`PALIMPSEST_PROVIDER=qwen`, or implied by `PALIMPSEST_CACHE_ONLY=1`).
+The Qwen Cloud roster (`PALIMPSEST_PROVIDER=qwen`) remains only so the hackathon-era
+recording at the `qwen-submission` tag can still be read.
 
 ## Install it as your memory in Claude Code
 
@@ -281,7 +280,7 @@ password?"*, say *"The wifi password changed to bluefish99."*, ask again.
 TypeScript · Claude (`claude-opus-5`) for extraction and adjudication · bge-small-en-v1.5
 (q8) in-process for embeddings · MCP over stdio and Streamable HTTP · SQLite (`node:sqlite`) ·
 runs locally. Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`, `text-embedding-v4`) remains
-only as the provider the benchmark cache was recorded with. The Alibaba Function Compute
+only as the provider the first benchmark was recorded with (`qwen-submission` tag). The Alibaba Function Compute
 deployment from the first hackathon (`s.yaml`, `pnpm deploy`, `src/scripts/package-fc.ts`)
 is still in the repo and no longer maintained.
 

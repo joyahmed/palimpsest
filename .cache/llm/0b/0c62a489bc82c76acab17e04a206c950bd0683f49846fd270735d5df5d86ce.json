@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Describing what a shipment record contains says nothing about whether the customs module ships at launch; both hold.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus moving the launch date is a past event and is untouched by what is in scope for that launch.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The launch being on October 15th and the customs module being in scope for it are compatible facts about different things.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Joy working on shipment tracking does not conflict with the customs module being in scope; both can be true at once.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The file format of customs docs is independent of whether the customs module is in scope for launch.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1506,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 281,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1506,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 281,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1506,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1506
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

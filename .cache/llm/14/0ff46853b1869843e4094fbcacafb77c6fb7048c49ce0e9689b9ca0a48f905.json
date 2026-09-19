@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Marcus pushing the launch date on 19 May and asking about SOC 2 on 4 Jun are separate events; both happened.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Marcus asking about SOC 2 says nothing about whether he still wants the customs module in scope; both can be true.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"A question about SOC 2 does not change the fact that Joy is working on Meridian.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Marcus's SOC 2 question and Joy's 80% test coverage preference are different concerns; both stand.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Joy's git email has nothing to do with Marcus asking about SOC 2.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1519,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 298,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1519,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 298,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1519,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1519
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

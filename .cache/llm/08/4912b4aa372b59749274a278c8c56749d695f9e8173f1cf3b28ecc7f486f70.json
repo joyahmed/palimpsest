@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"The app is deployed to Fly.io\", \"kind\": \"config\", \"subject\": \"deployment platform\", \"quote\": \"Deploying to Fly.io.\", \"confidence\": 1.0}, {\"content\": \"Joy set up the Fly.io deployment on the morning of 2026-09-19\", \"kind\": \"event\", \"subject\": \"Fly.io setup\", \"quote\": \"Set it up this morning\", \"confidence\": 0.9}, {\"content\": \"The Fly.io deployment region is ams\", \"kind\": \"config\", \"subject\": \"Fly.io region\", \"quote\": \"region is ams\", \"confidence\": 1.0}, {\"content\": \"The runtime is Node 24\", \"kind\": \"config\", \"subject\": \"Node runtime version\", \"quote\": \"Node 24 runtime.\", \"confidence\": 1.0}, {\"content\": \"Cold starts were the problem that motivated the move to Fly.io\", \"kind\": \"decision\", \"subject\": \"deployment platform rationale\", \"quote\": \"Cold starts were the issue.\", \"confidence\": 0.9}, {\"content\": \"Joy wants the process to stay warm for websockets\", \"kind\": \"preference\", \"subject\": \"process warmth\", \"quote\": \"I wanted the process to stay warm for the websocket stuff.\", \"confidence\": 0.9}, {\"content\": \"The websockets are used for live shipment position\", \"kind\": \"config\", \"subject\": \"websocket purpose\", \"quote\": \"Websockets are for live shipment position.\", \"confidence\": 1.0}, {\"content\": \"Vessels ping every 15 minutes\", \"kind\": \"config\", \"subject\": \"vessel ping interval\", \"quote\": \"Vessels ping every 15 minutes.\", \"confidence\": 1.0}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1308,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 557,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1308,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 557,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1308,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1308
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

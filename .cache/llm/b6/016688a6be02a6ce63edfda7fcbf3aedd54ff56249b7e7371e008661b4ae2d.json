@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"Audit logging on mutations has nothing to do with which e2e test framework is used; both can be true.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The Node 24 runtime and Playwright as the e2e framework coexist without conflict.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Deploying to Fly.io says nothing about the e2e test framework; both remain true.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The Fly.io region being ams is independent of the choice of Playwright for e2e tests.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The Dutch tax API integration decision is a separate concern from the e2e test framework.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 7806,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 274,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 7806,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 274,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 7806,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 7806
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"Dark mode being done and the work taking a day are both true; the new claim adds how long it took.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The teal primary colour is a design setting and says nothing about how long dark mode took to build.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The open-source approval in April is a separate event with no bearing on dark mode implementation time.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Sarah's fortnightly demos are a separate matter from how long dark mode took.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The Fly.io move and its cold-start motivation have nothing to do with dark mode implementation.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1529,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 271,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1529,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 271,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1529,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1529
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

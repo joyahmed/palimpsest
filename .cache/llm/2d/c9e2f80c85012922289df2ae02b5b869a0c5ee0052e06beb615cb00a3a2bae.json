@@ -1,0 +1,36 @@
+{
+  "text": "{\"claims\": [{\"content\": \"Auth uses session cookies.\", \"kind\": \"config\", \"subject\": \"auth mechanism\", \"quote\": \"Auth is session cookies now.\", \"confidence\": 1.0}, {\"content\": \"Session cookies are Redis-backed.\", \"kind\": \"config\", \"subject\": \"session store\", \"quote\": \"Redis-backed\", \"confidence\": 1.0}, {\"content\": \"Session cookies are set httpOnly.\", \"kind\": \"config\", \"subject\": \"session cookie flags\", \"quote\": \"httpOnly\", \"confidence\": 1.0}, {\"content\": \"Session cookies use sameSite strict.\", \"kind\": \"config\", \"subject\": \"session cookie flags\", \"quote\": \"sameSite strict\", \"confidence\": 1.0}, {\"content\": \"The previous auth approach was replaced because token revocation could not be done cleanly.\", \"kind\": \"decision\", \"subject\": \"auth mechanism rationale\", \"quote\": \"The revocation problem was the killer. Couldn't do it cleanly the other way.\", \"confidence\": 0.9}, {\"content\": \"Audit logging has been added to the project.\", \"kind\": \"config\", \"subject\": \"audit logging\", \"quote\": \"Also added audit logging.\", \"confidence\": 1.0}, {\"content\": \"Every mutation writes an audit log row containing actor, action, and timestamp.\", \"kind\": \"config\", \"subject\": \"audit log schema\", \"quote\": \"Every mutation writes a row with actor, action, timestamp.\", \"confidence\": 1.0}, {\"content\": \"Search is implemented with Postgres full-text search.\", \"kind\": \"config\", \"subject\": \"search implementation\", \"quote\": \"Search is Postgres full-text for now.\", \"confidence\": 1.0}, {\"content\": \"Postgres full-text search is considered good enough at the current data volume.\", \"kind\": \"decision\", \"subject\": \"search implementation rationale\", \"quote\": \"It's good enough at this volume.\", \"confidence\": 0.9}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1324,
+    "cache_read_input_tokens": 32364,
+    "output_tokens": 636,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1324,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 636,
+        "cache_read_input_tokens": 32364,
+        "cache_creation_input_tokens": 1324,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1324
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

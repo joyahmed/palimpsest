@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The middle tier costing $19 per month and the free tier being capped at 50 shipments describe different tiers; both are true together.\"}, {\"id\": \"2\", \"relation\": \"refines\", \"reason\": \"A free tier capped at 50 shipments adds detail about one of the three pricing tiers without contradicting that there are three.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"The middle tier being the anchor and the free tier's shipment cap are separate facts that both hold at once.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Rate limiting being implemented is about API request throttling, not the free tier's monthly shipment cap.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"A 100 requests-per-minute rate limit and a 50 shipments-per-month free tier cap are different limits on different things; both can be true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1517,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 316,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1517,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 316,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1517,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1517
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

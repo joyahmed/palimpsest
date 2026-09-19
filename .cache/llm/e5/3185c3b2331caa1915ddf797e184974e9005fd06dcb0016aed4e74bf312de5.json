@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"unrelated\", \"reason\": \"The schema being settled says nothing about which database engine is used; both can be true.\"}, {\"id\": \"2\", \"relation\": \"supersedes\", \"reason\": \"The database was Postgres as of 6 Apr, but by 1 Jul it is SQLite; it cannot be both at once, so the Postgres claim is dead.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Customs docs living in object storage rather than the database holds regardless of whether that database is SQLite or Postgres.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"The Node runtime version has nothing to do with the choice of database.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Deployment to Fly.io and using SQLite are independent facts that can both be true.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1490,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 288,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 288,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

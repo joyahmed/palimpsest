@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"The runtime moved from Node 20 to Node 24 as of 28 May; a deployment cannot run on both versions at once, so the Node 20 claim is dead.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"The dev server port and the Node runtime version are independent settings; both can be true together.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"TypeScript as the language and Node 24 as the runtime coexist without conflict.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Deploying to Fly.io says nothing about which Node version runs there; both hold at once.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"The database schema being settled has no bearing on the Node runtime version.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1502,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 285,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1502,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 285,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1502,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1502
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"refines\", \"reason\": \"The shipment has a route; the new claim spells out what a route actually is, so both hold.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"What database Meridian runs on says nothing about how a route is structured.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"Where Halcyon Freight operates from has no bearing on the definition of a route.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Joy working on the shipment tracking module and a route being a list of seaports are both true independently.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Who the client is does not touch the route definition.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1528,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 245,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1528,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 245,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1528,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1528
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

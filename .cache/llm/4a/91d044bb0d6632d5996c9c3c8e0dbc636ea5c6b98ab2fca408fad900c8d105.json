@@ -1,0 +1,36 @@
+{
+  "text": "{\"rulings\": [{\"id\": \"1\", \"relation\": \"supersedes\", \"reason\": \"Sarah left Halcyon in late April 2026, so she can no longer be the Halcyon-side PM for Meridian; the role claim from 6 Apr no longer holds.\"}, {\"id\": \"2\", \"relation\": \"unrelated\", \"reason\": \"Sarah's departure says nothing about where Halcyon Freight operates from; Rotterdam still stands.\"}, {\"id\": \"3\", \"relation\": \"unrelated\", \"reason\": \"How many shipping lanes Halcyon runs is untouched by one person leaving the company.\"}, {\"id\": \"4\", \"relation\": \"unrelated\", \"reason\": \"Halcyon paying for CircleCI is independent of Sarah's employment status.\"}, {\"id\": \"5\", \"relation\": \"unrelated\", \"reason\": \"Sarah giving Joy the September 1st launch date already happened on 6 Apr; her leaving afterwards cannot undo that event.\"}]}",
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1541,
+    "cache_read_input_tokens": 32167,
+    "output_tokens": 320,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1541,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 320,
+        "cache_read_input_tokens": 32167,
+        "cache_creation_input_tokens": 1541,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1541
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}

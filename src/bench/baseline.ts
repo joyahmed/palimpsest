@@ -108,7 +108,7 @@ export async function answerPalimpsest(
     .map((h) => {
       const conf = believed.get(h.id) ?? 0;
       const age = Math.round((now - h.observedAt) / 86_400_000);
-      return `- ${h.content}  [confidence ${conf.toFixed(2)}, ${age}d old]`;
+      return `- ${h.content}  [${h.kind}, confidence ${conf.toFixed(2)}, ${age}d old]`;
     })
     .join('\n');
 
@@ -121,7 +121,13 @@ Each memory carries a confidence. Low confidence means the belief is OLD, not th
 is wrong - it is still the best answer held, so give it. Anything this memory learned
 to be false has already been removed: what you see is what is currently believed. If
 a memory states the value asked for, answer with that value, even if another memory
-says the value changed - the stated value IS the one it changed to.`,
+says the value changed - the stated value IS the one it changed to.
+
+Each memory also carries its kind. An event is something that HAPPENED - "X gave the date
+Y", "the port was changed" - and is kept because the past is fixed, not because it is
+current. Never answer a what-is-it-now question from an event when a config, state,
+decision or identity memory states the value: the event is history, the other is the
+answer.`,
       user: `MEMORIES:\n${context}\n\nQUESTION: ${question}`,
       thinking: false,
       temperature: 0,

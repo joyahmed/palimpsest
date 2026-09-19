@@ -232,7 +232,9 @@ keeping it true. `pnpm recall` prints the same text for a human. If the database
 read, the hook says so loudly in the context window rather than letting the agent mistake
 an unreadable memory for an empty one.
 
-Four tools: `remember` (a note or transcript in, atomic claims out, contradictions killed),
+Six tools. `assert` (one atomic fact, instant, no model call; `supersedes: [id]` kills what it
+replaces) and `reaffirm` (a DOUBTED belief is still true - its clock restarts) are the fast
+path the recall ids exist for. `remember` (a note or transcript in, atomic claims out, contradictions killed),
 `believe` (what is true *now*; the dead are absent, not down-ranked), `history` (what it
 used to believe, and when and why it stopped), `forget` (refute a claim directly, with a
 reason on record). Over stdio for Claude Code; over Streamable HTTP at `/mcp` under

@@ -219,9 +219,9 @@ await step('migrate     a first-release database gains the new columns, keeps it
 // The two transports the memory is served over. Same DB: the stdio server must
 // see the kill that happened above.
 const childEnv = { ...getDefaultEnvironment(), PALIMPSEST_DB: DB, PALIMPSEST_PROVIDER: provider(), PALIMPSEST_CACHE_DIR: process.env.PALIMPSEST_CACHE_DIR! };
-const TOOLS = ['remember', 'believe', 'history', 'forget'];
+const TOOLS = ['remember', 'believe', 'history', 'forget', 'assert', 'reaffirm'];
 
-await step('mcp/stdio   4 tools, history shows the kill', async () => {
+await step('mcp/stdio   6 tools; assert supersedes by id prefix, reaffirm resets the clock', async () => {
   const client = new Client({ name: 'doctor', version: '0.1.0' });
   const transport = new StdioClientTransport({
     command: join(process.cwd(), 'node_modules/.bin/tsx'),
@@ -236,12 +236,33 @@ await step('mcp/stdio   4 tools, history shows the kill', async () => {
     const res = await client.callTool({ name: 'history', arguments: { about: WIFI_OLD } });
     const text = (res.content as Array<{ text?: string }>)[0]?.text ?? '';
     expect(text.includes(WIFI_OLD) && text.includes(WIFI_NEW), `history did not show the kill: ${text.slice(0, 120)}`);
+
+    // The fast path, over the wire: kill the wifi claim by its 8-char prefix, no model call.
+    expect(second, 'earlier step failed');
+    const a = await client.callTool({ name: 'assert', arguments: { content: 'The wifi password is coral77.', kind: 'config', subject: 'wifi password', supersedes: [second.id.slice(0, 8)], reason: 'changed again' } });
+    const aText = (a.content as Array<{ text?: string }>)[0]?.text ?? '';
+    expect(aText.includes('coral77') && aText.includes(WIFI_NEW), `assert did not report the kill: ${aText.slice(0, 160)}`);
+    const s = new ClaimStore(DB);
+    try {
+      const dead = s.get(second.id)!;
+      expect(dead.status === 'superseded' && dead.deathReason === 'changed again', `victim is ${dead.status}, reason "${dead.deathReason}"`);
+      const live = s.active().find((c) => c.content.includes('coral77'))!;
+      expect(live && live.embedding && live.embedding.length > 0, 'asserted claim has no embedding');
+      const before = live.observedAt;
+      const r = await client.callTool({ name: 'reaffirm', arguments: { ids: [live.id.slice(0, 8)] } });
+      expect(((r.content as Array<{ text?: string }>)[0]?.text ?? '').includes('coral77'), 'reaffirm did not confirm');
+      expect(s.get(live.id)!.observedAt >= before, 'reaffirm moved the clock backwards');
+      const bad = await client.callTool({ name: 'reaffirm', arguments: { ids: [second.id.slice(0, 8)] } });
+      expect(((bad.content as Array<{ text?: string }>)[0]?.text ?? '').startsWith('Refusing'), 'a dead belief was reaffirmed');
+    } finally {
+      s.close();
+    }
   } finally {
     await client.close();
   }
 });
 
-await step('mcp/http    Streamable HTTP handshake, 4 tools', async () => {
+await step('mcp/http    Streamable HTTP handshake, 6 tools', async () => {
   const http = createServer((req, res) => {
     const s = new ClaimStore(DB);
     handleMcp(req, res, s).catch((e) => { res.statusCode = 500; res.end(String(e)); }).finally(() => s.close());

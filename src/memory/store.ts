@@ -176,6 +176,22 @@ export class ClaimStore {
       .run(at, reason, id);
   }
 
+  /**
+   * A claim by id OR by the 8-character prefix recall prints. The agent has the prefix
+   * in context and nothing else; making it type the UUID would be making it guess.
+   * Ambiguity is an error, not a pick - the wrong belief must never die quietly.
+   */
+  resolve(idOrPrefix: string): Claim {
+    const exact = this.get(idOrPrefix);
+    if (exact) return exact;
+    const hits = this.db
+      .prepare(`SELECT * FROM claims WHERE id LIKE ? || '%'`)
+      .all(idOrPrefix) as Row[];
+    if (hits.length === 1) return toClaim(hits[0]!);
+    if (hits.length === 0) throw new Error(`no claim with id "${idOrPrefix}"`);
+    throw new Error(`"${idOrPrefix}" matches ${hits.length} claims - give more of the id`);
+  }
+
   get(id: string): Claim | undefined {
     const r = this.db.prepare(`SELECT * FROM claims WHERE id = ?`).get(id) as Row | undefined;
     return r ? toClaim(r) : undefined;

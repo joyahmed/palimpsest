@@ -32,7 +32,11 @@ import { z } from 'zod';
 import { ClaimStore } from '../memory/store.js';
 import { remember } from '../memory/remember.js';
 import { answerPalimpsest } from '../bench/baseline.js';
-import { decayedConfidence } from '../memory/types.js';
+import { decayedConfidence, HALF_LIFE_DAYS, type ClaimKind } from '../memory/types.js';
+import { MODELS } from '../qwen/models.js';
+import { embed } from '../qwen/client.js';
+
+const KINDS = Object.keys(HALF_LIFE_DAYS) as [ClaimKind, ...ClaimKind[]];
 
 
 export function createPalimpsestServer(store: ClaimStore): McpServer {
@@ -191,6 +195,81 @@ server.registerTool(
             : 'Nothing has been superseded yet - the memory has not had to change its mind.',
         },
       ],
+    };
+  },
+);
+
+// ---------------------------------------------------------------- assert
+
+server.registerTool(
+  'assert',
+  {
+    title: 'Write one fact directly',
+    description:
+      'The fast path: one atomic claim, written as given, no model call - an embedding ' +
+      'is computed locally so believe can find it. Use this mid-task for a fact you already ' +
+      'hold in atomic form (a port, a branch, a version, a preference); use remember for ' +
+      'prose you want split and adjudicated. If the fact REPLACES a belief shown in recall, ' +
+      'pass its id in supersedes: the old claim dies with your reason on record. Nothing is ' +
+      'checked for collisions here - that is what remember is for - so a bare assert of a ' +
+      'fact the memory already holds stores it twice. Look at recall first.',
+    inputSchema: {
+      content: z.string().describe('One assertion, self-contained, independently true or false.'),
+      kind: z.enum(KINDS).describe(
+        'Sets the decay rate. identity 10y, preference 2y, decision 1y, config 30d, state 7d, event never. ' +
+        'config is where memory lies most - be generous in choosing it.'),
+      subject: z.string().describe('Short noun phrase for what it is about ("api port", "current branch").'),
+      projects: z.array(z.string()).optional().describe('Repos this is ABOUT. Omit for facts true everywhere.'),
+      supersedes: z.array(z.string()).optional().describe('Ids (or the 8-char prefixes recall shows) of beliefs this one makes FALSE.'),
+      reason: z.string().optional().describe('Why the superseded beliefs are false now. Goes in their history.'),
+      date: z.string().optional().describe('ISO date the fact became true (YYYY-MM-DD). Defaults to today.'),
+    },
+  },
+  async ({ content, kind, subject, projects, supersedes, reason, date }) => {
+    const observedAt = date ? new Date(date).getTime() : Date.now();
+    // Resolve before writing: an ambiguous prefix must fail the whole call, not half of it.
+    const victims = (supersedes ?? []).map((id) => store.resolve(id));
+    const [embedding] = await embed(MODELS.embed, [content]);
+    const claim = store.add({
+      content, kind, subject, projects,
+      sourceSession: 'assert', sourceQuote: content, observedAt, confidence: 1, embedding,
+    });
+    for (const v of victims) {
+      if (v.status === 'active') store.supersede(v.id, claim.id, reason ?? `superseded by assert: ${content}`, observedAt);
+    }
+    return {
+      content: [{ type: 'text', text: JSON.stringify({
+        asserted: { id: claim.id.slice(0, 8), claim: claim.content, kind: claim.kind, projects: claim.projects ?? 'global' },
+        killed: victims.map((v) => ({ id: v.id.slice(0, 8), wasBelieved: v.content })),
+      }, null, 2) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------- reaffirm
+
+server.registerTool(
+  'reaffirm',
+  {
+    title: 'Re-confirm a doubted belief',
+    description:
+      'A belief recall listed as DOUBTED is still true: say so, and its age resets so decay ' +
+      'starts over. Do not assert it again - that stores the same belief twice and makes it ' +
+      'compete with itself. No model call.',
+    inputSchema: {
+      ids: z.array(z.string()).describe('Ids (or 8-char prefixes) of the beliefs that are still true.'),
+    },
+  },
+  async ({ ids }) => {
+    const now = Date.now();
+    const claims = ids.map((id) => store.resolve(id));
+    const dead = claims.filter((c) => c.status !== 'active');
+    if (dead.length) {
+      return { content: [{ type: 'text', text: `Refusing: ${dead.map((c) => c.id.slice(0, 8)).join(', ')} ${dead.length === 1 ? 'is' : 'are'} not active - a dead belief cannot be reaffirmed; assert the current fact instead.` }] };
+    }
+    for (const c of claims) store.reaffirm(c.id, now);
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ reaffirmed: claims.map((c) => ({ id: c.id.slice(0, 8), claim: c.content })) }, null, 2) }],
     };
   },
 );

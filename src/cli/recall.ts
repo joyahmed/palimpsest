@@ -37,11 +37,14 @@ import { DEFAULT_DB } from '../paths.js';
 const ID_LEN = 8;
 
 const PROTOCOL = `PROTOCOL - this memory is writable, and keeping it true is your job.
-  Learned something durable  -> \`remember\` it, in the user's words. It is split into atomic
-                                 claims and anything it CONTRADICTS above is marked dead for you.
+  Learned one atomic fact     -> \`assert\` it (instant; pick its kind honestly; scope it with
+                                 \`projects\` if it is about one repo). If it replaces a belief
+                                 above, pass that id in \`supersedes\` - the old one dies on record.
+  Learned prose, several facts -> \`remember\` it in the user's words; it is split into atomic
+                                 claims and anything it CONTRADICTS above is killed for you.
   Unsure what is current      -> \`believe\` answers from what is held NOW; the dead are absent.
+  A DOUBTED belief is still true -> \`reaffirm\` its id. Do not assert it again.
   A belief above is FALSE and nothing replaces it -> \`forget\` it with the reason.
-  A DOUBTED belief is still true -> \`remember\` it again; a restatement refreshes, not duplicates.
   Nothing is ever deleted. \`history\` says what died, when, and why.`;
 
 /**

@@ -251,6 +251,15 @@ used to believe, and when and why it stopped), `forget` (refute a claim directly
 reason on record). Over stdio for Claude Code; over Streamable HTTP at `/mcp` under
 `pnpm serve` for anything else.
 
+### Already have a memory file from the private predecessor?
+
+Point `PALIMPSEST_DB` at it and run `pnpm backfill` once. The table is migrated in place
+on first open (the columns it lacks are added; the ones it has - projects, probes,
+reaffirm counts - are read as they are), and the backfill gives every active claim the
+embedding it never had, locally, in seconds. Nothing is rewritten, no id changes. Then
+swap the two registrations - the MCP server and the recall hook - to this repo's `build/`.
+`pnpm test` rehearses exactly this on a copy of that schema.
+
 ## Alexa+ - a memory that forgets, for the home
 
 A local demo of the same memory in a household - the setting where this design is easiest

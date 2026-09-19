@@ -48,6 +48,7 @@ const { chat, embed, cosine, cacheStats } = await import('../qwen/client.js');
 const { ClaimStore } = await import('../memory/store.js');
 const { remember } = await import('../memory/remember.js');
 const { answerPalimpsest } = await import('../bench/baseline.js');
+const { backfillEmbeddings } = await import('../memory/backfill.js');
 const { handleMcp } = await import('../mcp/http.js');
 const { Client } = await import('@modelcontextprotocol/sdk/client/index.js');
 const { StdioClientTransport, getDefaultEnvironment } = await import(
@@ -255,6 +256,46 @@ await step('migrate     a first-release database gains the new columns, keeps it
 // see the kill that happened above.
 const childEnv = { ...getDefaultEnvironment(), PALIMPSEST_DB: DB, PALIMPSEST_PROVIDER: provider(), PALIMPSEST_CACHE_DIR: process.env.PALIMPSEST_CACHE_DIR! };
 const TOOLS = ['remember', 'believe', 'history', 'forget', 'assert', 'reaffirm', 'verify'];
+
+await step('inherit     a private-predecessor memory file: no embeddings, all its columns', async () => {
+  // The exact table the private palimpsest-memory writes: its columns, none of ours.
+  const old = join(scratch, 'private.db');
+  const raw = new DatabaseSync(old);
+  raw.exec(`CREATE TABLE claims (id TEXT PRIMARY KEY, content TEXT NOT NULL, kind TEXT NOT NULL, subject TEXT NOT NULL,
+    source_session TEXT NOT NULL, source_quote TEXT NOT NULL, observed_at INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'active',
+    confidence REAL NOT NULL DEFAULT 1.0, superseded_by TEXT, superseded_at INTEGER, death_reason TEXT,
+    reaffirm_count INTEGER NOT NULL DEFAULT 0, last_reaffirmed_at INTEGER, probe TEXT, expect TEXT, verified_at INTEGER,
+    verify_result TEXT, verify_output TEXT, projects TEXT)`);
+  const ins = raw.prepare(`INSERT INTO claims (id, content, kind, subject, source_session, source_quote, observed_at, status, projects, probe, expect, reaffirm_count)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  ins.run('p-1', 'The Zetta HRM API dev server runs on port 3001.', 'config', 'api port', 's', 'q', now - 3 * DAY, 'active', 'zetta-hrm', 'echo PORT=3001', '3001', 2);
+  ins.run('p-2', 'Joy prefers teal and slate in UI work.', 'preference', 'ui palette', 's', 'q', now - 90 * DAY, 'active', null, null, null, 0);
+  ins.run('p-3', 'The API dev server runs on port 3000.', 'config', 'api port', 's', 'q', now - 60 * DAY, 'superseded', 'zetta-hrm', null, null, 0);
+  raw.close();
+
+  const s = new ClaimStore(old);
+  try {
+    expect(s.active().length === 2 && s.all().length === 3, 'rows did not survive the open');
+    const c = s.get('p-1')!;
+    expect(c.projects?.[0] === 'zetta-hrm' && c.probe === 'echo PORT=3001' && c.embedding === undefined, 'private columns did not read back');
+    expect(s.unembedded().length === 2, `expected 2 unembedded, got ${s.unembedded().length}`);
+    const n = await backfillEmbeddings(s);
+    expect(n === 2 && s.unembedded().length === 0, `backfill embedded ${n}, ${s.unembedded().length} left`);
+    expect((await backfillEmbeddings(s)) === 0, 'backfill is not idempotent');
+    const [q] = await embed(MODELS.embed, ['What port does the HRM API run on?']);
+    const hits = s.collisionCandidates(q!, 3, 0.3);
+    expect(hits[0]?.id === 'p-1', `retrieval did not reach the inherited claim first (got ${hits[0]?.id})`);
+    expect(s.verify('p-1', now)?.result === 'passed', 'the inherited probe did not run');
+    // And the fast path still writes into it: assert needs the embedding column that was just added.
+    const [v] = await embed(MODELS.embed, ['The Zetta HRM web dev server runs on port 3000.']);
+    s.add({ content: 'The Zetta HRM web dev server runs on port 3000.', kind: 'config', subject: 'web port', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, embedding: v, projects: ['zetta-hrm'] });
+    expect(s.active().length === 3, 'insert into the migrated table failed');
+  } finally {
+    s.close();
+  }
+  const ctx = execFileSync(join(process.cwd(), 'node_modules/.bin/tsx'), ['src/cli/recall.ts', '--plain'], { env: { ...process.env, PALIMPSEST_DB: old, PALIMPSEST_PROJECT: 'banani-dohs' }, encoding: 'utf8' });
+  expect(ctx.includes('teal and slate') && !ctx.includes('3001'), 'recall from another project did not scope the inherited claims');
+});
 
 await step('mcp/stdio   7 tools; assert supersedes by id prefix, reaffirm resets the clock', async () => {
   const client = new Client({ name: 'doctor', version: '0.1.0' });

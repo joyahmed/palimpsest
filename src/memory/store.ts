@@ -12,7 +12,8 @@ import { DatabaseSync } from 'node:sqlite';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { homedir } from 'node:os';
+import { dirname, join } from 'node:path';
 import { DEFAULT_DB } from '../paths.js';
 import { cosine } from '../qwen/client.js';
 import { PROBE_UNKNOWN, trustedConfidence, TRUST_THRESHOLD, type Claim, type ClaimKind, type ClaimStatus } from './types.js';
@@ -46,6 +47,10 @@ CREATE INDEX IF NOT EXISTS idx_claims_subject ON claims(subject);
  * is there, add what is missing.
  */
 const ADDED_COLUMNS: Record<string, string> = {
+  // A store written by the private predecessor (no model inside, no retrieval by vector)
+  // has no embedding column at all. Added here, then filled by `pnpm backfill` - the
+  // claims are the same claims; they have simply acquired a way to be found.
+  embedding: 'BLOB',
   // Space-separated project slugs. A join table would be tidier and this store holds
   // hundreds of claims - a second table for a list that is usually one item is
   // complexity bought with nothing. The split happens in toClaim.
@@ -142,7 +147,10 @@ export interface Verification {
 export class ClaimStore {
   private db: DatabaseSync;
 
-  constructor(path = process.env.PALIMPSEST_DB ?? DEFAULT_DB) {
+  constructor(rawPath = process.env.PALIMPSEST_DB ?? DEFAULT_DB) {
+    // A tilde in an env var handed over without a shell (claude mcp add, settings.json)
+    // stays a literal tilde; expand it here so `~/.palimpsest/memory.db` means what it says.
+    const path = rawPath === '~' ? homedir() : rawPath.startsWith('~/') ? join(homedir(), rawPath.slice(2)) : rawPath;
     // A first run points at a file whose directory may not exist yet (~/.palimpsest/).
     mkdirSync(dirname(path), { recursive: true });
     this.db = new DatabaseSync(path);
@@ -327,6 +335,15 @@ export class ClaimStore {
       // Truncated: evidence for a human reading an audit line, not a log.
       .run(now, result, output.slice(0, 2000), id);
     return { claim, result, output };
+  }
+
+  /** Active claims that cannot be retrieved yet - written before embeddings existed. */
+  unembedded(): Claim[] {
+    return this.active().filter((c) => !c.embedding);
+  }
+
+  setEmbedding(id: string, embedding: Float32Array): void {
+    this.db.prepare(`UPDATE claims SET embedding = ? WHERE id = ?`).run(Buffer.from(embedding.buffer), id);
   }
 
   /** Every active claim carrying a probe - the checkable column. */

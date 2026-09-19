@@ -25,6 +25,7 @@
     "mcp": "tsx --env-file=.env src/mcp/server.ts",
     "recall": "tsx src/cli/recall.ts --plain",
     "verify": "tsx src/cli/verify.ts",
+    "backfill": "tsx src/cli/backfill.ts",
     "serve": "tsx --env-file=.env src/server.ts",
     "diagram": "tsx src/scripts/diagram.ts",
     "shots": "tsx --env-file=.env src/scripts/shots.ts",

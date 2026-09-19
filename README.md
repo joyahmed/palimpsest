@@ -3,21 +3,23 @@
 > *palimpsest (n.) - a manuscript scraped clean and written over, where traces of
 > the earlier text still show through.*
 
-**Agent memory that forgets.**
+**Agent memory that forgets.** A local MCP memory for Claude Code whose beliefs decay
+and can die - so the port, the branch, the password your agent repeats is the *current*
+one, and the old one is on record as dead, with the reason.
 
-Built for the **Global AI Hackathon Series with Qwen Cloud** · Track: **MemoryAgent**
+It runs on your machine, on the Claude Code login you already have. No API key, no
+server, no vector database: one SQLite file, one Node process, and a hook that puts what
+it believes into every session.
 
-**Status: a research prototype under evaluation, not production software.** It is used daily on
-one developer's machine and kept or dropped on measured results - the benchmark below is n=19 on
-a single synthetic fixture, which is enough to show a design difference and not enough to
-generalise. Read the numbers as an indication, and replay them yourself: the cache is committed,
-so `PALIMPSEST_CACHE_ONLY=1 pnpm bench` reproduces every figure here with no API key and no spend.
+**Status:** a tool one developer uses every day, public so anyone can run it. It began as
+an entry to the Global AI Hackathon Series with Qwen Cloud (judged version tagged
+[`qwen-submission`](../../tree/qwen-submission)); the benchmark from that entry is below,
+with the caveats it deserves. The mechanism is tested end to end by one command, live,
+in about a minute - that is the first thing to run.
 
-> **The judged version is tagged [`qwen-submission`](../../tree/qwen-submission), exactly as
-> submitted.** `main` has moved on since, and the differences are
-> corrections rather than features - most of them things the submission claimed and this
-> code did not do. If you are checking this against the Devpost entry, that tag is the
-> one it describes.
+```bash
+pnpm install && pnpm test
+```
 
 ---
 
@@ -87,9 +89,9 @@ Each claim carries:
 
 And three mechanisms:
 
-1. **Extraction** - a transcript is not a memory. Qwen distills it into atomic claims.
+1. **Extraction** - a transcript is not a memory. The model distills it into atomic claims.
 2. **Adjudication** - a new claim doesn't just get appended. We find what it might
-   collide with and ask Qwen to *rule*: update, contradiction, refinement, or new.
+   collide with and ask the model to *rule*: update, contradiction, refinement, or new.
    Cosine finds the candidates; only reasoning can decide which one is **dead**.
 3. **Decay** - confidence erodes at a rate set by what kind of fact it is, so what
    the memory trusts most sorts to the top. Decay *ranks*; it does not withhold. An
@@ -103,7 +105,8 @@ The port claim had been false for weeks. Same confidence, opposite truth, becaus
 confidence measures age.
 
 Closing that gap means letting a claim carry a command that checks it against the
-world, and running those checks as confidence falls. See *What's next*.
+world, and running those checks on demand. It exists in a private predecessor of this repo
+and is the next thing to bring over.
 
 Nothing is overwritten. You can always ask: *what did you used to believe, and when
 did you stop?*
@@ -154,53 +157,93 @@ so a replay cannot silently drift from what we published.
 We'd rather you checked than trusted us. (We checked, too - and the first time we
 tried this, it threw. See v3 in the results file.)
 
+> **The replay is pinned to the prompts it was recorded with.** The extraction prompt
+> changed on 2026-09-19 (a change of value is one claim, not a value plus an event -
+> found by `pnpm test`, which failed 4 runs in 10 without it), so a replay against the
+> committed cache now misses on extraction and throws, as designed. The numbers above are
+> the Qwen-era numbers; a re-recording on Claude is queued and will replace them.
+
 ## Running it
 
 ```bash
 pnpm install
-cp .env.example .env      # add ANTHROPIC_API_KEY (or run `ant auth login`)
-pnpm explain              # see the bug for yourself - no key needed, the embedder is local
-pnpm smoke                # verify the chat path: extract, adjudicate, embed
-pnpm seed:household       # ten household facts, for the Alexa+ demo
+pnpm test                 # the fast test: ~11 checks, live, ~1 min, no key, nothing touched
+pnpm explain              # see the bug for yourself - the embedder is local
+pnpm seed:household       # ten household facts, for the /alexa demo
 pnpm serve                # http://localhost:3000  - audit view, /alexa, /mcp
 ```
 
-Chat runs on **Claude** - through your Claude Code login (`claude -p`, no key: the
-default when `claude` is installed and logged in) or through the SDK with an
-`ANTHROPIC_API_KEY` - `claude-opus-5`, adaptive thinking, `effort: low` for bulk
-extraction and `high` for adjudication. Retrieval embeddings run **locally**
-(`bge-small-en-v1.5`, q8, 34 MB, downloaded once into `.cache/models`). No
-embedding vendor, no second key, no second quota. It is a Claude-based tool on
-purpose: one model family, one behaviour to reason about.
+`pnpm test` is the claim this README makes, executed: on a scratch database it remembers a
+fact, answers it, remembers a contradicting fact a day later, and checks that the first one
+is gone from `believe`, present in `history` with its killer and reason, that a restatement
+refreshes instead of duplicating, that the recall hook shows the live claim and not the dead
+one, and that both MCP transports serve it. Every model call is live - a test that replays
+yesterday's answers cannot tell you the provider broke this morning.
 
-The Qwen Cloud path is still here - `PALIMPSEST_PROVIDER=qwen` with a
-`DASHSCOPE_API_KEY` - because the committed replay cache was recorded with it;
-`PALIMPSEST_CACHE_ONLY=1 pnpm bench` always uses Qwen's cache and needs no key.
-(Qwen keys live on the **international** DashScope endpoint; the mainland one
-returns `401 invalid_api_key` for a perfectly valid key.)
+Chat runs on **Claude** - through your Claude Code login (`claude -p`; the default when
+`claude` is installed and logged in) or through the SDK with an `ANTHROPIC_API_KEY`
+(`PALIMPSEST_PROVIDER=anthropic`). `claude-opus-5`, `effort: low` for bulk extraction and
+`high` for adjudication. Retrieval embeddings run **locally** (`bge-small-en-v1.5`, q8,
+34 MB, downloaded once into `.cache/models`). No embedding vendor, no second key. It is a
+Claude-based tool on purpose: one model family, one behaviour to reason about.
 
-## It's live
+The Qwen Cloud roster remains only as the provider the replay cache was recorded with
+(`PALIMPSEST_PROVIDER=qwen`, or implied by `PALIMPSEST_CACHE_ONLY=1`).
 
-**[palimpsest.zettabyteincorp.com](https://palimpsest.zettabyteincorp.com)** - running on
-Alibaba Cloud Function Compute (Singapore).
+## Install it as your memory in Claude Code
 
-Tell it something that contradicts what it believes, and watch the old belief die: struck
-through, with the reason it was killed, and the claim that replaced it underneath. Real model
-calls. Nothing staged.
+Two pieces. The server is what the agent writes to and asks; the hook is what makes it
+get used - a memory that is not in context loses to one that is, even when the one in
+context is lying.
 
-The same memory is served three ways from one deployment:
+**1. The MCP server**, user-scoped so it is there in every project:
 
-| Path | What it is |
-|---|---|
-| `/` | the audit view - every claim, live and dead, with confidence and provenance |
-| `/alexa` | a simulated Alexa+ household assistant over it (see below) |
-| `/mcp` | the MCP server over **Streamable HTTP, spec 2025-11-25** - `remember`, `believe`, `history`, `forget` |
+```bash
+pnpm build
+claude mcp add --scope user palimpsest \
+  -e PALIMPSEST_DB=$HOME/.palimpsest/memory.db \
+  -e PALIMPSEST_PROVIDER=claude-code \
+  -- "$(nvm which default)" "$PWD/build/mcp/server.js"
+```
+
+Absolute paths, both of them: Claude Code spawns MCP servers and hooks without your shell's
+init, so `node` from nvm is not on that PATH, and `which node` may hand you a shell
+*function* rather than a binary. `claude mcp get palimpsest` should say **Connected**. The
+memory file and the caches never depend on the working directory - the server is started
+inside whatever project you are in, and none of it lands there.
+
+**2. The recall hook**, in `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command",
+        "command": "PALIMPSEST_DB=$HOME/.palimpsest/memory.db /abs/path/to/node /abs/path/to/palimpsest/build/cli/recall.js" } ] }
+    ]
+  }
+}
+```
+
+Every session then opens with what the memory believes - ids, kinds, decayed confidence -
+a DOUBTED block of claims too old to be load-bearing, a count of what was withheld
+(`event` and `decision`: git and the repo's docs hold those better), and the protocol for
+keeping it true. `pnpm recall` prints the same text for a human. If the database cannot be
+read, the hook says so loudly in the context window rather than letting the agent mistake
+an unreadable memory for an empty one.
+
+Four tools: `remember` (a note or transcript in, atomic claims out, contradictions killed),
+`believe` (what is true *now*; the dead are absent, not down-ranked), `history` (what it
+used to believe, and when and why it stopped), `forget` (refute a claim directly, with a
+reason on record). Over stdio for Claude Code; over Streamable HTTP at `/mcp` under
+`pnpm serve` for anything else.
 
 ## Alexa+ - a memory that forgets, for the home
 
-Built for the **Amazon Developer Hackathon, Alexa+ track** ("a self-hosted MCP server
-implementing MCP spec 2025-11-25 over Streamable HTTP", and optionally "a simulated Alexa+
-experience in a web app"). A household is where this design earns its keep: the wifi
+A local demo of the same memory in a household - the setting where this design is easiest
+to feel. (It was built with the Amazon Alexa+ track's brief in mind: a self-hosted MCP server
+over Streamable HTTP, spec 2025-11-25, and a simulated Alexa+ experience in a web app.)
+A household is where this design earns its keep: the wifi
 password changes, the school-pickup rota changes, and an assistant that answers from
 similarity keeps saying the old one, confidently.
 
@@ -219,43 +262,14 @@ similarity keeps saying the old one, confidently.
 Try it: `pnpm seed:household && pnpm serve`, open `/alexa`, ask *"What's the wifi
 password?"*, say *"The wifi password changed to bluefish99."*, ask again.
 
-### Proof of deployment
-
-![Proof of deployment](docs/proof-of-deployment.png)
-
-The Function Compute console (function `palimpsest`, `ap-southeast-1`, 496 invocations, 0
-errors) alongside the [`s.yaml`](s.yaml) that deployed it. Both halves are in this repo so you
-can check either one:
-
-| | |
-|---|---|
-| **The deployment config** | [`s.yaml`](s.yaml) - FC3 component, region, custom runtime, HTTP trigger, custom domain + TLS, Qwen endpoint |
-| **The backend it deploys** | [`src/server.ts`](src/server.ts) - the audit view, `/api/believe`, `/api/remember` |
-| **How it's packaged** | [`src/scripts/package-fc.ts`](src/scripts/package-fc.ts) - and why it vendors its own Node 24 |
-
-> **Two things worth knowing if you deploy to FC yourself**, because neither is discoverable
-> from the error message:
->
-> 1. **`node:sqlite` needs Node 22+, and every Function Compute runtime stops at Node 20** -
->    managed `nodejs20` and the `custom.debian10` image alike. A naive deploy crashes on cold
->    start. We vendor Node 24 into the package and `exec` it from `bootstrap`, which is exactly
->    what a custom runtime is *for*.
-> 2. **Alibaba force-downloads any HTML served from its own domains** - `Content-Disposition:
->    attachment` on `*.fcapp.run`, `*.aliyuncs.com` and OSS static hosting, every region, no
->    setting to disable. The browser downloads the audit view instead of rendering it. A custom
->    domain is the only supported escape.
-
-**Honest limitation:** Function Compute's filesystem is ephemeral. The deployment ships with a
-pre-seeded store; writes made during your session live in `/tmp` and vanish when the container
-recycles. That is fine for a demo and wrong for a database, and we say so here rather than
-implying durability we do not have.
-
 ## Stack
 
 TypeScript · Claude (`claude-opus-5`) for extraction and adjudication · bge-small-en-v1.5
 (q8) in-process for embeddings · MCP over stdio and Streamable HTTP · SQLite (`node:sqlite`) ·
-deployed on Alibaba Cloud Function Compute. Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`,
-`text-embedding-v4`) remains as the provider the benchmark cache was recorded with.
+runs locally. Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`, `text-embedding-v4`) remains
+only as the provider the benchmark cache was recorded with. The Alibaba Function Compute
+deployment from the first hackathon (`s.yaml`, `pnpm deploy`, `src/scripts/package-fc.ts`)
+is still in the repo and no longer maintained.
 
 No vector database. At a few thousand claims, brute-force cosine is microseconds -
 and the hard problem here was never retrieval speed. It was deciding which

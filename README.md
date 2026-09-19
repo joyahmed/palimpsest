@@ -206,9 +206,13 @@ context is lying.
 pnpm build
 claude mcp add --scope user palimpsest \
   -e PALIMPSEST_DB=$HOME/.palimpsest/memory.db \
+  -e PALIMPSEST_CACHE_DIR=$HOME/.palimpsest/cache \
   -e PALIMPSEST_PROVIDER=claude-code \
   -- "$(nvm which default)" "$PWD/build/mcp/server.js"
 ```
+
+Then `pnpm verify` and `pnpm recall` work from the repo with `PALIMPSEST_DB` set the same way.
+The cache dir keeps your own memory's model calls out of the repo's committed replay cache.
 
 Absolute paths, both of them: Claude Code spawns MCP servers and hooks without your shell's
 init, so `node` from nvm is not on that PATH, and `which node` may hand you a shell

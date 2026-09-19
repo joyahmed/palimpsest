@@ -49,6 +49,10 @@ RULES:
    not claims. "Maybe we should use Redis" is NOT a claim. "We are using Redis" is.
 5. QUOTE YOUR SOURCE. Every claim carries the verbatim span it came from, so a
    human can always check your work.
+6. A CHANGE IS ITS NEW VALUE. "The wifi password changed to X" is ONE claim: "The
+   wifi password is X" (config). Do NOT also emit "the wifi password was changed"
+   as an event - it carries nothing the value claim does not, it never decays, and
+   it sits beside the value forever casting doubt on it.
 
 KINDS (this sets how fast the claim rots - get it right):
 ${KIND_GUIDE}

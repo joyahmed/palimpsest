@@ -21,10 +21,27 @@
  */
 
 import { execFile } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { stripFences } from './anthropic.js';
 
 const run = promisify(execFile);
+
+/**
+ * Which `claude` to run.
+ *
+ * As an MCP server this process is spawned by Claude Code without the user's shell
+ * init, so PATH may not carry the CLI's install dir. PALIMPSEST_CLAUDE_BIN wins;
+ * then PATH; then the native installer's default location.
+ */
+function claudeBin(): string {
+  if (process.env.PALIMPSEST_CLAUDE_BIN) return process.env.PALIMPSEST_CLAUDE_BIN;
+  const local = join(homedir(), '.local', 'bin', 'claude');
+  const onPath = (process.env.PATH ?? '').split(':').some((d) => d && existsSync(join(d, 'claude')));
+  return onPath ? 'claude' : local;
+}
 
 export interface ClaudeCodeRequest {
   model: string;
@@ -72,11 +89,11 @@ export async function claudeCodeChat(req: ClaudeCodeRequest): Promise<ClaudeCode
   ];
   let stdout: string;
   try {
-    ({ stdout } = await run('claude', args, { maxBuffer: 16 * 1024 * 1024, timeout: 180_000 }));
+    ({ stdout } = await run(claudeBin(), args, { maxBuffer: 16 * 1024 * 1024, timeout: 180_000 }));
   } catch (err) {
     const e = err as NodeJS.ErrnoException & { stderr?: string };
     if (e.code === 'ENOENT') {
-      throw new Error('provider claude-code needs the `claude` CLI on PATH (Claude Code), or set another provider');
+      throw new Error('provider claude-code needs the `claude` CLI (Claude Code): put it on PATH or set PALIMPSEST_CLAUDE_BIN');
     }
     throw new Error(`claude -p failed: ${e.stderr?.trim() || e.message}`);
   }

@@ -117,8 +117,11 @@ export async function answerPalimpsest(
       model: MODELS.adjudicate,
       system: `${ANSWER_SYSTEM}
 
-Each memory carries a confidence. Low confidence means the belief has decayed and
-may be stale - weigh it accordingly.`,
+Each memory carries a confidence. Low confidence means the belief is OLD, not that it
+is wrong - it is still the best answer held, so give it. Anything this memory learned
+to be false has already been removed: what you see is what is currently believed. If
+a memory states the value asked for, answer with that value, even if another memory
+says the value changed - the stated value IS the one it changed to.`,
       user: `MEMORIES:\n${context}\n\nQUESTION: ${question}`,
       thinking: false,
       temperature: 0,

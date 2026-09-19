@@ -10,6 +10,7 @@
   },
   "scripts": {
     "smoke": "tsx --env-file=.env src/scripts/smoke.ts",
+    "test": "tsx --env-file=.env src/scripts/doctor.ts",
     "explain": "tsx --env-file=.env src/scripts/why.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json",

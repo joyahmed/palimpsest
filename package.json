@@ -11,6 +11,8 @@
   "scripts": {
     "smoke": "tsx --env-file=.env src/scripts/smoke.ts",
     "test": "tsx --env-file=.env src/scripts/doctor.ts",
+    "test:unit": "node --test --experimental-test-module-mocks --import tsx \"src/**/*.test.ts\"",
+    "test:replay": "PALIMPSEST_CACHE_ONLY=1 PALIMPSEST_CACHE_SEED=.cache/llm tsx --env-file=.env src/bench/run.ts",
     "explain": "tsx --env-file=.env src/scripts/why.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json",

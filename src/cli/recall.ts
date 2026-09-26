@@ -115,7 +115,9 @@ function render(believed: Believed[], doubted: Believed[], withheld: Withheld): 
     '',
   ];
 
-  if (!believed.length && !doubted.length) {
+  // EMPTY only when nothing is WITHHELD either. A store holding only events, or only another
+  // project's facts, is not empty, and calling it so is the lie the block below exists to stop.
+  if (!believed.length && !doubted.length && withheld.kind === 0 && withheld.scope === 0) {
     out.push(
       'The memory is EMPTY. Nothing has been remembered yet.',
       '',

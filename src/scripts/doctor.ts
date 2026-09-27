@@ -268,16 +268,16 @@ await step('inherit     a private-predecessor memory file: no embeddings, all it
     verify_result TEXT, verify_output TEXT, projects TEXT)`);
   const ins = raw.prepare(`INSERT INTO claims (id, content, kind, subject, source_session, source_quote, observed_at, status, projects, probe, expect, reaffirm_count)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  ins.run('p-1', 'The Zetta HRM API dev server runs on port 3001.', 'config', 'api port', 's', 'q', now - 3 * DAY, 'active', 'zetta-hrm', 'echo PORT=3001', '3001', 2);
+  ins.run('p-1', 'The Acme API dev server runs on port 3001.', 'config', 'api port', 's', 'q', now - 3 * DAY, 'active', 'acme-app', 'echo PORT=3001', '3001', 2);
   ins.run('p-2', 'Joy prefers teal and slate in UI work.', 'preference', 'ui palette', 's', 'q', now - 90 * DAY, 'active', null, null, null, 0);
-  ins.run('p-3', 'The API dev server runs on port 3000.', 'config', 'api port', 's', 'q', now - 60 * DAY, 'superseded', 'zetta-hrm', null, null, 0);
+  ins.run('p-3', 'The API dev server runs on port 3000.', 'config', 'api port', 's', 'q', now - 60 * DAY, 'superseded', 'acme-app', null, null, 0);
   raw.close();
 
   const s = new ClaimStore(old);
   try {
     expect(s.active().length === 2 && s.all().length === 3, 'rows did not survive the open');
     const c = s.get('p-1')!;
-    expect(c.projects?.[0] === 'zetta-hrm' && c.probe === 'echo PORT=3001' && c.embedding === undefined, 'private columns did not read back');
+    expect(c.projects?.[0] === 'acme-app' && c.probe === 'echo PORT=3001' && c.embedding === undefined, 'private columns did not read back');
     expect(s.unembedded().length === 2, `expected 2 unembedded, got ${s.unembedded().length}`);
     const n = await backfillEmbeddings(s);
     expect(n === 2 && s.unembedded().length === 0, `backfill embedded ${n}, ${s.unembedded().length} left`);
@@ -288,12 +288,12 @@ await step('inherit     a private-predecessor memory file: no embeddings, all it
     expect(s.verify('p-1', now)?.result === 'passed', 'the inherited probe did not run');
     // And the fast path still writes into it: assert needs the embedding column that was just added.
     const [v] = await embed(MODELS.embed, ['The Zetta HRM web dev server runs on port 3000.']);
-    s.add({ content: 'The Zetta HRM web dev server runs on port 3000.', kind: 'config', subject: 'web port', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, embedding: v, projects: ['zetta-hrm'] });
+    s.add({ content: 'The Acme web dev server runs on port 3000.', kind: 'config', subject: 'web port', sourceSession: 'doctor', sourceQuote: 'q', observedAt: now, confidence: 1, embedding: v, projects: ['acme-app'] });
     expect(s.active().length === 3, 'insert into the migrated table failed');
   } finally {
     s.close();
   }
-  const ctx = execFileSync(join(process.cwd(), 'node_modules/.bin/tsx'), ['src/cli/recall.ts', '--plain'], { env: { ...process.env, PALIMPSEST_DB: old, PALIMPSEST_PROJECT: 'banani-dohs' }, encoding: 'utf8' });
+  const ctx = execFileSync(join(process.cwd(), 'node_modules/.bin/tsx'), ['src/cli/recall.ts', '--plain'], { env: { ...process.env, PALIMPSEST_DB: old, PALIMPSEST_PROJECT: 'my-app' }, encoding: 'utf8' });
   expect(ctx.includes('teal and slate') && !ctx.includes('3001'), 'recall from another project did not scope the inherited claims');
 });
 

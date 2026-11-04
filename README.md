@@ -1,205 +1,122 @@
+<div align="center">
+
 # Palimpsest
 
-> *palimpsest (n.) - a manuscript scraped clean and written over, where traces of
-> the earlier text still show through.*
+**Agent memory that forgets.**<br>
+When a fact changes, the old one dies - on record, with the date and the reason - so your agent stops repeating it.
 
-**Agent memory that forgets.** A local MCP memory for Claude Code whose beliefs decay
-and can die - so the port, the branch, the password your agent repeats is the *current*
-one, and the old one is on record as dead, with the reason.
+[![Node 22+](https://img.shields.io/badge/node-22%2B-1e293b?style=flat-square)](#run-it) [![MCP server](https://img.shields.io/badge/MCP-stdio%20%C2%B7%20HTTP-1e293b?style=flat-square)](#use-it-as-your-memory-in-claude-code) [![License: MIT](https://img.shields.io/badge/license-MIT-1e293b?style=flat-square)](LICENSE)
 
-It runs on your machine, on the Claude Code login you already have. No API key, no
-server, no vector database: one SQLite file, one Node process, and a hook that puts what
-it believes into every session.
+Free · Runs on your machine · No API key, no vector database · TypeScript + SQLite
 
-**Status:** a tool one developer uses every day, public so anyone can run it. It began as
-an entry to the Global AI Hackathon Series with Qwen Cloud (judged version tagged
-[`qwen-submission`](../../tree/qwen-submission)); the benchmark from that entry is below,
-with the caveats it deserves. The mechanism is tested end to end by one command, live,
-in about a minute - that is the first thing to run.
+<br>
 
-```bash
-pnpm install && pnpm test
-```
+<img src="docs/shot-audit.png" alt="The audit view: dead claims struck through, each with the date it died and why, above the claim that replaced it." width="900">
 
----
+</div>
 
-![Architecture](docs/architecture.png)
+<br>
 
-## The bug
+## Why I built this
 
-Ask any AI agent with memory what port your dev server runs on. It will answer
-instantly, confidently, and - if the port ever changed - **wrong**.
+I kept a notes file for my coding agent, with a "current focus" line in it. One day I saw it still naming a branch I had left eight days earlier - and the agent read it out with total confidence. A line of text cannot notice it stopped being true. Every memory tool I tried had the same problem: it only adds, it never lets anything die.
 
-Not because retrieval failed. Because retrieval *worked*, exactly as designed.
+Old is not the same as wrong, either. On 2026-08-14 two of my claims had both faded to the same confidence, 0.48. One recorded a Node version and was still exactly true. The other said a database port was open to the internet, and had been false for weeks. Same number, opposite truth.
 
-Every memory system shipping today stores text, embeds it, and retrieves whatever
-is most **similar** to your question. So watch what that does to two claims that
-flatly contradict each other:
+So **Palimpsest** stores one small fact at a time, each with a kind and a half-life. When a new fact contradicts an old one, the old one dies and keeps a death note: when, what replaced it, and why. It began as my entry to a Qwen Cloud hackathon (tag [`qwen-submission`](../../tree/qwen-submission)); now it is the memory I use every day.
 
-```
-                                                                    Qwen    bge-small
-"We decided to use Postgres."    vs   "We decided NOT to use Postgres."   0.93    0.78
-"The API listens on port 3000."  vs   "Port 3000 is where the API listens."  0.91    0.98
-```
+> *palimpsest (n.) - a page scraped clean and written over, where the old writing still shows through.*
 
-*(Real numbers, two embedders. Run `pnpm explain` yourself - it prints whichever
-one you are running.)*
+## A quick look
 
-With Qwen's embedder **the contradiction scores higher than the paraphrase**; with
-bge-small it scores lower, at 0.78 - and 0.78 is still "closely related", well
-inside what any retriever returns. Either way the point holds: to a vector store,
-"we decided to use Postgres" and "we decided *not* to use Postgres" are close,
-because embeddings capture *topic*, not *truth*. The single word that reverses the
-entire meaning moves the number a little, or not at all, depending on the model.
+<table>
+<tr>
+<td width="50%" valign="top"><img src="docs/shot-death.png" alt="Facts that changed: each dead claim struck through with its death date and reason"><br><b>Every change, with the reason the old fact died</b></td>
+<td width="50%" valign="top"><img src="docs/shot-kill.png" alt="A decision claim dying the moment a contradicting event arrives"><br><b>Tell it something new, and the claim it contradicts dies on the spot</b></td>
+</tr>
+</table>
 
-You cannot fix this with a threshold. A cutoff tight enough to drop the
-contradiction drops real paraphrases with it - the numbers overlap from one
-embedder to the next. **The signal is not in the number.**
+## Highlights
 
-So the retriever hands the model both the live fact and the dead one, ranked side
-by side, with no way to tell them apart. The model picks whichever won the cosine
-coin-flip. That is why your agent lies to you fluently.
+- ⚰️ **Facts can die**: a contradicting fact kills the old one. Nothing is deleted - `history` tells you what it used to believe and when it stopped.
+- ⏳ **Each kind fades at its own speed**: a name lasts years, a config setting a month, a "right now" state a week. Events never fade - what happened, happened.
+- 🔍 **Probes**: a claim can carry a read-only command that checks it against the real world. `verify` runs them when you ask.
+- 🧰 **Seven MCP tools**: `remember`, `believe`, `history`, `assert`, `reaffirm`, `verify`, `forget`. Over stdio, or Streamable HTTP at `/mcp`.
+- 🪝 **Recall hook**: every session opens with what the memory believes now, plus the claims too old to lean on.
+- 🏠 **Local**: one SQLite file, one Node process, embeddings run on your machine. By default it uses the Claude Code login you already have - no key.
+- 📊 **Benchmark you can replay**: every model call is cached in the repo, so you get the same numbers without spending anything.
 
-## Why nobody fixes it
+<details>
+<summary><b>Everything it does</b> (click to open)</summary>
 
-Memory systems store **chunks**. A chunk is not a unit of truth - one paragraph
-holds five facts, three still true and two dead. You cannot delete half a chunk.
-You cannot edit it, because you don't know which sentence went bad.
+### The tools
 
-So the only move left is to append a new chunk and leave the old one there.
+- `remember`: a note or transcript in, small atomic claims out. Each new claim is checked against what it might collide with, and the model rules: update, contradiction, refinement, or new.
+- `believe`: what is true now. Dead claims are left out, not just ranked lower.
+- `history`: what it used to believe, when it stopped, and why.
+- `assert`: one fact, instantly, with no model call. `supersedes: [id]` kills what it replaces; `probe` + `expect` give it a check.
+- `reaffirm`: a doubted claim is still true - its clock restarts.
+- `verify`: run the probes. A pass means full trust for a day; a fail means zero - wrong, not old. A probe that could not run says so.
+- `forget`: refute a claim directly, with a reason on record.
 
-**That is why every memory system is append-only.** Not for lack of imagination -
-they have no unit small enough to kill.
+### Half-lives
 
-## What Palimpsest does
+| Kind | Half-life |
+|---|---|
+| `identity` | 3650 days |
+| `preference` | 730 days |
+| `decision` | 365 days |
+| `config` | 30 days |
+| `state` | 7 days |
+| `event` | never fades |
 
-A memory is not a chunk here. It is a **claim**: one atomic assertion,
-independently true or false - which means it can have a status, which means it can
-**die**.
+### The web app (`pnpm serve`)
 
-Each claim carries:
+- `/` - the audit view: what it believes, what it used to believe, and the dead.
+- `/alexa` - a household demo in a voice-assistant style. Ask a question, state a change, ask again; the old answer shows up struck through under the reply.
+- `/mcp` - the same tools over Streamable HTTP.
+- `/api/*` - the JSON the pages use.
 
-- **Provenance** - where it came from, and when it became true in the world.
-- **Kind** - because facts don't rot at one universal rate. `identity` has a
-  ten-year half-life; `config` has thirty days; an `event` never decays at all,
-  because a thing that happened cannot become false.
-- **Confidence** - decaying exponentially from birth at the rate its kind implies.
-- **History** - when a claim dies, we keep the body, the killer, the date, and the
-  reason.
+### The benchmark
 
-And three mechanisms:
+12 sessions of a made-up project over three months. Facts change: the database is swapped, the launch slips, the brand colour moves. Then both memories are asked what is true now. The baseline is plain RAG with the same extraction, embeddings and answering model - the only difference is that one of them can kill a claim. Recorded 2026-09-19 (v4):
 
-1. **Extraction** - a transcript is not a memory. The model distills it into atomic claims.
-2. **Adjudication** - a new claim doesn't just get appended. We find what it might
-   collide with and ask the model to *rule*: update, contradiction, refinement, or new.
-   Cosine finds the candidates; only reasoning can decide which one is **dead**.
-3. **Decay** - confidence erodes at a rate set by what kind of fact it is, so what
-   the memory trusts most sorts to the top. Decay *ranks*; it does not withhold. An
-   old claim still comes back, carrying a number that says how much to lean on it.
+| | plain RAG | Palimpsest |
+|---|---|---|
+| Facts that changed | 45% (5/11) | **100% (11/11)** |
+| Facts that never changed | 88% (7/8) | 88% (7/8) |
+| Overall | 63% (12/19) | **95% (18/19)** |
+| Dead facts served | 3 | **0** |
 
-**Verification.** Decay can tell you a claim is *old*. It cannot tell
-you it is *wrong*, and those are different things. A live example from 2026-08-14:
-two claims had both decayed to ~0.48 - one recording a Node version, one recording
-that a database port was open to the internet. The Node claim was still exactly true.
-The port claim had been false for weeks. Same confidence, opposite truth, because
-confidence measures age.
+Where it still fails, every version, and what fixed what: [`src/bench/RESULTS.md`](src/bench/RESULTS.md).
 
-So a claim can carry a **probe** - a read-only command that reads the fact out of the
-world - and the substring its output must contain. `verify` runs them on demand. Confirmed,
-the claim is served at full trust for a day and the agent is told not to spend a lookup on
-it; contradicted, it is zero, and shown under its own CONTRADICTED header rather than buried
-among the merely old. Nineteen of thirty-five real claims turned out to have no oracle at all -
-"Joy prefers X" has none anywhere in the world - and for those, age remains the least-bad
-signal there is.
+</details>
 
-Nothing is overwritten. You can always ask: *what did you used to believe, and when
-did you stop?*
+## Run it
 
-## The benchmark
-
-12 sessions of a real-shaped project, spread over three months. Facts change: the
-database is swapped, the launch slips, the brand colour moves, the PM is replaced.
-Then we ask both memories what is true **now**.
-
-The baseline is naive RAG - chunk, embed, top-k retrieve - given the *same*
-extraction, the *same* embeddings and the *same* answering model. The only
-difference between the two systems is that one of them can kill a claim.
-
-|                          | naive RAG    | Palimpsest       |
-|--------------------------|--------------|------------------|
-| Facts that **changed**   | 45% (5/11)   | **100% (11/11)** |
-| Facts that never changed | 88% (7/8)    | 88% (7/8)        |
-| **Overall**              | 63% (12/19)  | **95% (18/19)**  |
-| **Served a DEAD fact**   | **3**        | **0**            |
-
-Every fact that moved, answered right - and, just as importantly, **no worse on the
-facts that didn't**. A memory eager enough to forget that it destroys stable facts
-would be worse than append-only, not better. That column is the one that could have
-killed this project, and it's printed as loudly as the one that flatters it.
-
-Naive RAG served three dead facts - "Postgres", "September 1st", "#1E4D8C" - with
-total confidence, weeks after each one died. Palimpsest served none.
-
-**Where it still fails**, because that belongs in the README too: neither system ever
-finds the shipping origin. That is a *retrieval* failure - the right claim is alive in
-the store and simply isn't reached by top-5 cosine. Full breakdown, every version,
-including the one that found a dead fact being served and what fixed it:
-[`src/bench/RESULTS.md`](src/bench/RESULTS.md).
-
-### Check it yourself
-
-Every model call is cached to disk and committed to this repo.
+You need Node 22 or newer and `pnpm`.
 
 ```bash
-PALIMPSEST_CACHE_ONLY=1 pnpm bench     # 500 cache hits, 0 misses, no API key, no spend
-```
-
-**Clone it, replay the benchmark, and get bit-identical numbers.**
-`PALIMPSEST_CACHE_ONLY=1` makes a cache miss *throw* rather than quietly hit the API,
-so a replay cannot silently drift from what we published.
-
-We'd rather you checked than trusted us. (We checked, too - and the first time we
-tried this, it threw. See v3 in the results file.)
-
-> The numbers above were recorded on Claude on 2026-09-19 (v4 in the results file). The
-> first recording, on Qwen Cloud for the hackathon, is preserved at the
-> [`qwen-submission`](../../tree/qwen-submission) tag and replays there: 79% vs 58%,
-> with the older prompts.
-
-## Running it
-
-```bash
+git clone https://github.com/joyahmed/palimpsest
+cd palimpsest
 pnpm install
-pnpm test                 # the fast test: ~11 checks, live, ~1 min, no key, nothing touched
-pnpm explain              # see the bug for yourself - the embedder is local
-pnpm seed:household       # ten household facts, for the /alexa demo
-pnpm serve                # http://localhost:3000  - audit view, /alexa, /mcp
+touch .env                 # the scripts read .env; an empty one is fine
+pnpm test                  # live end-to-end check on a scratch database
+pnpm seed:household        # ten household facts for the /alexa demo
+pnpm serve                 # http://localhost:9000  - audit view, /alexa, /mcp
 ```
 
-`pnpm test` is the claim this README makes, executed: on a scratch database it remembers a
-fact, answers it, remembers a contradicting fact a day later, and checks that the first one
-is gone from `believe`, present in `history` with its killer and reason, that a restatement
-refreshes instead of duplicating, that the recall hook shows the live claim and not the dead
-one, and that both MCP transports serve it. Every model call is live - a test that replays
-yesterday's answers cannot tell you the provider broke this morning.
+Keep `.env` empty unless you mean to switch provider. By default chat runs through the `claude` command (`claude -p`), so it needs Claude Code installed and logged in. Setting `ANTHROPIC_API_KEY` switches it to the API instead.
 
-Chat runs on **Claude** - through your Claude Code login (`claude -p`; the default when
-`claude` is installed and logged in) or through the SDK with an `ANTHROPIC_API_KEY`
-(`PALIMPSEST_PROVIDER=anthropic`). `claude-opus-5`, `effort: low` for bulk extraction and
-`high` for adjudication. Retrieval embeddings run **locally** (`bge-small-en-v1.5`, q8,
-34 MB, downloaded once into `.cache/models`). No embedding vendor, no second key. It is a
-Claude-based tool on purpose: one model family, one behaviour to reason about.
+Replay the benchmark from the committed cache - no key, no spend. A cache miss throws instead of quietly calling the model:
 
-The Qwen Cloud roster (`PALIMPSEST_PROVIDER=qwen`) remains only so the hackathon-era
-recording at the `qwen-submission` tag can still be read.
+```bash
+PALIMPSEST_CACHE_ONLY=1 pnpm bench
+```
 
-## Install it as your memory in Claude Code
+## Use it as your memory in Claude Code
 
-Two pieces. The server is what the agent writes to and asks; the hook is what makes it
-get used - a memory that is not in context loses to one that is, even when the one in
-context is lying.
-
-**1. The MCP server**, user-scoped so it is there in every project:
+**1. The MCP server**, for every project:
 
 ```bash
 pnpm build
@@ -210,14 +127,7 @@ claude mcp add --scope user palimpsest \
   -- "$(nvm which default)" "$PWD/build/mcp/server.js"
 ```
 
-Then `pnpm verify` and `pnpm recall` work from the repo with `PALIMPSEST_DB` set the same way.
-The cache dir keeps your own memory's model calls out of the repo's committed replay cache.
-
-Absolute paths, both of them: Claude Code spawns MCP servers and hooks without your shell's
-init, so `node` from nvm is not on that PATH, and `which node` may hand you a shell
-*function* rather than a binary. `claude mcp get palimpsest` should say **Connected**. The
-memory file and the caches never depend on the working directory - the server is started
-inside whatever project you are in, and none of it lands there.
+Use absolute paths: MCP servers and hooks start without your shell setup, so `node` from nvm is not on their PATH. `claude mcp get palimpsest` should say **Connected**.
 
 **2. The recall hook**, in `~/.claude/settings.json`:
 
@@ -232,71 +142,23 @@ inside whatever project you are in, and none of it lands there.
 }
 ```
 
-Every session then opens with what the memory believes - ids, kinds, decayed confidence -
-a DOUBTED block of claims too old to be load-bearing, a count of what was withheld
-(`event` and `decision`: git and the repo's docs hold those better), and the protocol for
-keeping it true. `pnpm recall` prints the same text for a human. If the database cannot be
-read, the hook says so loudly in the context window rather than letting the agent mistake
-an unreadable memory for an empty one.
+`pnpm recall` prints the same text for you to read. If the database cannot be read, the hook says so loudly instead of passing it off as an empty memory.
 
-Seven tools. `assert` (one atomic fact, instant, no model call; `supersedes: [id]` kills what
-it replaces; `probe` + `expect` give it an oracle), `reaffirm` (a DOUBTED belief is still true -
-its clock restarts) and `verify` (run the probes: a pass is full trust for a day, a fail is
-zero - *wrong*, not old - and a probe that could not run says so instead of lying either way)
-are the direct path the recall ids exist for. Probes are commands the memory executes, so they
-run only when `verify` is called - on stakes, before a deploy or before trusting a port - and
-never at session start. `remember` (a note or transcript in, atomic claims out, contradictions killed),
-`believe` (what is true *now*; the dead are absent, not down-ranked), `history` (what it
-used to believe, and when and why it stopped), `forget` (refute a claim directly, with a
-reason on record). Over stdio for Claude Code; over Streamable HTTP at `/mcp` under
-`pnpm serve` for anything else.
+## Watch it
 
-### Already have a memory file from the private predecessor?
-
-Point `PALIMPSEST_DB` at it and run `pnpm backfill` once. The table is migrated in place
-on first open (the columns it lacks are added; the ones it has - projects, probes,
-reaffirm counts - are read as they are), and the backfill gives every active claim the
-embedding it never had, locally, in seconds. Nothing is rewritten, no id changes. Then
-swap the two registrations - the MCP server and the recall hook - to this repo's `build/`.
-`pnpm test` rehearses exactly this on a copy of that schema.
-
-## Alexa+ - a memory that forgets, for the home
-
-A local demo of the same memory in a household - the setting where this design is easiest
-to feel. (It was built with the Amazon Alexa+ track's brief in mind: a self-hosted MCP server
-over Streamable HTTP, spec 2025-11-25, and a simulated Alexa+ experience in a web app.)
-A household is where this design earns its keep: the wifi
-password changes, the school-pickup rota changes, and an assistant that answers from
-similarity keeps saying the old one, confidently.
-
-- **MCP endpoint:** `POST /mcp` (Streamable HTTP, stateless, protocol `2025-11-25`), the
-  same four tools an Agent Skill or any MCP client calls. Locally: `pnpm serve` then
-  point a client at `http://localhost:3000/mcp`; over stdio: `pnpm mcp`.
-- **Simulated Alexa+:** `/alexa` - a voice-style transcript. A question is `believe`
-  (retrieval over *live* claims only); a statement is `remember` (extract, collide,
-  adjudicate). What the memory stopped believing is shown struck through under the reply,
-  with the reason and the date it had been believed since. Six guided prompts walk the loop.
-- **State across sessions:** claims carry a kind and a half-life - the thermostat setting
-  (`state`, 7 days) is doubted by next week on its own; the family's names (`identity`,
-  10 years) are not. Nothing is ever deleted: `history` answers *what did you believe before,
-  and when did you change your mind?*
-
-Try it: `pnpm seed:household && pnpm serve`, open `/alexa`, ask *"What's the wifi
-password?"*, say *"The wifi password changed to bluefish99."*, ask again.
-
-## Stack
-
-TypeScript · Claude (`claude-opus-5`) for extraction and adjudication · bge-small-en-v1.5
-(q8) in-process for embeddings · MCP over stdio and Streamable HTTP · SQLite (`node:sqlite`) ·
-runs locally. Qwen Cloud (`qwen3.7-plus`, `qwen3.6-flash`, `text-embedding-v4`) remains
-only as the provider the first benchmark was recorded with (`qwen-submission` tag). The Alibaba Function Compute
-deployment from the first hackathon (`s.yaml`, `pnpm deploy`, `src/scripts/package-fc.ts`)
-is still in the repo and no longer maintained.
-
-No vector database. At a few thousand claims, brute-force cosine is microseconds -
-and the hard problem here was never retrieval speed. It was deciding which
-retrieved claims are still **true**.
+[Palimpsest - Agent Memory That Forgets](https://youtu.be/_E1ftpmVEHE) (2:41). More of what I build: [youtube.com/@joysbuilds](https://www.youtube.com/@joysbuilds).
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+
+I build tools I use myself, from Bangladesh. If Palimpsest stops your agent from repeating a dead fact, that makes me happy.<br>
+Found a bug or want something? [Open an issue](https://github.com/joyahmed/palimpsest/issues).
+
+**Joy**
+
+</div>

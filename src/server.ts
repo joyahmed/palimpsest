@@ -179,8 +179,10 @@ const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void>
   }
 };
 
+// HOST unset = every interface, which the Function Compute runtime needs (it routes to
+// 0.0.0.0:9000). A box behind a reverse proxy sets HOST=127.0.0.1.
 createServer((req, res) => {
   void handler(req, res);
-}).listen(PORT, () => {
+}).listen({ port: PORT, host: process.env.HOST }, () => {
   console.log(`palimpsest listening on :${PORT}`);
 });
